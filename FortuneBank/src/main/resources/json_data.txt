@@ -1,0 +1,17 @@
+{
+    "firstName":"dinesh",
+	"middleName":"",
+	"lastName":"rathod",
+	"fatherName":"",
+	"phone":"7045800407",
+	"email":"dinesh@rathod.com",
+	"aadharNumber":"123456781234",
+	"dob":"1997-05-14"
+}
+
+{
+"accountnumber":"1",
+"loginpassword":"pass",
+"transactionpassword":"pass",
+"otp":""
+}
