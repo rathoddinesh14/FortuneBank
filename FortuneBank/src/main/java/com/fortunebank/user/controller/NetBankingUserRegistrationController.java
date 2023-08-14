@@ -23,6 +23,7 @@ public class NetBankingUserRegistrationController {
 		netBankingUser.setAccountNumber(userRegDto.getAccountnumber());
 		netBankingUser.setLoginPassword(userRegDto.getLoginpassword());
 		netBankingUser.setTransactionPassword(userRegDto.getTransactionpassword());
+		netBankingUser.setUserId(""+userRegDto.getAccountnumber());
 		return netBankingUserRegistrationService.registerNetBankingUser(netBankingUser);
 	}
 }

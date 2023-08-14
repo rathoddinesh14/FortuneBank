@@ -1,5 +1,6 @@
 package com.fortunebank.user.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -16,4 +17,7 @@ public class NetBankingUser {
 	private Long accountNumber;
 	private String loginPassword;
 	private String transactionPassword;
+	
+	@Column(unique = true)
+	private String userId;
 }
