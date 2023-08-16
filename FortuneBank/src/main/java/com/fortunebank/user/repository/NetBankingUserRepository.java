@@ -8,4 +8,6 @@ import com.fortunebank.user.model.NetBankingUser;
 
 public interface NetBankingUserRepository extends JpaRepository<NetBankingUser, Long> {
 	public Optional<NetBankingUser> findByUserId(String userId);
+
+	public Optional<NetBankingUser> findByAccountNumber(Long accountNumber);
 }
