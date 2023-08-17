@@ -1,7 +1,10 @@
 import "./../styles/NetBankingRegistration.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function NetBankingRegistration() {
+  const history = useNavigate();
   const [accountNumber, setAccountNumber] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [transactionPassword, setTransactionPassword] = useState("");
@@ -9,6 +12,28 @@ function NetBankingRegistration() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    const data = {
+      accountnumber: accountNumber,
+      loginpassword: loginPassword,
+      transactionpassword: transactionPassword,
+      otp: otp,
+    };
+
+    // Send POST request using axios
+    axios
+      .post("http://localhost:8080/fortunebank/api/register", data)
+      .then((response) => {
+        console.log("Registration successful:", response.data);
+        if (response.data) {
+          setTimeout(() => {
+            history("/");
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error, data);
+      });
 
     // You can perform form validation and submit the data to your backend here
     // For now, just logging the values

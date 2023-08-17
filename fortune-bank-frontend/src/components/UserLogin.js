@@ -1,8 +1,10 @@
 import "./../styles/UserLogin.css";
 import React, { useState } from "react";
 import axios from "axios"; // Import axios
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
+  const history = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,18 +20,23 @@ function UserLogin() {
     event.preventDefault();
 
     const data = {
-      username: username,
+      userid: username,
       password: password,
     };
 
     // Send POST request using axios
     axios
-      .post("http://your-spring-boot-api-url/login", data)
+      .post("http://localhost:8080/fortunebank/api/login", data)
       .then((response) => {
         console.log("Login successful:", response.data);
+        if (response.data) {
+          setTimeout(() => {
+            history("/userhome");
+          }, 2000);
+        }
       })
       .catch((error) => {
-        console.error("Login failed:", error);
+        console.error("Login failed:", error, data);
       });
   };
 
