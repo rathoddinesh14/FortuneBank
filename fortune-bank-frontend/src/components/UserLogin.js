@@ -29,6 +29,7 @@ function UserLogin() {
       .post("http://localhost:8080/fortunebank/api/login", data)
       .then((response) => {
         console.log("Login successful:", response.data);
+        alert("Login successful");
         if (response.data) {
           setTimeout(() => {
             history("/userhome");

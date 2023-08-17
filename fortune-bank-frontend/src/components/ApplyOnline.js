@@ -1,4 +1,4 @@
-import "./../styles/ApplyOnline.css";
+import "./../styles/Form.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
