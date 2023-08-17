@@ -25,6 +25,7 @@ function NetBankingRegistration() {
       .post("http://localhost:8080/fortunebank/api/register", data)
       .then((response) => {
         console.log("Registration successful:", response.data);
+        alert("Registration successful");
         if (response.data) {
           setTimeout(() => {
             history("/");
