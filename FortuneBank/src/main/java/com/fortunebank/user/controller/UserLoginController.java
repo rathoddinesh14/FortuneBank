@@ -2,6 +2,7 @@ package com.fortunebank.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import com.fortunebank.user.dto.UserLoginDto;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingUserRegistrationService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
 public class UserLoginController {
