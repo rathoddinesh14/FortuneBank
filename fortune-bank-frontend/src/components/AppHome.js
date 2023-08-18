@@ -6,7 +6,7 @@ import Footer from "./Footer";
 function AppHome() {
   return (
     <div className="homecontainer">
-      <Header />
+      {/* <Header /> */}
       <div className="container">
         <a href="/login">Login</a>
         <a href="/register">Register</a>
@@ -14,7 +14,7 @@ function AppHome() {
         <a href="/resetpassword">Forgot / Reset Password</a>
         <a href="/forgotuserid">Forgot User ID</a>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

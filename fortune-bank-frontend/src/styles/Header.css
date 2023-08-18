@@ -1,9 +1,18 @@
 /* Header.css */
 header {
-    background-color: #007bff;
+
+    background-color: #8400ff;
     color: white;
     padding: 20px;
     text-align: center;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'right';
+    height: '100vh';
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
 }
 
 h1 {
@@ -12,6 +21,8 @@ h1 {
 
 nav {
     margin-top: 10px;
+
+
 }
 
 nav a {
