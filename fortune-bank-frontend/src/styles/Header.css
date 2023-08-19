@@ -1,0 +1,32 @@
+/* Header.css */
+header {
+
+    background-color: #8400ff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'right';
+    height: '100vh';
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+}
+
+h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+
+
+}
+
+nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}

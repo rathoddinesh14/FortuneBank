@@ -7,9 +7,14 @@ import UserHome from "./components/UserHome";
 import ForgotUserId from "./components/ForgotUserId";
 import ForgotPassword from "./components/ForgotPassword";
 import AppHome from "./components/AppHome";
-
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 function App() {
   return (
+    <div className="App">
+      
+       <Header></Header>
+       <section>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppHome />} />
@@ -23,6 +28,12 @@ function App() {
         <Route path="/resetpassword" element={<ForgotPassword />} />
       </Routes>
     </BrowserRouter>
+    </section> 
+
+       <footer className='Footer'>
+         <Footer></Footer>
+       </footer>
+       </div>
   );
 }
 
