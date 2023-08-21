@@ -32,9 +32,9 @@ public class TransactionController {
     public ResponseEntity<Transaction> transfer(@RequestBody TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
         UserDetails fromUser = new UserDetails();
-        fromUser.setAccountNumber(transactionDto.getFromAccount());
+        fromUser.setAccountNumber(transactionDto.getFromaccount());
         UserDetails toUser = new UserDetails();
-        toUser.setAccountNumber(transactionDto.getToAccount());
+        toUser.setAccountNumber(transactionDto.getToaccount());
         transaction.setFud(fromUser);
         transaction.setTud(toUser);
         transaction.setAmount(transactionDto.getAmount());

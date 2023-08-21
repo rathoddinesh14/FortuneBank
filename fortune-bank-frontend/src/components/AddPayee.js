@@ -105,8 +105,7 @@ function AddPayee() {
         />
     
         <label htmlFor="savebeneficiary">Save Beneficiary: </label>
-        <input
-          type="checkbox"
+        <input type="checkbox"
           value={savebeneficiary}
           onChange={handleSaveBeneficiaryChange}
         />

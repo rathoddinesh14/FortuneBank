@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class TransactionDto {
-    private Long fromAccount;
-    private Long toAccount;
+    private Long fromaccount;
+    private Long toaccount;
     private Double amount;
     private String remarks;
 }
