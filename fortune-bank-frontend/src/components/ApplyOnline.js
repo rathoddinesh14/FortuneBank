@@ -1,4 +1,3 @@
-import "./../styles/Form.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -56,75 +55,108 @@ function ApplyOnline() {
   };
 
   return (
-    <div className="container">
-      <h2>User Registration</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-8"></div>
+        <div className="col-md-4 bg-white p-4">
+          <h2 className="mb-4">User Registration</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="firstName">First Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="firstName"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="middleName">Middle Name:</label>
-        <input
-          type="text"
-          id="middleName"
-          value={middleName}
-          onChange={(e) => setMiddleName(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="middleName">Middle Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="middleName"
+                value={middleName}
+                onChange={(e) => setMiddleName(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="lastName">Last Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="lastName"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="fatherName">Father's Name:</label>
-        <input
-          type="text"
-          id="fatherName"
-          value={fatherName}
-          onChange={(e) => setFatherName(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="fatherName">Father's Name:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="fatherName"
+                value={fatherName}
+                onChange={(e) => setFatherName(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="phone">Phone:</label>
-        <input
-          type="tel"
-          id="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="phone">Phone:</label>
+              <input
+                type="tel"
+                className="form-control"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="aadharNumber">Aadhar Number:</label>
-        <input
-          type="text"
-          id="aadharNumber"
-          value={aadharNumber}
-          onChange={(e) => setAadharNumber(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="aadharNumber">Aadhar Number:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="aadharNumber"
+                value={aadharNumber}
+                onChange={(e) => setAadharNumber(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="dob">Date of Birth:</label>
-        <input
-          type="date"
-          id="dob"
-          value={dob}
-          onChange={(e) => setDob(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="dob">Date of Birth:</label>
+              <input
+                type="date"
+                className="form-control"
+                id="dob"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
+            </div>
 
-        <button type="submit">Register</button>
-      </form>
+            <div className="mb-3">{/* Add margin bottom spacing */}</div>
+
+            <button type="submit" className="btn btn-primary">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

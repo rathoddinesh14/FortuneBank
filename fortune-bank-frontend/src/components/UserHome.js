@@ -1,11 +1,14 @@
-import AddPayee from "./AddPayee";
-import AddTransaction from "./AddTransaction";
+import Dashboard from "./Dashboard";
+// import AddPayee from "./AddPayee";
+// import AddTransaction from "./AddTransaction";
+
 function UserHome() {
   return (
-    <div>
-      <h1>User Home</h1>
-      <AddPayee></AddPayee>
-      <AddTransaction></AddTransaction>
+    <div className="container">
+      <h1>Welcome user</h1>
+      <Dashboard />
+      {/* <AddPayee /> */}
+      {/* <AddTransaction /> */}
     </div>
   );
 }

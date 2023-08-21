@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/Form.css";
 
 function ForgotUserId() {
   const history = useNavigate();
@@ -38,27 +37,42 @@ function ForgotUserId() {
   };
 
   return (
-    <div className="container">
-      <h2>Forgot User ID</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="accountnumber">Account Number:</label>
-        <input
-          type="text"
-          id="accountnumber"
-          value={accountnumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
-        />
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-8"></div>
+        <div className="col-md-4 bg-white p-4">
+          <h2 className="mb-4">Forgot User ID</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="accountnumber">Account Number:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="accountnumber"
+                value={accountnumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="otp">OTP:</label>
-        <input
-          type="text"
-          id="otp"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="otp">OTP:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </div>
 
-        <button type="submit">Submit</button>
-      </form>
+            <div className="mb-3">{/* Add margin bottom spacing */}</div>
+
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
