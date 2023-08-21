@@ -8,6 +8,6 @@ import com.fortunebank.user.model.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByFudAccountNumberOrTudAccountNumber(Long accountNumber);
+    List<Transaction> findByFudAccountNumberOrTudAccountNumber(Long accountNumber, Long secondAccountNumber);
 
 }

@@ -4,11 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.PayeeRepository;
 
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
 public class PayeeService {
 	
 	@Autowired

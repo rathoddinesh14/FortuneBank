@@ -21,6 +21,6 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactions(Long accountNumber) {
-        return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber);
+        return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber, accountNumber);
     }
 }

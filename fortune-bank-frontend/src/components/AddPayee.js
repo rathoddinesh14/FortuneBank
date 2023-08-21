@@ -3,33 +3,60 @@ import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
 
-function UserLogin() {
+function AddPayee() {
   const history = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [beneficiaryname, setBeneficiaryname] = useState("");
+  const [accountnumber, setAccountnumber] = useState("");
+  const [payeeaccountnumber, setPayeeaccountnumber] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [savebeneficiary, setSavebeneficiary] = useState("");
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  // const handleUsernameChange = (event) => {
+  //   setUsername(event.target.value);
+  // };
+
+  // const handlePasswordChange = (event) => {
+  //   setPassword(event.target.value);
+  // };
+
+  const handleBeneficiarynameChange = (event) => {
+    setBeneficiaryname(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handleAccountnumberChange = (event) => {
+    setAccountnumber(event.target.value);
   };
+
+  const handlePayeeAccountnumberChange = (event) => {
+    setPayeeaccountnumber(event.target.value);
+  };
+
+  const handleNicknameChange = (event) => {
+    setNickname(event.target.value);
+  };
+  
+  const handleSaveBeneficiaryChange = (event) => {
+    setSavebeneficiary(event.target.value);
+  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = {
-      userid: username,
-      password: password,
+      beneficiaryname: beneficiaryname,
+      accountnumber: accountnumber,
+      payeeaccountnumber: payeeaccountnumber,
+      nickname: nickname,
+      savebeneficiary: savebeneficiary
     };
 
     // Send POST request using axios
     axios
-      .post("http://localhost:8080/fortunebank/api/login", data)
+      .post("http://localhost:8080/fortunebank/api/beneficiary/add", data)
       .then((response) => {
-        console.log("Login successful:", response.data);
-        alert("Login successful");
+        console.log("Beneficiary Added:", response.data);
+        alert("Beneficiary Added");
         if (response.data) {
           setTimeout(() => {
             history("/userhome");
@@ -37,13 +64,13 @@ function UserLogin() {
         }
       })
       .catch((error) => {
-        console.error("Login failed:", error, data);
+        console.error("Unable to add Beneficiary:", error, data);
       });
   };
 
   return (
     <div className="container">
-      <h2>Login</h2>
+      <h2>Add Beneficiary</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="beneficiaryname">Beneficiary Name: </label>
         <input
@@ -61,6 +88,14 @@ function UserLogin() {
           onChange={handleAccountnumberChange}
         />
 
+      <label htmlFor="payeeaccountnumber">Payee Account Number: </label>
+        <input
+          type="text"
+          id="payeeaccountnumber"
+          value={payeeaccountnumber}
+          onChange={handlePayeeAccountnumberChange}
+        />
+
         <label htmlFor="nickname">Nickname: </label>
         <input
           type="text"
@@ -68,7 +103,7 @@ function UserLogin() {
           value={nickname}
           onChange={handleNicknameChange}
         />
-
+    
         <label htmlFor="savebeneficiary">Save Beneficiary: </label>
         <input
           type="checkbox"
@@ -76,10 +111,10 @@ function UserLogin() {
           onChange={handleSaveBeneficiaryChange}
         />
 
-        <button type="submit">Login</button>
+        <button type="submit">Add Beneficiary</button>
       </form>
     </div>
   );
 }
 
-export default UserLogin;
+export default AddPayee;

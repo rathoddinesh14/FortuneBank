@@ -16,9 +16,12 @@ import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.TransactionService;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/transaction")
 public class TransactionController {
