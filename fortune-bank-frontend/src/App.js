@@ -25,6 +25,26 @@ function App() {
             <Route path="/userhome" element={<UserHome />} />
             <Route path="/forgotuserid" element={<ForgotUserId />} />
             <Route path="/resetpassword" element={<ForgotPassword />} />
+            <Route
+              path="/overview"
+              element={<UserHome urlParam="overview" />}
+            />
+            <Route
+              path="/payments"
+              element={<UserHome urlParam="payments" />}
+            />
+            <Route
+              path="/statements"
+              element={<UserHome urlParam="statements" />}
+            />
+            <Route
+              path="/beneficiaries"
+              element={<UserHome urlParam="beneficiaries" />}
+            />
+            <Route
+              path="/transactions"
+              element={<UserHome urlParam="transactions" />}
+            />
           </Routes>
         </BrowserRouter>
       </section>

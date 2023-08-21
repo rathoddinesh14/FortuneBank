@@ -1,10 +1,14 @@
 import React from "react";
+import Overview from "./Overview";
+import Payments from "./Payments";
+import Statements from "./Statements";
 
-function Dashboard() {
+function Dashboard(props) {
+  console.log("props", props);
   return (
     <div className="container bg-white">
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <a className="navbar-brand" href="/dashboard">
+        <a className="navbar-brand" href="/userhome">
           Online Banking
         </a>
         <button
@@ -21,13 +25,13 @@ function Dashboard() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/dashboard">
+              <a className="nav-link" href="/userhome">
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/accounts">
-                Accounts
+              <a className="nav-link" href="/beneficiaries">
+                Beneficiaries
               </a>
             </li>
             <li className="nav-item">
@@ -66,9 +70,9 @@ function Dashboard() {
         </nav>
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-          {/* Main content of the dashboard */}
-          <h1 className="mt-3">Welcome to Online Banking Dashboard</h1>
-          {/* Add more content here */}
+          <h1 className="mt-3">
+            Welcome to Online Banking Dashboard {props.urlParam}
+          </h1>
         </main>
       </div>
     </div>
