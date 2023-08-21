@@ -30,5 +30,7 @@ public class Beneficiary {
 	@JoinColumn(name = "payee_account_number")
 	private UserDetails payeeDetails;
 	
+	private String name;
+	
 	private String nickName;
 }
