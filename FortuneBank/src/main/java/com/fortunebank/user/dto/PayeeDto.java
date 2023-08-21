@@ -7,11 +7,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddPayeeDto {
+public class PayeeDto {
 	private String beneficiaryname;
 	private Long accountnumber;
+	private Long payeeaccountnumber;
 	private boolean savebeneficiary;
 	private String nickname;
-	
-	
 }

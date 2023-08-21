@@ -1,5 +1,6 @@
 package com.fortunebank.user.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class PayeeService {
 	 public Beneficiary addPayee(Beneficiary ben) {
 	        return payeeRepo.save(ben);
 	    }
-
-	    public Optional<Beneficiary> getPayee(Long accountNumber) {
-	        return payeeRepo.findBy
+	 
+	 public List<Beneficiary> findByUdAccountNumber(Long accountNumber) {
+	        return payeeRepo.findByUdAccountNumber(accountNumber);
 	    }
 }

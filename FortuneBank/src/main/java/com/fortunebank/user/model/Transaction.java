@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,11 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long tid;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "from_account_number")
 	private UserDetails fud;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "to_account_number")
 	private UserDetails tud;
 	
