@@ -42,8 +42,16 @@ function App() {
               element={<UserHome urlParam="beneficiaries" />}
             />
             <Route
+              path="/addbeneficiary"
+              element={<UserHome urlParam="addbeneficiary" />}
+            />
+            <Route
               path="/transactions"
               element={<UserHome urlParam="transactions" />}
+            />
+            <Route
+              path="/transfer"
+              element={<UserHome urlParam="transfer" />}
             />
           </Routes>
         </BrowserRouter>

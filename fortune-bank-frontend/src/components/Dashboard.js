@@ -2,8 +2,24 @@ import React from "react";
 import Overview from "./Overview";
 import Payments from "./Payments";
 import Statements from "./Statements";
+import { useNavigate } from "react-router-dom";
+import DashboardItem from "./DashboardItem";
 
 function Dashboard(props) {
+  const history = useNavigate();
+
+  const handleAddBeneficiary = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/addbeneficiary");
+  };
+
+  const handleTransfer = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/transfer");
+  };
+
   console.log("props", props);
   return (
     <div className="container bg-white">
@@ -64,15 +80,32 @@ function Dashboard(props) {
                   Statements
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  href="/addbeneficiary"
+                  onClick={handleAddBeneficiary}
+                >
+                  Add Beneficiary
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  href="/transfer"
+                  onClick={handleTransfer}
+                >
+                  Transfer
+                </a>
+              </li>
               {/* Add more vertical navigation items */}
             </ul>
           </div>
         </nav>
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <h1 className="mt-3">
-            Welcome to Online Banking Dashboard {props.urlParam}
-          </h1>
+          <DashboardItem urlParam={props.urlParam} />
         </main>
       </div>
     </div>
