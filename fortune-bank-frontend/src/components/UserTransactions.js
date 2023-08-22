@@ -1,244 +1,77 @@
-import React, { useState } from "react";
+import React,{useState,useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
+import TransactionService from "../service/TransactionService";
 
-function TransactionTable({ transactions }) {
-  return (
-    <div className="transaction-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Transaction ID</th>
-            <th>From Account</th>
-            <th>To Account</th>
-            <th>Amount</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((transaction) => (
-            <tr key={transaction.tid}>
-              <td>{transaction.tid}</td>
-              <td>{transaction.fromaccount}</td>
-              <td>{transaction.toaccount}</td>
-              <td>{transaction.amount}</td>
-              <td>{transaction.remarks}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 function UserTransactions({ userId }) {
+  const history = useNavigate();
+
   const [transactions, setTransactions] = useState([]);
+  const [message, setMessage] = useState('');
 
-  // Fetch transactions for the given userId (simulated data for example)
-  // Replace this with actual API call to fetch transactions
-  // For example: fetch(`/api/transactions/${userId}`)
-  // Update the state with the fetched transactions
-  // setTransactions([...fetchedTransactions]);
+  useEffect(() => {
+      fetchTransactions();
+  }, []);
 
-  // Simulated transactions data for example
-  const simulatedTransactions = [
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
-    {
-      tid: 1,
-      fromaccount: 1234567890,
-      toaccount: 9876543210,
-      amount: 1000.0,
-      remarks: "Payment for services",
-    },
+  const fetchTransactions = () => {
+    TransactionService.getTransactions(1).then((response) => {
+        setTransactions(response.data);
+    });
+console.log(transactions);
+};
 
-    // Add more transactions here
-  ];
 
-  return (
-    <div className="app-container">
-      <h1>Transactions</h1>
-      <TransactionTable transactions={simulatedTransactions} />
-    </div>
-  );
+return(
+  <div>
+      <h1 className="text-warning">Transactions List</h1>
+      <br/>
+          {/* <div className = "row justify-content-center">
+              <button className="btn btn-info w-auto" onClick={addProduct}>Add Product</button>
+          </div> */}
+      <br/>
+      <div className="row justify-content-center" >
+          <table className="table table-success w-auto">
+           <thead>
+              <tr className="table-danger">
+                  <th> Transaction Id</th>
+                  <th> Transaction Amount</th>
+                  <th> Transaction Date</th>
+                  <th> Remarks</th>
+                  <th> Maturity Instructions</th>
+              </tr>
+          </thead>
+          <tbody>
+                  {transactions.map(
+                          transaction => 
+                          <tr key={transaction.id}>
+                              <td> {transaction.tid} </td>
+                              <td> {transaction.amount} </td>
+                              <td> {transaction.date} </td>
+                              <td> {transaction.remark} </td>
+                              <td> {transaction.maturityInstructions}</td>
+                              {/* <td>
+                              <button className="btn btn-success" onClick={() => editProduct(prod.pid)}>
+                                      
+                                 Update</button>
+                                 &nbsp;
+                                  <button className="btn btn-danger" onClick={() => deleteProduct(prod.pid)}>
+                                     
+                                Delete </button>
+                                &nbsp;
+                                 <button className="btn btn-secondary" onClick={() => viewProduct(prod.pid)}>
+                                      
+                                View </button>
+                              </td>  */}
+                          </tr>
+                      )
+                  }
+          </tbody>
+          </table>
+      </div>
+      {message && <div className="alert alert-success">{message}</div>}
+  </div>
+)
 }
+
 
 export default UserTransactions;

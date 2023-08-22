@@ -20,6 +20,18 @@ function Dashboard(props) {
     history("/transfer");
   };
 
+  
+  const handleBeneficiaries = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/beneficiaries");
+  };
+
+  const handleTransactions = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/transactions");
+  };
   console.log("props", props);
   return (
     <div className="container bg-white">
@@ -46,12 +58,12 @@ function Dashboard(props) {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/beneficiaries">
+              <a className="nav-link" onClick={handleBeneficiaries}>
                 Beneficiaries
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/transactions">
+              <a className="nav-link" onClick={handleTransactions}>
                 Transactions
               </a>
             </li>
