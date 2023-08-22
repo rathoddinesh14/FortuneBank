@@ -1,11 +1,18 @@
-import AddPayee from "./AddPayee";
-import AddTransaction from "./AddTransaction";
-function UserHome() {
+import Dashboard from "./Dashboard";
+// import { useParams } from "react-router-dom";
+// import AddPayee from "./AddPayee";
+// import AddTransaction from "./AddTransaction";
+
+function UserHome(props) {
+  // url
+  // const { id } = useParams();
+
   return (
-    <div>
-      <h1>User Home</h1>
-      <AddPayee></AddPayee>
-      <AddTransaction></AddTransaction>
+    <div className="container">
+      <h1>Welcome user</h1>
+      <Dashboard urlParam={props.urlParam} />
+      {/* <AddPayee /> */}
+      {/* <AddTransaction /> */}
     </div>
   );
 }

@@ -1,12 +1,11 @@
 import React from "react";
-import "../styles/Footer.css";
 
 function Footer() {
   return (
-    <footer>
-      <p>
+    <footer className="text-black text-center">
+      <div className="container">
         &copy; {new Date().getFullYear()} Fortune Bank. All rights reserved.
-      </p>
+      </div>
     </footer>
   );
 }

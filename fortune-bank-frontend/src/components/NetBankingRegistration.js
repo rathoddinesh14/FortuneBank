@@ -1,4 +1,3 @@
-import "./../styles/NetBankingRegistration.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -45,43 +44,64 @@ function NetBankingRegistration() {
   };
 
   return (
-    <div className="container">
-      <h2>Net Banking Registration</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="accountNumber">Account Number: </label>
-        <input
-          type="text"
-          id="accountNumber"
-          value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value)}
-        />
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-8"></div>
+        <div className="col-md-4 bg-white p-4">
+          <h2 className="mb-4">Net Banking Registration</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="accountNumber">Account Number:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="accountNumber"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="loginPassword">Login Password: </label>
-        <input
-          type="password"
-          id="loginPassword"
-          value={loginPassword}
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="loginPassword">Login Password:</label>
+              <input
+                type="password"
+                className="form-control"
+                id="loginPassword"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="transactionPassword">Transaction Password: </label>
-        <input
-          type="password"
-          id="transactionPassword"
-          value={transactionPassword}
-          onChange={(e) => setTransactionPassword(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="transactionPassword">Transaction Password:</label>
+              <input
+                type="password"
+                className="form-control"
+                id="transactionPassword"
+                value={transactionPassword}
+                onChange={(e) => setTransactionPassword(e.target.value)}
+              />
+            </div>
 
-        <label htmlFor="otp">OTP: </label>
-        <input
-          type="text"
-          id="otp"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-        />
+            <div className="form-group">
+              <label htmlFor="otp">OTP:</label>
+              <input
+                type="text"
+                className="form-control"
+                id="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </div>
 
-        <button type="submit">Register</button>
-      </form>
+            <div className="mb-3">{/* Add margin bottom spacing */}</div>
+
+            <button type="submit" className="btn btn-primary">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
