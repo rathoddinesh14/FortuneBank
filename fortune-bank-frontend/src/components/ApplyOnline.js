@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AddressForm from "./AddressForm";
+import UserService from "../service/UserService";
 
 function ApplyOnline() {
   const history = useNavigate();
@@ -14,19 +15,35 @@ function ApplyOnline() {
   const [aadharNumber, setAadharNumber] = useState("");
   const [dob, setDob] = useState("");
 
+  const temporaryAddressInitialValues = {
+    type: "Temporary",
+    line1: "",
+    line2: "",
+    landmark: "",
+    state: "",
+    city: "",
+    pincode: "",
+  };
+
+  const permanentAddressInitialValues = {
+    type: "Permanent",
+    line1: "",
+    line2: "",
+    landmark: "",
+    state: "",
+    city: "",
+    pincode: "",
+  };
+
+  const [temporaryAddress, setTemporaryAddress] = useState(
+    temporaryAddressInitialValues
+  );
+  const [permanentAddress, setPermanentAddress] = useState(
+    permanentAddressInitialValues
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // You can perform form validation and submit the data to your backend here
-    // For now, just logging the values
-    console.log("First Name:", firstName);
-    console.log("Middle Name:", middleName);
-    console.log("Last Name:", lastName);
-    console.log("Father Name:", fatherName);
-    console.log("Phone:", phone);
-    console.log("Email:", email);
-    console.log("Aadhar Number:", aadharNumber);
-    console.log("DOB:", dob);
 
     const data = {
       firstName: firstName,
@@ -37,13 +54,13 @@ function ApplyOnline() {
       email: email,
       aadharNumber: aadharNumber,
       dob: dob,
+      taddress: temporaryAddress,
+      paddress: permanentAddress,
     };
 
-    // Send POST request using axios
-    axios
-      .post("http://localhost:8080/fortunebank/api/apply", data)
+    UserService.apply(data)
       .then((response) => {
-        console.log("Apply Online successful:", response.data);
+        alert("Apply Online successful");
         if (response.data) {
           setTimeout(() => {
             history("/");
@@ -152,7 +169,14 @@ function ApplyOnline() {
             {/* <div className="mb-3"></div> */}
           </div>
           <div className="col-md-6 bg-white p-4">
-            <AddressForm />
+            <AddressForm
+              temporaryAddress={temporaryAddress}
+              permanentAddress={permanentAddress}
+              setTemporaryAddress={setTemporaryAddress}
+              setPermanentAddress={setPermanentAddress}
+              permanentAddressInitialValues={permanentAddressInitialValues}
+              temporaryAddressInitialValues={temporaryAddressInitialValues}
+            />
           </div>
           <div className="row">
             <button type="submit" className="btn btn-primary">
