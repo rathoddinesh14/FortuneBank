@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.dto.ForgotPasswordDto;
 import com.fortunebank.user.dto.ForgotUserIdDto;
+import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.NetBankingUserRepository;
 
@@ -14,7 +15,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class NetBankingUserRegistrationService {
+public class NetBankingService {
 
     @Autowired
     private NetBankingUserRepository netBankingUserRepository;

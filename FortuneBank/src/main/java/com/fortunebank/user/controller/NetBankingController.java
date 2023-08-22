@@ -12,15 +12,15 @@ import com.fortunebank.user.dto.ForgotPasswordDto;
 import com.fortunebank.user.dto.ForgotUserIdDto;
 import com.fortunebank.user.dto.UserRegistrationDto;
 import com.fortunebank.user.model.NetBankingUser;
-import com.fortunebank.user.service.NetBankingUserRegistrationService;
+import com.fortunebank.user.service.NetBankingService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
-public class NetBankingUserRegistrationController {
+public class NetBankingController {
 
 	@Autowired
-	private NetBankingUserRegistrationService netBankingUserRegistrationService;
+	private NetBankingService netBankingService;
 
 	@PostMapping("/register")
 	public NetBankingUser register(@RequestBody UserRegistrationDto userRegDto) {
@@ -29,14 +29,14 @@ public class NetBankingUserRegistrationController {
 		netBankingUser.setLoginPassword(userRegDto.getLoginpassword());
 		netBankingUser.setTransactionPassword(userRegDto.getTransactionpassword());
 		netBankingUser.setUserId("" + userRegDto.getAccountnumber());
-		return netBankingUserRegistrationService.registerNetBankingUser(netBankingUser);
+		return netBankingService.registerNetBankingUser(netBankingUser);
 	}
 
 	@PostMapping("/resetpassword")
 	public boolean resetPassword(@Validated @RequestBody ForgotPasswordDto fpd) {
 		boolean res = false;
 		try {
-			res = netBankingUserRegistrationService.resetPassword(fpd);
+			res = netBankingService.resetPassword(fpd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class NetBankingUserRegistrationController {
 	public String forgotUserId(@Validated @RequestBody ForgotUserIdDto fud) {
 		String res = "";
 		try {
-			res = netBankingUserRegistrationService.getUserId(fud);
+			res = netBankingService.getUserId(fud);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

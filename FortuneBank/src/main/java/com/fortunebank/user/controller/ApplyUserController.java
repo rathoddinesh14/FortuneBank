@@ -3,18 +3,22 @@ package com.fortunebank.user.controller;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.ResponseApplyUser;
+import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserDetailsDto;
 import com.fortunebank.user.model.Address;
 import com.fortunebank.user.model.UserDetails;
-import com.fortunebank.user.service.ApplyUserService;
+import com.fortunebank.user.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -22,7 +26,7 @@ import com.fortunebank.user.service.ApplyUserService;
 public class ApplyUserController {
 
 	@Autowired
-	private ApplyUserService applyUserService;
+	private UserService userService;
 
 	@PostMapping("/apply")
 	public ResponseEntity<ResponseApplyUser> applyUser(@RequestBody UserDetailsDto user_dto) {
@@ -38,7 +42,7 @@ public class ApplyUserController {
 		user.setDob(dob);
 		user.setAccountType(0);
 		user.setBalance(0);
-		UserDetails appliedUser = applyUserService.saveUserDetails(user);
+		UserDetails appliedUser = userService.saveUserDetails(user);
 
 		Address tAddress = new Address();
 		tAddress.setLine1(user_dto.getTaddress().getLine1());
@@ -49,7 +53,7 @@ public class ApplyUserController {
 		tAddress.setCity(user_dto.getTaddress().getCity());
 		tAddress.setUd(appliedUser);
 		tAddress.setType(user_dto.getTaddress().getType());
-		applyUserService.saveAddress(tAddress);
+		userService.saveAddress(tAddress);
 
 		Address pAddress = new Address();
 		pAddress.setLine1(user_dto.getPaddress().getLine1());
@@ -60,11 +64,16 @@ public class ApplyUserController {
 		pAddress.setCity(user_dto.getPaddress().getCity());
 		pAddress.setUd(appliedUser);
 		pAddress.setType(user_dto.getPaddress().getType());
-		applyUserService.saveAddress(pAddress);
+		userService.saveAddress(pAddress);
 
 		ResponseApplyUser response = new ResponseApplyUser();
 		response.setMessage("User applied successfully");
 		response.setAccountNumber(appliedUser.getAccountNumber());
 		return ResponseEntity.ok().body(response);
+	}
+
+	@GetMapping("/userprofile/{accountNumber}")
+	public ResponseEntity<ResponseUserProfile> getUserProfile(@PathVariable Long accountNumber) {
+		return new ResponseEntity<ResponseUserProfile>(userService.getUserProfile(accountNumber), HttpStatus.OK);
 	}
 }

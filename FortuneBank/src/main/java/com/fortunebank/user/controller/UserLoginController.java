@@ -10,28 +10,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.UserLoginDto;
 import com.fortunebank.user.model.NetBankingUser;
-import com.fortunebank.user.service.NetBankingUserRegistrationService;
+import com.fortunebank.user.service.NetBankingService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(value = "/api")
 public class UserLoginController {
 	@Autowired
-	private NetBankingUserRegistrationService netBankingService;
-	
+	private NetBankingService netBankingService;
+
 	@PostMapping("/login")
-	public boolean loginUser(@Validated @RequestBody UserLoginDto uld ) throws Exception{
+	public boolean loginUser(@Validated @RequestBody UserLoginDto uld) throws Exception {
 		boolean a = false;
 		String userid = uld.getUserid();
 		String password = uld.getPassword();
-		
-		NetBankingUser nbu = netBankingService.loginGetUser(userid).orElseThrow(() ->
-		new Exception("Error"));
-		if(password.equals(nbu.getLoginPassword())) {
+
+		NetBankingUser nbu = netBankingService.loginGetUser(userid).orElseThrow(() -> new Exception("Error"));
+		if (password.equals(nbu.getLoginPassword())) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

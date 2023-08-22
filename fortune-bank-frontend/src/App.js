@@ -29,10 +29,7 @@ function App() {
               element={<FormTemplate children={<NetBankingRegistration />} />}
             />
             <Route path="/apply" element={<ApplyOnline />} />
-            <Route
-              path="/userhome"
-              element={<FormTemplate children={<UserHome />} />}
-            />
+            <Route path="/userhome" element={<UserHome />} />
             <Route
               path="/forgotuserid"
               element={<FormTemplate children={<ForgotUserId />} />}
