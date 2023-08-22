@@ -2,6 +2,7 @@ package com.fortunebank.user.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
@@ -48,8 +50,20 @@ public class TransactionController {
     }
 
     @GetMapping("/get/{accountNumber}")
-    public List<Transaction> getTransactions(@PathVariable Long accountNumber) {
-        return transactionService.getTransactions(accountNumber);
+    public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
+        List<ResponseTransaction> transactions = new ArrayList<>();
+        transactionService.getTransactions(accountNumber).forEach(transaction -> {
+            ResponseTransaction responseTransaction = new ResponseTransaction();
+            responseTransaction.setTid(transaction.getTid());
+            responseTransaction.setAmount(transaction.getAmount());
+            responseTransaction.setDate(transaction.getDate().toString());
+            responseTransaction.setFromAccountNumber(transaction.getFud().getAccountNumber());
+            responseTransaction.setMaturityInstructions(transaction.getMaturityInstructions());
+            responseTransaction.setRemark(transaction.getRemark());
+            responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
+            transactions.add(responseTransaction);
+        });
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
 }

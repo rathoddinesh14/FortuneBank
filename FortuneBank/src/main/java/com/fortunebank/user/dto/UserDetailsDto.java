@@ -14,4 +14,10 @@ public class UserDetailsDto {
 	private String email;
 	private String aadharNumber;
 	private String dob;
+
+	// temporary address
+	private AddressDto taddress;
+
+	// permanent address
+	private AddressDto paddress;
 }
