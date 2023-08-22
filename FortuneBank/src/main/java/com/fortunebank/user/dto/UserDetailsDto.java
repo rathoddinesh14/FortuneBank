@@ -14,4 +14,20 @@ public class UserDetailsDto {
 	private String email;
 	private String aadharNumber;
 	private String dob;
+
+	// temporary address
+	private String line1;
+	private String line2;
+	private String landmark;
+	private String state;
+	private String city;
+	private int pincode;
+
+	// permanent address
+	private String pline1;
+	private String pline2;
+	private String plandmark;
+	private String pstate;
+	private String pcity;
+	private int ppincode;
 }

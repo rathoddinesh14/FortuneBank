@@ -1,55 +1,56 @@
-import React,{useState,useEffect} from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TransactionService from "../service/TransactionService";
-
 
 function UserTransactions({ userId }) {
   const history = useNavigate();
 
   const [transactions, setTransactions] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-      fetchTransactions();
+    fetchTransactions();
   }, []);
 
   const fetchTransactions = () => {
     TransactionService.getTransactions(1).then((response) => {
-        setTransactions(response.data);
+      setTransactions(response.data);
     });
-console.log(transactions);
-};
+    console.log(transactions);
+  };
 
-
-return(
-  <div>
+  return (
+    <div>
       <h1 className="text-warning">Transactions List</h1>
-      <br/>
-          {/* <div className = "row justify-content-center">
+      <br />
+      {/* <div className = "row justify-content-center">
               <button className="btn btn-info w-auto" onClick={addProduct}>Add Product</button>
           </div> */}
-      <br/>
-      <div className="row justify-content-center" >
-          <table className="table table-success w-auto">
-           <thead>
-              <tr className="table-danger">
-                  <th> Transaction Id</th>
-                  <th> Transaction Amount</th>
-                  <th> Transaction Date</th>
-                  <th> Remarks</th>
-                  <th> Maturity Instructions</th>
-              </tr>
+      <br />
+      <div className="row justify-content-center">
+        <table className="table table-success w-auto">
+          <thead>
+            <tr className="table-danger">
+              <th> Transaction Id</th>
+              <th> From Account</th>
+              <th> To Account</th>
+              <th> Transaction Amount</th>
+              <th> Transaction Date</th>
+              <th> Remarks</th>
+              <th> Maturity Instructions</th>
+            </tr>
           </thead>
           <tbody>
-                  {transactions.map(
-                          transaction => 
-                          <tr key={transaction.id}>
-                              <td> {transaction.tid} </td>
-                              <td> {transaction.amount} </td>
-                              <td> {transaction.date} </td>
-                              <td> {transaction.remark} </td>
-                              <td> {transaction.maturityInstructions}</td>
-                              {/* <td>
+            {transactions.map((transaction) => (
+              <tr key={transaction.id} className="text-center">
+                <td> {transaction.tid} </td>
+                <td> {transaction.fromAccountNumber} </td>
+                <td> {transaction.toAccountNumber} </td>
+                <td> {transaction.amount} </td>
+                <td> {transaction.date} </td>
+                <td> {transaction.remark} </td>
+                <td> {transaction.maturityInstructions}</td>
+                {/* <td>
                               <button className="btn btn-success" onClick={() => editProduct(prod.pid)}>
                                       
                                  Update</button>
@@ -62,16 +63,14 @@ return(
                                       
                                 View </button>
                               </td>  */}
-                          </tr>
-                      )
-                  }
+              </tr>
+            ))}
           </tbody>
-          </table>
+        </table>
       </div>
       {message && <div className="alert alert-success">{message}</div>}
-  </div>
-)
+    </div>
+  );
 }
-
 
 export default UserTransactions;

@@ -10,6 +10,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import AppHome from "./components/AppHome";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import FormTemplate from "./components/FormTemplate";
 
 function App() {
   return (
@@ -19,12 +20,27 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<AppHome />} />
-            <Route path="/login" element={<UserLogin />} />
-            <Route path="/register" element={<NetBankingRegistration />} />
+            <Route
+              path="/login"
+              element={<FormTemplate children={<UserLogin />} />}
+            />
+            <Route
+              path="/register"
+              element={<FormTemplate children={<NetBankingRegistration />} />}
+            />
             <Route path="/apply" element={<ApplyOnline />} />
-            <Route path="/userhome" element={<UserHome />} />
-            <Route path="/forgotuserid" element={<ForgotUserId />} />
-            <Route path="/resetpassword" element={<ForgotPassword />} />
+            <Route
+              path="/userhome"
+              element={<FormTemplate children={<UserHome />} />}
+            />
+            <Route
+              path="/forgotuserid"
+              element={<FormTemplate children={<ForgotUserId />} />}
+            />
+            <Route
+              path="/resetpassword"
+              element={<FormTemplate children={<ForgotPassword />} />}
+            />
             <Route
               path="/overview"
               element={<UserHome urlParam="overview" />}

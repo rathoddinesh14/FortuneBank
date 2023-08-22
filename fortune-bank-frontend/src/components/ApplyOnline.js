@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddressForm from "./AddressForm";
 
 function ApplyOnline() {
   const history = useNavigate();
@@ -56,11 +57,10 @@ function ApplyOnline() {
 
   return (
     <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-8"></div>
-        <div className="col-md-4 bg-white p-4">
-          <h2 className="mb-4">User Registration</h2>
-          <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-md-6 bg-white p-4">
+            <h2 className="mb-4">User Registration</h2>
             <div className="form-group">
               <label htmlFor="firstName">First Name:</label>
               <input
@@ -149,14 +149,18 @@ function ApplyOnline() {
               />
             </div>
 
-            <div className="mb-3">{/* Add margin bottom spacing */}</div>
-
+            {/* <div className="mb-3"></div> */}
+          </div>
+          <div className="col-md-6 bg-white p-4">
+            <AddressForm />
+          </div>
+          <div className="row">
             <button type="submit" className="btn btn-primary">
               Register
             </button>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

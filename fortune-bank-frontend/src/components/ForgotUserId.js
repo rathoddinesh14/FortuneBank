@@ -37,43 +37,38 @@ function ForgotUserId() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-8"></div>
-        <div className="col-md-4 bg-white p-4">
-          <h2 className="mb-4">Forgot User ID</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="accountnumber">Account Number:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="accountnumber"
-                value={accountnumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="otp">OTP:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="otp"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-              />
-            </div>
-
-            <div className="mb-3">{/* Add margin bottom spacing */}</div>
-
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </form>
+    <>
+      <h2 className="mb-4">Forgot User ID</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="accountnumber">Account Number:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="accountnumber"
+            value={accountnumber}
+            onChange={(e) => setAccountNumber(e.target.value)}
+          />
         </div>
-      </div>
-    </div>
+
+        <div className="form-group">
+          <label htmlFor="otp">OTP:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="otp"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-3">{/* Add margin bottom spacing */}</div>
+
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </>
   );
 }
 

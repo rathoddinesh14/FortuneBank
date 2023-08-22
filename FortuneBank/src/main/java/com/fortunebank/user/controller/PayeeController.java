@@ -1,5 +1,6 @@
 package com.fortunebank.user.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.PayeeDto;
+import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.PayeeService;
@@ -39,9 +41,17 @@ public class PayeeController {
     }
 
     @GetMapping("/get/{accountNumber}")
-    public ResponseEntity<List<Beneficiary>> getBeneficiary(@PathVariable Long accountNumber) {
-        List<Beneficiary> beneficiary = beneficiaryService.findByUdAccountNumber(accountNumber);
-        return new ResponseEntity<List<Beneficiary>>(beneficiary, HttpStatus.OK);
+    public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber) {
+        List<Beneficiary> beneficiaries = beneficiaryService.findByUdAccountNumber(accountNumber);
+        List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
+        beneficiaries.stream().forEach(beneficiary -> {
+            ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
+            responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
+            responseBeneficiary.setName(beneficiary.getName());
+            responseBeneficiary.setNickname(beneficiary.getNickName());
+            beneficiaryList.add(responseBeneficiary);
+        });
+        return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryList, HttpStatus.OK);
     }
 
 }
