@@ -15,9 +15,7 @@ function Beneficiaries(props) {
   }, []);
 
   const fetchBeneficiaries = () => {
-    BeneficiaryService.getBeneficiaries(
-      AuthenticationService.getLoggedInAccountNumber()
-    ).then((response) => {
+    BeneficiaryService.getBeneficiaries().then((response) => {
       setBeneficiaries(response.data);
     });
     console.log(beneficiaries);
