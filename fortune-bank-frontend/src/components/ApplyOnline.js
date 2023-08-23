@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import AddressForm from "./AddressForm";
 import UserService from "../service/UserService";
 

@@ -36,6 +36,8 @@ public class PayeeController {
         payeeDetails.setAccountNumber(beneficiary.getPayeeaccountnumber());
         savedBeneficiary.setUd(userDetails);
         savedBeneficiary.setPayeeDetails(payeeDetails);
+        savedBeneficiary.setName(beneficiary.getBeneficiaryname());
+        savedBeneficiary.setNickName(beneficiary.getNickname());
         savedBeneficiary = beneficiaryService.addPayee(savedBeneficiary);
         return new ResponseEntity<Beneficiary>(savedBeneficiary, HttpStatus.CREATED);
     }

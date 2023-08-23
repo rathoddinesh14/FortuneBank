@@ -20,11 +20,22 @@ function Dashboard(props) {
     history("/transfer");
   };
 
-  
+  const handleLogout = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/logout");
+  };
+
   const handleBeneficiaries = (e) => {
     console.log(e);
     e.preventDefault();
     history("/beneficiaries");
+  };
+
+  const handleOverview = (e) => {
+    console.log("Overview", e);
+    e.preventDefault();
+    history("/overview");
   };
 
   const handleTransactions = (e) => {
@@ -34,7 +45,7 @@ function Dashboard(props) {
   };
   console.log("props", props);
   return (
-    <div className="container bg-white">
+    <div className="container bg-white pb-4">
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
         <a className="navbar-brand" href="/userhome">
           Online Banking
@@ -53,7 +64,7 @@ function Dashboard(props) {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/userhome">
+              <a className="nav-link" href="#">
                 Home
               </a>
             </li>
@@ -67,6 +78,12 @@ function Dashboard(props) {
                 Transactions
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link" onClick={handleLogout}>
+                Logout
+              </a>
+            </li>
+
             {/* Add more links as needed */}
           </ul>
         </div>
@@ -78,7 +95,11 @@ function Dashboard(props) {
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
               <li className="nav-item">
-                <a className="nav-link" href="/overview">
+                <a
+                  className="nav-link"
+                  href="/overview"
+                  onClick={handleOverview}
+                >
                   Overview
                 </a>
               </li>
@@ -117,7 +138,7 @@ function Dashboard(props) {
         </nav>
 
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <DashboardItem urlParam={props.urlParam} />
+          <DashboardItem urlParam={props.urlParam} className="m-4" />
         </main>
       </div>
     </div>
