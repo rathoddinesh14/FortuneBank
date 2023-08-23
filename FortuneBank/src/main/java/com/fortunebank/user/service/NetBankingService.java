@@ -40,4 +40,11 @@ public class NetBankingService {
                 .orElseThrow(() -> new Exception(""));
         return user.getUserId();
     }
+
+	public Long getAccountNumber(Long userid) throws Exception {
+		
+		NetBankingUser user = netBankingUserRepository.findById(userid)
+                .orElseThrow(() -> new Exception(""));
+		return user.getAccountNumber();
+	}
 }

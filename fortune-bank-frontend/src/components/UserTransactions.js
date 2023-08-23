@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TransactionService from "../service/TransactionService";
+import AuthenticationService from "../service/AuthenticationService";
 
 function UserTransactions({ userId }) {
   const history = useNavigate();
@@ -13,7 +14,9 @@ function UserTransactions({ userId }) {
   }, []);
 
   const fetchTransactions = () => {
-    TransactionService.getTransactions(1).then((response) => {
+    TransactionService.getTransactions(
+      AuthenticationService.getLoggedInAccountNumber()
+    ).then((response) => {
       setTransactions(response.data);
     });
     console.log(transactions);
@@ -42,7 +45,7 @@ function UserTransactions({ userId }) {
           </thead>
           <tbody>
             {transactions.map((transaction) => (
-              <tr key={transaction.id} className="text-center">
+              <tr key={transaction.tid} className="text-center">
                 <td> {transaction.tid} </td>
                 <td> {transaction.fromAccountNumber} </td>
                 <td> {transaction.toAccountNumber} </td>

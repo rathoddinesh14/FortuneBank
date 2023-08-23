@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
+import UserService from "../service/UserService";
 
 function UserLogin() {
   const history = useNavigate();
@@ -22,6 +23,10 @@ function UserLogin() {
       .then((response) => {
         console.log("Login successful:", response.data);
         alert("Login successful");
+        UserService.getAccountNumber(username).then((response) => {
+          AuthenticationService.registerSuccessfulLogin(response.data);
+          console.log("account number ", response.data);
+        });
         if (response.data) {
           setTimeout(() => {
             history("/userhome");

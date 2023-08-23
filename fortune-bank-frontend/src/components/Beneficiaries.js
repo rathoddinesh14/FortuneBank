@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeneficiaryService from "../service/BeneficiaryService";
 import { ParseText } from "../utils/TextHandler";
+import AuthenticationService from "../service/AuthenticationService";
 
 function Beneficiaries(props) {
   const history = useNavigate();
@@ -14,7 +15,9 @@ function Beneficiaries(props) {
   }, []);
 
   const fetchBeneficiaries = () => {
-    BeneficiaryService.getBeneficiaries(1).then((response) => {
+    BeneficiaryService.getBeneficiaries(
+      AuthenticationService.getLoggedInAccountNumber()
+    ).then((response) => {
       setBeneficiaries(response.data);
     });
     console.log(beneficiaries);
