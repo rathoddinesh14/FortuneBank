@@ -71,6 +71,10 @@ function App() {
               path="/overview"
               element={<UserHome urlParam="overview" />}
             />
+            <Route
+              path="/transactionsuccess"
+              element={<UserHome urlParam="transactionsuccess" />}
+            />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>

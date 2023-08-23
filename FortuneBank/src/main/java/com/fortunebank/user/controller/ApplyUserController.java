@@ -76,4 +76,10 @@ public class ApplyUserController {
 	public ResponseEntity<ResponseUserProfile> getUserProfile(@PathVariable Long accountNumber) {
 		return new ResponseEntity<ResponseUserProfile>(userService.getUserProfile(accountNumber), HttpStatus.OK);
 	}
+
+	@GetMapping("/getname/{accountNumber}")
+	public ResponseEntity<String> getName(@PathVariable Long accountNumber) {
+		return new ResponseEntity<String>(userService.getName(accountNumber), HttpStatus.OK);
+	}
+
 }

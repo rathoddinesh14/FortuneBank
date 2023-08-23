@@ -7,6 +7,7 @@ function UserLogin() {
   const history = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -21,16 +22,14 @@ function UserLogin() {
 
     AuthenticationService.login(username, password)
       .then((response) => {
-        console.log("Login successful:", response.data);
-        alert("Login successful");
         UserService.getAccountNumber(username).then((response) => {
           AuthenticationService.registerSuccessfulLogin(response.data);
-          console.log("account number ", response.data);
         });
         if (response.data) {
+          setMessage("Login successful....Redirecting to home page");
           setTimeout(() => {
             history("/userhome");
-          }, 2000);
+          }, 1000);
         }
       })
       .catch((error) => {
@@ -70,6 +69,11 @@ function UserLogin() {
           Login
         </button>
       </form>
+      {message && (
+        <div className="alert alert-success mt-3" role="alert">
+          {message}
+        </div>
+      )}
     </>
   );
 }

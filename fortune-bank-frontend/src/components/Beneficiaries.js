@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeneficiaryService from "../service/BeneficiaryService";
 import { ParseText } from "../utils/TextHandler";
-import AuthenticationService from "../service/AuthenticationService";
 
 function Beneficiaries(props) {
   const history = useNavigate();
@@ -15,25 +14,40 @@ function Beneficiaries(props) {
   }, []);
 
   const fetchBeneficiaries = () => {
-    BeneficiaryService.getBeneficiaries(
-      AuthenticationService.getLoggedInAccountNumber()
-    ).then((response) => {
+    BeneficiaryService.getBeneficiaries().then((response) => {
       setBeneficiaries(response.data);
     });
-    console.log(beneficiaries);
   };
 
-  // const deleteProduct = (id) => {
-  //     ProductService.deleteProduct(id).then(() => {
-  //        // setProducts(products.filter(product => product.id !== id));
-  //        fetchProducts(); // Refresh products list
-  //         setMessage('Product deleted successfully.');
-  //          // Clear the message after 3 seconds
-  //          setTimeout(() => {
-  //             setMessage('');
-  //         }, 2000);
-  //     });
-  // };
+  const deleteBeneficiary = (id) => {
+    alert("Are you sure you want to delete this Beneficiary?");
+    BeneficiaryService.deleteBeneficiary(id).then((reponse) => {
+      if (reponse.data) {
+        fetchBeneficiaries(); // Refresh products list
+        setMessage("Beneficiary deleted successfully.");
+        // Clear the message after 3 seconds
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
+      } else {
+        setMessage("Beneficiary not deleted.");
+        // Clear the message after 3 seconds
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
+      }
+    });
+  };
+  // ProductService.deleteProduct(id).then(() => {
+  //   // setProducts(products.filter(product => product.id !== id));
+  //   fetchProducts(); // Refresh products list
+  //   setMessage("Product deleted successfully.");
+  //   // Clear the message after 3 seconds
+  //   setTimeout(() => {
+  //     setMessage("");
+  //   }, 2000);
+  // });
+  // console.log("Delete Beneficiary", id);
 
   // const viewBeneficiary = (id) => {
   //     history(`/viewProduct/${id}`);
@@ -66,28 +80,38 @@ function Beneficiaries(props) {
               <th> Beneficiary Name</th>
               {/* <th> Beneficiary Account Number</th> */}
               <th> Beneficiary NickName</th>
+              <th> Actions</th>
             </tr>
           </thead>
           <tbody>
             {beneficiaries.map((beneficiary) => (
-              <tr key={beneficiary.id} className="text-center">
+              <tr key={beneficiary.bid} className="text-center">
                 <td> {ParseText(beneficiary.accountnumber)} </td>
                 <td> {ParseText(beneficiary.name)} </td>
                 {/* <td> {beneficiary.} </td> */}
                 <td> {ParseText(beneficiary.nickname)} </td>
-                {/* <td>
-                                        <button className="btn btn-success" onClick={() => editProduct(prod.pid)}>
-                                                
-                                           Update</button>
-                                           &nbsp;
-                                            <button className="btn btn-danger" onClick={() => deleteProduct(prod.pid)}>
-                                               
-                                          Delete </button>
-                                          &nbsp;
-                                           <button className="btn btn-secondary" onClick={() => viewProduct(prod.pid)}>
-                                                
-                                          View </button>
-                                        </td>  */}
+                <td>
+                  {/* <button
+                    className="btn btn-success"
+                    onClick={() => editProduct(prod.pid)}
+                  >
+                    Update
+                  </button> */}
+                  {/* &nbsp; */}
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteBeneficiary(beneficiary.bid)}
+                  >
+                    Delete{" "}
+                  </button>
+                  {/* &nbsp;
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => viewProduct(prod.pid)}
+                  >
+                    View{" "}
+                  </button> */}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../service/AuthenticationService";
+import BeneficiaryService from "../service/BeneficiaryService";
+import TransactionService from "../service/TransactionService";
 
 function AddTransaction() {
   const history = useNavigate();
 
-  const [fromaccount, setFromaccount] = useState("");
   const [toaccount, setToaccount] = useState("");
+  const [beneficiaries, setBeneficiaries] = useState([]);
   const [amount, setAmount] = useState("");
   const [remarks, setRemarks] = useState("");
+  const [maturityInstructions, setMaturityInstructions] = useState("");
 
-  const handleFromAccountChange = (event) => {
-    setFromaccount(event.target.value);
-  };
-
-  const handleToAccountChange = (event) => {
+  const handleBeneficiaryChange = (event) => {
     setToaccount(event.target.value);
   };
 
@@ -26,26 +25,36 @@ function AddTransaction() {
     setRemarks(event.target.value);
   };
 
+  const handleMaturityInstructionsChange = (event) => {
+    setMaturityInstructions(event.target.value);
+  };
+
+  const fetchBeneficiaries = () => {
+    BeneficiaryService.getBeneficiaries().then((response) => {
+      setBeneficiaries(response.data);
+    });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = {
-      fromaccount: fromaccount,
+      fromaccount: AuthenticationService.getLoggedInAccountNumber(),
       toaccount: toaccount,
       amount: amount,
       remarks: remarks,
+      maturityInstructions: maturityInstructions,
     };
 
     // Send POST request using axios
-    axios
-      .post("http://localhost:8080/fortunebank/api/transaction/transfer", data)
+    TransactionService.addTransaction(data)
       .then((response) => {
         console.log("Transaction Successful:", response.data);
         alert("Transaction Successful");
         if (response.data) {
           setTimeout(() => {
-            history("/userhome");
-          }, 2000);
+            history("/transactionsuccess");
+          }, 1000);
         }
       })
       .catch((error) => {
@@ -63,20 +72,43 @@ function AddTransaction() {
             type="text"
             className="form-control"
             id="fromaccount"
-            value={fromaccount}
-            onChange={handleFromAccountChange}
+            value={AuthenticationService.getLoggedInAccountNumber()}
+            readOnly
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="toaccount">Beneficiary Account Number:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="toaccount"
-            value={toaccount}
-            onChange={handleToAccountChange}
-          />
+          <div className="mb-3">
+            <select
+              className="form-select"
+              id="toaccount"
+              value={toaccount}
+              onChange={handleBeneficiaryChange}
+            >
+              <option value="" disabled>
+                Select Beneficiary
+              </option>
+              {beneficiaries.map((beneficiary) => (
+                <option
+                  key={beneficiary.accountnumber}
+                  value={beneficiary.accountnumber}
+                >
+                  {beneficiary.accountnumber} - {beneficiary.name} -{" "}
+                  {beneficiary.nickname}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={fetchBeneficiaries}
+            >
+              Fetch Beneficiaries
+            </button>
+          </div>
         </div>
 
         <div className="form-group">
@@ -96,7 +128,19 @@ function AddTransaction() {
             className="form-control"
             id="remarks"
             value={remarks}
+            placeholder="Optional"
             onChange={handleRemarksChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="maturityInstructions">Maturity Instructions:</label>
+          <textarea
+            className="form-control"
+            id="maturityInstructions"
+            placeholder="Optional"
+            value={maturityInstructions}
+            onChange={handleMaturityInstructionsChange}
           />
         </div>
 

@@ -32,21 +32,7 @@ public class TransactionController {
 
     @PostMapping("/transfer")
     public ResponseEntity<Transaction> transfer(@RequestBody TransactionDto transactionDto) {
-        Transaction transaction = new Transaction();
-        UserDetails fromUser = new UserDetails();
-        fromUser.setAccountNumber(transactionDto.getFromaccount());
-        UserDetails toUser = new UserDetails();
-        toUser.setAccountNumber(transactionDto.getToaccount());
-        transaction.setFud(fromUser);
-        transaction.setTud(toUser);
-        transaction.setAmount(transactionDto.getAmount());
-        transaction.setRemark(transactionDto.getRemarks());
-        // indian time
-        LocalDateTime localDateTime = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.of("Asia/Kolkata");
-        transaction.setDate(java.sql.Timestamp.valueOf(localDateTime.atZone(zoneId).toLocalDateTime()));
-        // transaction.setDate(java.sql.Date.valueOf(java.time.LocalDate.now()));
-        return new ResponseEntity<>(transactionService.saveTransaction(transaction), HttpStatus.OK);
+        return new ResponseEntity<>(transactionService.saveTransaction(transactionDto), HttpStatus.OK);
     }
 
     @GetMapping("/get/{accountNumber}")
