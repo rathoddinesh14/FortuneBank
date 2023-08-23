@@ -21,7 +21,6 @@ public class UserLoginController {
 
 	@PostMapping("/login")
 	public boolean loginUser(@Validated @RequestBody UserLoginDto uld) throws Exception {
-		boolean a = false;
 		String userid = uld.getUserid();
 		String password = uld.getPassword();
 

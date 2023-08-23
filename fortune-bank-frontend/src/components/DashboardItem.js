@@ -2,6 +2,8 @@ import AddPayee from "./AddPayee";
 import AddTransaction from "./AddTransaction";
 import UserTransactions from "./UserTransactions";
 import Beneficiaries from "./Beneficiaries";
+import React from "react";
+import AccountDetails from "./AccountDetails";
 
 function DashboardItem(props) {
   if (props.urlParam === "addbeneficiary") {
@@ -12,6 +14,8 @@ function DashboardItem(props) {
     return <UserTransactions />;
   } else if (props.urlParam === "beneficiaries") {
     return <Beneficiaries />;
+  } else if (props.urlParam === "overview") {
+    return <AccountDetails />;
   } else {
     return (
       <h1 className="mt-3">

@@ -26,7 +26,7 @@ class AuthenticationService {
     return user;
   }
 
-  logout() {
+  static logout() {
     sessionStorage.removeItem(ACCOUNT_NUMBER_SESSION_ATTRIBUTE_NAME);
   }
 

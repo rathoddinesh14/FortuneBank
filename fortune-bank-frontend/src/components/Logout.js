@@ -1,27 +1,28 @@
 import React, { Component } from "react";
+import AuthenticationService from "../service/AuthenticationService";
 
 class Logout extends Component {
+  componentDidMount() {
+    AuthenticationService.logout();
+  }
+
   render() {
     return (
-      <>
-        <br />
-        <h1 style={{ color: "wheat" }}>You are logged out</h1>
-
-        <div>
-          <img
-            style={{
-              borderRadius: "20px",
-            }}
-            src="/images/run.jpg"
-            alt="pms"
-            height={400}
-            width={400}
-          ></img>
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-md-6">
+            <img
+              src="images/logout.jpeg"
+              alt="Thank You"
+              className="img-fluid"
+            />
+          </div>
+          <div className="col-md-6">
+            <h1>Thank You</h1>
+            <p>We appreciate your visit. Have a great day!</p>
+          </div>
         </div>
-        <br />
-
-        <div className="container">Thank You for Using Our Application.</div>
-      </>
+      </div>
     );
   }
 }
