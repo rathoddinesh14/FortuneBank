@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
 import BeneficiaryService from "../service/BeneficiaryService";
+import TransactionService from "../service/TransactionService";
 
 function AddTransaction() {
   const history = useNavigate();
@@ -47,8 +47,7 @@ function AddTransaction() {
     };
 
     // Send POST request using axios
-    axios
-      .post("http://localhost:8080/fortunebank/api/transaction/transfer", data)
+    TransactionService.addTransaction(data)
       .then((response) => {
         console.log("Transaction Successful:", response.data);
         alert("Transaction Successful");

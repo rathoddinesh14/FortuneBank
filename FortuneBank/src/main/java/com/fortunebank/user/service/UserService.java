@@ -49,4 +49,8 @@ public class UserService {
 
         return responseUserProfile;
     }
+
+    public String getName(Long accountNumber) {
+        return userRepository.findByAccountNumber(accountNumber).get().getFirstName();
+    }
 }

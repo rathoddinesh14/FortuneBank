@@ -1,7 +1,4 @@
 import React from "react";
-import Overview from "./Overview";
-import Payments from "./Payments";
-import Statements from "./Statements";
 import { useNavigate } from "react-router-dom";
 import DashboardItem from "./DashboardItem";
 
@@ -43,13 +40,13 @@ function Dashboard(props) {
     e.preventDefault();
     history("/transactions");
   };
-  console.log("props", props);
+
   return (
     <div className="container bg-white pb-4">
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <a className="navbar-brand" href="/userhome">
+        {/* <a className="navbar-brand" href="/userhome">
           Online Banking
-        </a>
+        </a> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -64,24 +61,24 @@ function Dashboard(props) {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <button className="nav-link" type="button">
                 Home
-              </a>
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={handleBeneficiaries}>
+              <button className="nav-link" onClick={handleBeneficiaries}>
                 Beneficiaries
-              </a>
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={handleTransactions}>
+              <button className="nav-link" onClick={handleTransactions}>
                 Transactions
-              </a>
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={handleLogout}>
+              <button className="nav-link" onClick={handleLogout}>
                 Logout
-              </a>
+              </button>
             </li>
 
             {/* Add more links as needed */}
@@ -90,7 +87,7 @@ function Dashboard(props) {
       </nav>
 
       <div className="row">
-        <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar ">
           {/* Vertical navigation */}
           <div className="sidebar-sticky">
             <ul className="nav flex-column">

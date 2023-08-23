@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,16 +45,18 @@ public class PayeeController {
 
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber) {
-        List<Beneficiary> beneficiaries = beneficiaryService.findByUdAccountNumber(accountNumber);
-        List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
-        beneficiaries.stream().forEach(beneficiary -> {
-            ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
-            responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
-            responseBeneficiary.setName(beneficiary.getName());
-            responseBeneficiary.setNickname(beneficiary.getNickName());
-            beneficiaryList.add(responseBeneficiary);
-        });
-        return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryList, HttpStatus.OK);
+        return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryService.findByUdAccountNumber(accountNumber),
+                HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{accountNumber}/{beneficiaryId}")
+    public ResponseEntity<Boolean> deleteBeneficiary(@PathVariable Long accountNumber,
+            @PathVariable Long beneficiaryId) {
+        try {
+            return new ResponseEntity<Boolean>(beneficiaryService.deleteBeneficiary(accountNumber, beneficiaryId),
+                    HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+        }
+    }
 }

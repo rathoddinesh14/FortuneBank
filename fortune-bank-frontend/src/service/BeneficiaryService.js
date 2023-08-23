@@ -13,6 +13,20 @@ class BeneficiaryService {
     );
   }
 
+  static addBeneficiary(beneficiary) {
+    return axios.post(BENEFICIARIES_REST_API_URL + "/add", beneficiary);
+  }
+
+  static deleteBeneficiary(beneficiaryId) {
+    return axios.delete(
+      BENEFICIARIES_REST_API_URL +
+        "/delete/" +
+        AuthenticationService.getLoggedInAccountNumber() +
+        "/" +
+        beneficiaryId
+    );
+  }
+
   // static createProduct(product){
   //     return axios.post(PRODUCTS_REST_API_URL,product);
   // }
