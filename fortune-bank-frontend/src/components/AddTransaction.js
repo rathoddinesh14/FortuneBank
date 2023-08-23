@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../service/AuthenticationService";
 
 function AddTransaction() {
   const history = useNavigate();
 
-  const [fromaccount, setFromaccount] = useState("");
   const [toaccount, setToaccount] = useState("");
   const [amount, setAmount] = useState("");
   const [remarks, setRemarks] = useState("");
-
-  const handleFromAccountChange = (event) => {
-    setFromaccount(event.target.value);
-  };
+  const [maturityInstructions, setMaturityInstructions] = useState("");
 
   const handleToAccountChange = (event) => {
     setToaccount(event.target.value);
@@ -26,11 +23,14 @@ function AddTransaction() {
     setRemarks(event.target.value);
   };
 
+  const handleMaturityInstructionsChange = (event) => {
+    setMaturityInstructions(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const data = {
-      fromaccount: fromaccount,
       toaccount: toaccount,
       amount: amount,
       remarks: remarks,
@@ -63,8 +63,8 @@ function AddTransaction() {
             type="text"
             className="form-control"
             id="fromaccount"
-            value={fromaccount}
-            onChange={handleFromAccountChange}
+            value={AuthenticationService.getLoggedInAccountNumber()}
+            readOnly
           />
         </div>
 
@@ -96,7 +96,19 @@ function AddTransaction() {
             className="form-control"
             id="remarks"
             value={remarks}
+            placeholder="Optional"
             onChange={handleRemarksChange}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="maturityInstructions">Maturity Instructions:</label>
+          <textarea
+            className="form-control"
+            id="maturityInstructions"
+            placeholder="Optional"
+            value={maturityInstructions}
+            onChange={handleMaturityInstructionsChange}
           />
         </div>
 
