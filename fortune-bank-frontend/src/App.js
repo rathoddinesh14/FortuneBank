@@ -11,6 +11,7 @@ import AppHome from "./components/AppHome";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import FormTemplate from "./components/FormTemplate";
+import Logout from "./components/Logout";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               path="/transfer"
               element={<UserHome urlParam="transfer" />}
             />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>
       </section>

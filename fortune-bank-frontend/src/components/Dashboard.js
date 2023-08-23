@@ -20,7 +20,12 @@ function Dashboard(props) {
     history("/transfer");
   };
 
-  
+  const handleLogout = (e) => {
+    console.log(e);
+    e.preventDefault();
+    history("/logout");
+  };
+
   const handleBeneficiaries = (e) => {
     console.log(e);
     e.preventDefault();
@@ -67,6 +72,12 @@ function Dashboard(props) {
                 Transactions
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link" onClick={handleLogout}>
+                Logout
+              </a>
+            </li>
+
             {/* Add more links as needed */}
           </ul>
         </div>
