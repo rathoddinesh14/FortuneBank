@@ -12,6 +12,7 @@ function AddTransaction() {
   const [amount, setAmount] = useState("");
   const [remarks, setRemarks] = useState("");
   const [maturityInstructions, setMaturityInstructions] = useState("");
+  const [beneficiaryMessage, setBeneficiaryMessage] = useState("");
 
   const handleBeneficiaryChange = (event) => {
     setToaccount(event.target.value);
@@ -32,6 +33,7 @@ function AddTransaction() {
   const fetchBeneficiaries = () => {
     BeneficiaryService.getBeneficiaries().then((response) => {
       setBeneficiaries(response.data);
+      setBeneficiaryMessage("Beneficiaries Fetched : " + response.data.length);
     });
   };
 
@@ -49,8 +51,6 @@ function AddTransaction() {
     // Send POST request using axios
     TransactionService.addTransaction(data)
       .then((response) => {
-        console.log("Transaction Successful:", response.data);
-        alert("Transaction Successful");
         if (response.data) {
           setTimeout(() => {
             history("/transactionsuccess");
@@ -64,7 +64,7 @@ function AddTransaction() {
 
   return (
     <div className="container mt-5 bg-white">
-      <h2>Transaction Form</h2>
+      <h2>Transaction</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="fromaccount">Your Account Number:</label>
@@ -100,14 +100,16 @@ function AddTransaction() {
               ))}
             </select>
           </div>
-          <div>
+          <div className="row pb-1">
             <button
-              className="btn btn-outline-secondary"
+              className="btn-primary col-2"
               type="button"
               onClick={fetchBeneficiaries}
             >
               Fetch Beneficiaries
             </button>
+            &nbsp;
+            <span className="text-success col-4">{beneficiaryMessage}</span>
           </div>
         </div>
 

@@ -6,31 +6,43 @@ function Dashboard(props) {
   const history = useNavigate();
 
   const handleAddBeneficiary = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/addbeneficiary");
   };
 
+  const handleDeposit = (e) => {
+    // console.log(e);
+    e.preventDefault();
+    history("/deposit");
+  };
+
+  const handleWithdraw = (e) => {
+    // console.log(e);
+    e.preventDefault();
+    history("/withdraw");
+  };
+
   const handleTransfer = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/transfer");
   };
 
   const handleLogout = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/logout");
   };
 
   const handleBeneficiaries = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/beneficiaries");
   };
 
   const handleOverview = (e) => {
-    console.log("Overview", e);
+    // console.log("Overview", e);
     e.preventDefault();
     history("/overview");
   };
@@ -111,13 +123,19 @@ function Dashboard(props) {
                 </a>
               </li>
               <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="/addbeneficiary"
-                  onClick={handleAddBeneficiary}
-                >
+                <button className="nav-link" onClick={handleDeposit}>
+                  Deposit Amount
+                </button>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleWithdraw}>
+                  Withdraw Amount
+                </button>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleAddBeneficiary}>
                   Add Beneficiary
-                </a>
+                </button>
               </li>
 
               <li className="nav-item">
