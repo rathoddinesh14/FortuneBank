@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.UserLoginDto;
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingUserRegistrationService;
 
@@ -20,13 +21,13 @@ public class UserLoginController {
 	private NetBankingUserRegistrationService netBankingService;
 	
 	@PostMapping("/login")
-	public boolean loginUser(@Validated @RequestBody UserLoginDto uld ) throws Exception{
+	public boolean loginUser(@Validated @RequestBody UserLoginDto uld ) throws ResourceNotFoundException{
 		boolean a = false;
 		String userid = uld.getUserid();
 		String password = uld.getPassword();
 		
 		NetBankingUser nbu = netBankingService.loginGetUser(userid).orElseThrow(() ->
-		new Exception("Error"));
+		new ResourceNotFoundException("User not found for this id"));
 		if(password.equals(nbu.getLoginPassword())) {
 			return true;
 		}
