@@ -3,9 +3,12 @@ package com.fortunebank.user.model;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fortunebank.user.enumtype.AccountStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,4 +45,7 @@ public class UserDetails {
 
 	private int accountType;
 	private double balance;
+
+	@Enumerated(EnumType.STRING)
+	private AccountStatus accountStatus;
 }

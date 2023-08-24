@@ -6,6 +6,7 @@ import React from "react";
 import AccountDetails from "./AccountDetails";
 import TransactionSuccessful from "./TransactionSuccessful";
 import AmountForm from "./AmountForm";
+import CustomerList from "./CustomerList";
 
 function DashboardItem(props) {
   if (props.urlParam === "addbeneficiary") {
@@ -24,6 +25,8 @@ function DashboardItem(props) {
     return <AmountForm type="deposit" />;
   } else if (props.urlParam === "withdraw") {
     return <AmountForm type="withdraw" />;
+  } else if (props.urlParam === "customers") {
+    return <CustomerList />;
   } else {
     return (
       <h1 className="mt-3">

@@ -1,5 +1,6 @@
 import axios from "axios";
 import AuthenticationService from "./AuthenticationService";
+import API_URLS from "../utils/ApiUrls";
 
 const USER_API_URL = "http://localhost:8080/fortunebank/api";
 
@@ -25,6 +26,16 @@ class UserService {
       USER_API_URL +
         "/userprofile/" +
         AuthenticationService.getLoggedInAccountNumber()
+    );
+  }
+
+  static getAllUsers() {
+    return axios.get(API_URLS.adminCustomers);
+  }
+
+  static updateUser(accountNumber, status) {
+    return axios.put(
+      API_URLS.adminAccountStatus + "/" + accountNumber + "/" + status
     );
   }
 }

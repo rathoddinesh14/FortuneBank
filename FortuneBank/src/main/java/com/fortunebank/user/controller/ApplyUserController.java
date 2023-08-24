@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fortunebank.user.dto.ResponseApplyUser;
 import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserDetailsDto;
+import com.fortunebank.user.enumtype.AccountStatus;
 import com.fortunebank.user.model.Address;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.UserService;
@@ -42,6 +43,7 @@ public class ApplyUserController {
 		user.setDob(dob);
 		user.setAccountType(0);
 		user.setBalance(0);
+		user.setAccountStatus(AccountStatus.ENABLED);
 		UserDetails appliedUser = userService.saveUserDetails(user);
 
 		Address tAddress = new Address();

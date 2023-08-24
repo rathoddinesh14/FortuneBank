@@ -21,6 +21,7 @@ public class HelpferFunctions {
         responseUserProfile.setDob(userDetails.getDob().toString());
         responseUserProfile.setAccountType(userDetails.getAccountType());
         responseUserProfile.setBalance(userDetails.getBalance());
+        responseUserProfile.setAccountStatus(userDetails.getAccountStatus().getDisplayName());
         return responseUserProfile;
     }
 

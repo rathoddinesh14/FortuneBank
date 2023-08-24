@@ -17,4 +17,5 @@ public class ResponseUserProfile {
     private String dob;
     private int accountType;
     private double balance;
+    private String accountStatus;
 }

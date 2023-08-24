@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.dto.ResponseUserProfile;
+import com.fortunebank.user.enumtype.AccountStatus;
 import com.fortunebank.user.model.Address;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.AddressRepository;
@@ -40,5 +41,13 @@ public class UserService {
 
     public String getName(Long accountNumber) {
         return userRepository.findByAccountNumber(accountNumber).get().getFirstName();
+    }
+
+    public boolean updateAccountStatus(Long accountNumber, String status) {
+        Optional<UserDetails> userDetails = userRepository.findByAccountNumber(accountNumber);
+        userDetails.orElseThrow(() -> new RuntimeException("User not found"));
+        userDetails.get().setAccountStatus(AccountStatus.valueOf(status));
+        userRepository.save(userDetails.get());
+        return true;
     }
 }

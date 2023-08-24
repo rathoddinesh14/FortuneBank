@@ -3,6 +3,9 @@ const API_URLS = {
   getTransactions: "/transactions", // Example URL
   adminBeneficiaries:
     "http://localhost:8080/fortunebank/api/admin/beneficiaries",
+  adminCustomers: "http://localhost:8080/fortunebank/api/admin/customers",
+  adminAccountStatus:
+    "http://localhost:8080/fortunebank/api/admin/updateaccountstatus",
 };
 
 export default API_URLS;
