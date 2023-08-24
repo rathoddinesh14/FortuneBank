@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.model.Transaction;
@@ -47,9 +48,37 @@ public class TransactionController {
             responseTransaction.setMaturityInstructions(transaction.getMaturityInstructions());
             responseTransaction.setRemark(transaction.getRemark());
             responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
+            responseTransaction.setTransactionType(transaction.getTransactionType());
             transactions.add(responseTransaction);
         });
         return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
+    @PostMapping("/deposit")
+    public ResponseEntity<String> depositAmount(@RequestBody AmountDto request) {
+        Long accountNumber = request.getAccountNumber();
+        double depositAmount = request.getAmount();
+        if (transactionService.depositAmount(accountNumber, depositAmount)) {
+            return ResponseEntity.ok("Deposit successful");
+        } else {
+            return ResponseEntity.ok("Deposit failed");
+        }
+    }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity<String> withdrawAmount(@RequestBody AmountDto request) {
+        Long accountNumber = request.getAccountNumber();
+        double withdrawalAmount = request.getAmount();
+
+        try {
+            if (transactionService.withdrawAmount(accountNumber, withdrawalAmount)) {
+                return ResponseEntity.ok("Withdrawal successful");
+            } else {
+                return ResponseEntity.ok("Withdrawal failed");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

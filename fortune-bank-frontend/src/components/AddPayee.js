@@ -65,17 +65,6 @@ function AddPayee() {
       <h2>Add Beneficiary</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="beneficiaryname">Beneficiary Name:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="beneficiaryname"
-            value={beneficiaryname}
-            onChange={handleBeneficiarynameChange}
-          />
-        </div>
-
-        <div className="form-group">
           <label htmlFor="accountnumber">Account Number:</label>
           <input
             type="text"
@@ -83,6 +72,17 @@ function AddPayee() {
             id="accountnumber"
             value={accountnumber}
             readOnly
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="beneficiaryname">Beneficiary Name:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="beneficiaryname"
+            value={beneficiaryname}
+            onChange={handleBeneficiarynameChange}
           />
         </div>
 

@@ -12,6 +12,14 @@ class TransactionService {
     return axios.post(TRANSACTIONS_REST_API_URL + "/transfer", transaction);
   }
 
+  static deposit(transaction) {
+    return axios.post(TRANSACTIONS_REST_API_URL + "/deposit", transaction);
+  }
+
+  static withdraw(transaction) {
+    return axios.post(TRANSACTIONS_REST_API_URL + "/withdraw", transaction);
+  }
+
   // static createProduct(product){
   //     return axios.post(PRODUCTS_REST_API_URL,product);
   // }

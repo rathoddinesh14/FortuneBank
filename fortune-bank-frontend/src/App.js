@@ -75,6 +75,11 @@ function App() {
               path="/transactionsuccess"
               element={<UserHome urlParam="transactionsuccess" />}
             />
+            <Route path="/deposit" element={<UserHome urlParam="deposit" />} />
+            <Route
+              path="/withdraw"
+              element={<UserHome urlParam="withdraw" />}
+            />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>

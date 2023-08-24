@@ -35,6 +35,7 @@ function UserTransactions({ userId }) {
           <thead>
             <tr className="table-danger">
               <th> Transaction Id</th>
+              <th> Transaction Type</th>
               <th> From Account</th>
               <th> To Account</th>
               <th> Transaction Amount</th>
@@ -47,6 +48,7 @@ function UserTransactions({ userId }) {
             {transactions.map((transaction) => (
               <tr key={transaction.tid} className="text-center">
                 <td> {transaction.tid} </td>
+                <td> {transaction.transactionType}</td>
                 <td> {transaction.fromAccountNumber} </td>
                 <td> {transaction.toAccountNumber} </td>
                 <td> {transaction.amount} </td>
