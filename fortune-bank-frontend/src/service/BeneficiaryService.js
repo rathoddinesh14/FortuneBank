@@ -1,16 +1,21 @@
 import axios from "axios";
 import AuthenticationService from "./AuthenticationService";
+import API_URLS from "../utils/ApiUrls";
 
 const BENEFICIARIES_REST_API_URL =
   "http://localhost:8080/fortunebank/api/beneficiary";
 
 class BeneficiaryService {
   static getBeneficiaries() {
-    return axios.get(
-      BENEFICIARIES_REST_API_URL +
-        "/get/" +
-        AuthenticationService.getLoggedInAccountNumber()
-    );
+    if (AuthenticationService.isAdminMode()) {
+      return axios.get(API_URLS.adminBeneficiaries);
+    } else {
+      return axios.get(
+        BENEFICIARIES_REST_API_URL +
+          "/get/" +
+          AuthenticationService.getLoggedInAccountNumber()
+      );
+    }
   }
 
   static addBeneficiary(beneficiary) {
@@ -26,18 +31,6 @@ class BeneficiaryService {
         beneficiaryId
     );
   }
-
-  // static createProduct(product){
-  //     return axios.post(PRODUCTS_REST_API_URL,product);
-  // }
-
-  // static getProductById(productId){
-  //     return axios.get(PRODUCTS_REST_API_URL+'/'+productId);
-  // }
-
-  // static updateProduct(product,productId){
-  //     return axios.put(PRODUCTS_REST_API_URL+'/'+productId,product);
-  // }
 }
 
 export default BeneficiaryService;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TransactionService from "../service/TransactionService";
-import AuthenticationService from "../service/AuthenticationService";
 
 function UserTransactions({ userId }) {
   const history = useNavigate();
@@ -14,9 +13,7 @@ function UserTransactions({ userId }) {
   }, []);
 
   const fetchTransactions = () => {
-    TransactionService.getTransactions(
-      AuthenticationService.getLoggedInAccountNumber()
-    ).then((response) => {
+    TransactionService.getTransactions().then((response) => {
       setTransactions(response.data);
     });
     console.log(transactions);

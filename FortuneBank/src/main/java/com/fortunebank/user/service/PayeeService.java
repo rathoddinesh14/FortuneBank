@@ -11,6 +11,7 @@ import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.PayeeRepository;
+import com.fortunebank.user.utils.HelpferFunctions;
 
 import jakarta.transaction.Transactional;
 
@@ -32,12 +33,7 @@ public class PayeeService {
 		bl.orElseThrow(() -> new RuntimeException("No Beneficiaries found for the user"));
 
 		bl.get().stream().forEach(beneficiary -> {
-			ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
-			responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
-			responseBeneficiary.setName(beneficiary.getName());
-			responseBeneficiary.setNickname(beneficiary.getNickName());
-			responseBeneficiary.setBid(beneficiary.getBid());
-			beneficiaryList.add(responseBeneficiary);
+			beneficiaryList.add(HelpferFunctions.getResponseBeneficiaryfromPayee(beneficiary));
 		});
 		return beneficiaryList;
 	}

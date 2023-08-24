@@ -1,7 +1,5 @@
 package com.fortunebank.user.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +15,8 @@ import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.model.Transaction;
-import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.TransactionService;
+import com.fortunebank.user.utils.HelpferFunctions;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,16 +38,7 @@ public class TransactionController {
     public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
         List<ResponseTransaction> transactions = new ArrayList<>();
         transactionService.getTransactions(accountNumber).forEach(transaction -> {
-            ResponseTransaction responseTransaction = new ResponseTransaction();
-            responseTransaction.setTid(transaction.getTid());
-            responseTransaction.setAmount(transaction.getAmount());
-            responseTransaction.setDate(transaction.getDate().toString());
-            responseTransaction.setFromAccountNumber(transaction.getFud().getAccountNumber());
-            responseTransaction.setMaturityInstructions(transaction.getMaturityInstructions());
-            responseTransaction.setRemark(transaction.getRemark());
-            responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
-            responseTransaction.setTransactionType(transaction.getTransactionType());
-            transactions.add(responseTransaction);
+            transactions.add(HelpferFunctions.getResponseTransactionfromTransaction(transaction));
         });
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
