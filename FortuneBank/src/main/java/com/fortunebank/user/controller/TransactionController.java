@@ -52,6 +52,7 @@ public class TransactionController {
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
         List<ResponseTransaction> transactions = new ArrayList<>();
+        try {
         transactionService.getTransactions(accountNumber).forEach(transaction -> {
             ResponseTransaction responseTransaction = new ResponseTransaction();
             responseTransaction.setTid(transaction.getTid());
@@ -63,6 +64,9 @@ public class TransactionController {
             responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
             transactions.add(responseTransaction);
         });
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.repository.TransactionRepository;
 
@@ -20,7 +21,7 @@ public class TransactionService {
         return transactionRepository.save(transaction);
     }
 
-    public List<Transaction> getTransactions(Long accountNumber) {
-        return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber, accountNumber);
+    public List<Transaction> getTransactions(Long accountNumber) throws ResourceNotFoundException {
+        return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber, accountNumber).orElseThrow(() -> new ResourceNotFoundException("Account number not found!"));
     }
 }

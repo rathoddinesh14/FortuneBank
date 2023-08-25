@@ -42,16 +42,23 @@ public class PayeeController {
 
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber) {
-        List<Beneficiary> beneficiaries = beneficiaryService.findByUdAccountNumber(accountNumber);
-        List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
-        beneficiaries.stream().forEach(beneficiary -> {
-            ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
-            responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
-            responseBeneficiary.setName(beneficiary.getName());
-            responseBeneficiary.setNickname(beneficiary.getNickName());
-            beneficiaryList.add(responseBeneficiary);
-        });
-        return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryList, HttpStatus.OK);
+    	List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
+    	try {
+        	List<Beneficiary> beneficiaries = beneficiaryService.findByUdAccountNumber(accountNumber);
+        
+            beneficiaries.stream().forEach(beneficiary -> {
+                ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
+                responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
+                responseBeneficiary.setName(beneficiary.getName());
+                responseBeneficiary.setNickname(beneficiary.getNickName());
+                beneficiaryList.add(responseBeneficiary);
+            });
+            
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        }
+    	return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryList, HttpStatus.OK);
     }
 
 }
