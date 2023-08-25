@@ -80,6 +80,14 @@ function App() {
               path="/withdraw"
               element={<UserHome urlParam="withdraw" />}
             />
+            <Route
+              path="/customers"
+              element={<UserHome urlParam="customers" />}
+            />
+            <Route
+              path="/customersearch"
+              element={<UserHome urlParam="customersearch" />}
+            />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>

@@ -1,11 +1,23 @@
 import axios from "axios";
+import AuthenticationService from "./AuthenticationService";
 
 const TRANSACTIONS_REST_API_URL =
   "http://localhost:8080/fortunebank/api/transaction";
 
+const ADMIN_TRANSACTIONS_REST_API_URL =
+  "http://localhost:8080/fortunebank/api/admin/transactions";
+
 class TransactionService {
-  static getTransactions(accountNumber) {
-    return axios.get(TRANSACTIONS_REST_API_URL + "/get/" + accountNumber);
+  static getTransactions() {
+    if (AuthenticationService.isAdminMode()) {
+      return axios.get(ADMIN_TRANSACTIONS_REST_API_URL);
+    } else {
+      return axios.get(
+        TRANSACTIONS_REST_API_URL +
+          "/get/" +
+          AuthenticationService.getLoggedInAccountNumber()
+      );
+    }
   }
 
   static addTransaction(transaction) {

@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useTable, useSortBy } from "react-table";
 import TransactionService from "../service/TransactionService";
-import AuthenticationService from "../service/AuthenticationService";
 
-function UserTransactions({ userId }) {
-  const history = useNavigate();
-
+function UserTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -14,62 +11,108 @@ function UserTransactions({ userId }) {
   }, []);
 
   const fetchTransactions = () => {
-    TransactionService.getTransactions(
-      AuthenticationService.getLoggedInAccountNumber()
-    ).then((response) => {
+    TransactionService.getTransactions().then((response) => {
       setTransactions(response.data);
     });
-    console.log(transactions);
   };
+
+  const data = React.useMemo(() => transactions, [transactions]);
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Transaction Id",
+        accessor: "tid",
+      },
+      {
+        Header: "Transaction Type",
+        accessor: "transactionType",
+      },
+      {
+        Header: "From Account",
+        accessor: "fromAccountNumber",
+      },
+      {
+        Header: "To Account",
+        accessor: "toAccountNumber",
+      },
+      {
+        Header: "Transaction Amount",
+        accessor: "amount",
+      },
+      {
+        Header: "Transaction Date",
+        accessor: "date",
+      },
+      {
+        Header: "Remarks",
+        accessor: "remark",
+      },
+      {
+        Header: "Maturity Instructions",
+        accessor: "maturityInstructions",
+      },
+    ],
+    []
+  );
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useSortBy);
 
   return (
     <div>
-      <h1 className="text-warning">Transactions List</h1>
-      <br />
-      {/* <div className = "row justify-content-center">
-              <button className="btn btn-info w-auto" onClick={addProduct}>Add Product</button>
-          </div> */}
+      <h1 className="text-warning text-center">Transactions List</h1>
       <br />
       <div className="row justify-content-center">
-        <table className="table table-success w-auto">
+        <table className="table table-success w-auto" {...getTableProps()}>
           <thead>
-            <tr className="table-danger">
-              <th> Transaction Id</th>
-              <th> Transaction Type</th>
-              <th> From Account</th>
-              <th> To Account</th>
-              <th> Transaction Amount</th>
-              <th> Transaction Date</th>
-              <th> Remarks</th>
-              <th> Maturity Instructions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((transaction) => (
-              <tr key={transaction.tid} className="text-center">
-                <td> {transaction.tid} </td>
-                <td> {transaction.transactionType}</td>
-                <td> {transaction.fromAccountNumber} </td>
-                <td> {transaction.toAccountNumber} </td>
-                <td> {transaction.amount} </td>
-                <td> {transaction.date} </td>
-                <td> {transaction.remark} </td>
-                <td> {transaction.maturityInstructions}</td>
-                {/* <td>
-                              <button className="btn btn-success" onClick={() => editProduct(prod.pid)}>
-                                      
-                                 Update</button>
-                                 &nbsp;
-                                  <button className="btn btn-danger" onClick={() => deleteProduct(prod.pid)}>
-                                     
-                                Delete </button>
-                                &nbsp;
-                                 <button className="btn btn-secondary" onClick={() => viewProduct(prod.pid)}>
-                                      
-                                View </button>
-                              </td>  */}
+            {headerGroups.map((headerGroup) => (
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                className="table-danger"
+              >
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{
+                      borderBottom: "solid 3px red",
+                      color: "black",
+                    }}
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? "🔽"
+                          : "🔼"
+                        : ""}
+                    </span>
+                  </th>
+                ))}
               </tr>
             ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="text-center">
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          padding: "10px",
+                          border: "solid 1px gray",
+                        }}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

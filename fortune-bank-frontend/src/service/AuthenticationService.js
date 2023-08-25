@@ -4,6 +4,7 @@ import UserService from "./UserService";
 const AUTH_API_URL = "http://localhost:8080/fortunebank/api/";
 export const ACCOUNT_NUMBER_SESSION_ATTRIBUTE_NAME = "authenticatedUser";
 export const ACCOUNT_NAME_SESSION_ATTRIBUTE_NAME = "accountName";
+export const ADMIN_MODE_SESSION_ATTRIBUTE_NAME = "isAdminMode";
 
 class AuthenticationService {
   static setSessionAttribute(key, value) {
@@ -54,6 +55,25 @@ class AuthenticationService {
       password: password,
     };
     return axios.post(AUTH_API_URL + "login", data);
+  }
+
+  static adminlogin(username, password) {
+    const data = {
+      userid: username,
+      password: password,
+    };
+    return axios.post(AUTH_API_URL + "admin/login", data);
+  }
+
+  static setAdminMode(isAdmin) {
+    sessionStorage.setItem(ADMIN_MODE_SESSION_ATTRIBUTE_NAME, isAdmin);
+  }
+
+  static isAdminMode() {
+    let isAdmin = sessionStorage.getItem(ADMIN_MODE_SESSION_ATTRIBUTE_NAME);
+    if (isAdmin === null) return false;
+    if (isAdmin === "true") return true;
+    return false;
   }
 }
 

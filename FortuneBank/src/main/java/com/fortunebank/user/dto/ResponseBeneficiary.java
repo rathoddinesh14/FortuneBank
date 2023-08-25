@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 public class ResponseBeneficiary {
     private Long bid;
-    private Long accountnumber;
+    private Long payeeAccountNumber;
     private String name;
-    private String nickname;
+    private String nickName;
+    private Long accountNumber;
 }
