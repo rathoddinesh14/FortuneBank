@@ -16,7 +16,7 @@ import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.service.TransactionService;
-import com.fortunebank.user.utils.HelpferFunctions;
+import com.fortunebank.user.utils.HelperFunctions;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +38,7 @@ public class TransactionController {
     public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
         List<ResponseTransaction> transactions = new ArrayList<>();
         transactionService.getTransactions(accountNumber).forEach(transaction -> {
-            transactions.add(HelpferFunctions.getResponseTransactionfromTransaction(transaction));
+            transactions.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
         });
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }

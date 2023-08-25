@@ -20,7 +20,7 @@ import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.repository.TransactionRepository;
 import com.fortunebank.user.repository.UserRepository;
 import com.fortunebank.user.service.UserService;
-import com.fortunebank.user.utils.HelpferFunctions;
+import com.fortunebank.user.utils.HelperFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class AdminController {
     @GetMapping("/customers")
     public ResponseEntity<List<ResponseUserProfile>> getAllUsers() {
         List<ResponseUserProfile> users = userRepository.findAll().stream().collect(ArrayList::new, (list, user) -> {
-            list.add(HelpferFunctions.getResponseUserProfilefromUserDetails(user));
+            list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
         }, ArrayList::addAll);
 
         return ResponseEntity.ok(users);
@@ -55,7 +55,7 @@ public class AdminController {
     public ResponseEntity<List<ResponseTransaction>> getAllTransactions() {
         List<ResponseTransaction> transactions = transactionRepository.findAll().stream().collect(ArrayList::new,
                 (list, transaction) -> {
-                    list.add(HelpferFunctions.getResponseTransactionfromTransaction(transaction));
+                    list.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
                 }, ArrayList::addAll);
 
         return ResponseEntity.ok(transactions);
@@ -65,7 +65,7 @@ public class AdminController {
     public ResponseEntity<List<ResponseBeneficiary>> getAllBeneficiaries() {
         List<ResponseBeneficiary> users = beneficiaryRepository.findAll().stream().collect(ArrayList::new,
                 (list, user) -> {
-                    list.add(HelpferFunctions.getResponseBeneficiaryfromPayee(user));
+                    list.add(HelperFunctions.getResponseBeneficiaryfromPayee(user));
                 }, ArrayList::addAll);
 
         return ResponseEntity.ok(users);

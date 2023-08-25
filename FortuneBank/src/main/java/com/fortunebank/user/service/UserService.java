@@ -11,7 +11,7 @@ import com.fortunebank.user.model.Address;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.AddressRepository;
 import com.fortunebank.user.repository.UserRepository;
-import com.fortunebank.user.utils.HelpferFunctions;
+import com.fortunebank.user.utils.HelperFunctions;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -36,7 +36,7 @@ public class UserService {
 
         userDetails.orElseThrow(() -> new RuntimeException("User not found"));
 
-        return HelpferFunctions.getResponseUserProfilefromUserDetails(userDetails.get());
+        return HelperFunctions.getResponseUserProfilefromUserDetails(userDetails.get());
     }
 
     public String getName(Long accountNumber) {

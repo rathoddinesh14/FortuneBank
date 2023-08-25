@@ -7,7 +7,7 @@ import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
 
-public class HelpferFunctions {
+public class HelperFunctions {
     public static ResponseUserProfile getResponseUserProfilefromUserDetails(UserDetails userDetails) {
         ResponseUserProfile responseUserProfile = new ResponseUserProfile();
         responseUserProfile.setAccountNumber(userDetails.getAccountNumber());
@@ -31,7 +31,8 @@ public class HelpferFunctions {
         responseTransaction.setAmount(transaction.getAmount());
         responseTransaction.setDate(transaction.getDate().toString());
         responseTransaction.setFromAccountNumber(transaction.getFud().getAccountNumber());
-        responseTransaction.setMaturityInstructions(transaction.getMaturityInstructions());
+        responseTransaction.setMaturityInstructions(
+                transaction.getMaturityInstructions() == null ? "NA" : transaction.getMaturityInstructions());
         responseTransaction.setRemark(transaction.getRemark());
         responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
         responseTransaction.setTransactionType(transaction.getTransactionType());
