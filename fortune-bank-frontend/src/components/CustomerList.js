@@ -129,7 +129,7 @@ class CustomerList extends Component {
                   <td>
                     <button
                       className={`btn btn-sm ${
-                        isEnable(customer.enabled)
+                        isEnable(customer.accountStatus)
                           ? "btn-danger"
                           : "btn-success"
                       }`}
@@ -137,7 +137,7 @@ class CustomerList extends Component {
                         this.handleToggleCustomer(customer.accountNumber)
                       }
                     >
-                      {isEnable(customer.enabled) ? "Disable" : "Enable"}
+                      {isEnable(customer.accountStatus) ? "Disable" : "Enable"}
                     </button>
                   </td>
                 </tr>

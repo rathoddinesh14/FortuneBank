@@ -16,7 +16,7 @@ function UserTransactions() {
     });
   };
 
-  const data = React.useMemo(() => transactions, []);
+  const data = React.useMemo(() => transactions, [transactions]);
 
   const columns = React.useMemo(
     () => [
@@ -61,11 +61,7 @@ function UserTransactions() {
 
   return (
     <div>
-      <h1 className="text-warning">Transactions List</h1>
-      <br />
-      {/* <div className = "row justify-content-center">
-              <button className="btn btn-info w-auto" onClick={addProduct}>Add Product</button>
-          </div> */}
+      <h1 className="text-warning text-center">Transactions List</h1>
       <br />
       <div className="row justify-content-center">
         <table className="table table-success w-auto" {...getTableProps()}>

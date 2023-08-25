@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
-import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.utils.HelperFunctions;
 

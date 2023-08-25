@@ -41,10 +41,11 @@ public class HelperFunctions {
 
     public static ResponseBeneficiary getResponseBeneficiaryfromPayee(Beneficiary beneficiary) {
         ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
-        responseBeneficiary.setAccountnumber(beneficiary.getPayeeDetails().getAccountNumber());
+        responseBeneficiary.setPayeeAccountNumber(beneficiary.getPayeeDetails().getAccountNumber());
         responseBeneficiary.setName(beneficiary.getName());
-        responseBeneficiary.setNickname(beneficiary.getNickName());
+        responseBeneficiary.setNickName(beneficiary.getNickName());
         responseBeneficiary.setBid(beneficiary.getBid());
+        responseBeneficiary.setAccountNumber(beneficiary.getUd().getAccountNumber());
         return responseBeneficiary;
     }
 }
