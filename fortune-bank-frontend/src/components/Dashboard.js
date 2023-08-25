@@ -47,6 +47,11 @@ function Dashboard(props) {
     history("/customers");
   };
 
+  const handleCustomerSearch = (e) => {
+    e.preventDefault();
+    history("/customersearch");
+  };
+
   const handleOverview = (e) => {
     // console.log("Overview", e);
     e.preventDefault();
@@ -83,6 +88,13 @@ function Dashboard(props) {
                 Home
               </button>
             </li>
+            {AuthenticationService.isAdminMode() && (
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleCustomerSearch}>
+                  Customer Search
+                </button>
+              </li>
+            )}
             {AuthenticationService.isAdminMode() && (
               <li className="nav-item">
                 <button className="nav-link" onClick={handleCustomers}>

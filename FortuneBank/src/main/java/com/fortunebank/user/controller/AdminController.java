@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fortunebank.user.dto.CustomerSearchDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserLoginDto;
+import com.fortunebank.user.enumtype.AccountStatus;
 import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.repository.TransactionRepository;
 import com.fortunebank.user.repository.UserRepository;
@@ -84,4 +86,27 @@ public class AdminController {
     public boolean updateAccountStatus(@PathVariable Long accountNumber, @PathVariable String status) {
         return userService.updateAccountStatus(accountNumber, status);
     }
+
+    @PostMapping("customersearch/firstname")
+    public ResponseEntity<List<ResponseUserProfile>> customerSearch(@RequestBody CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByFirstName(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+
+        return ResponseEntity.ok(users);
+    }
+
+    @PostMapping("customersearch/accountstatus")
+    public ResponseEntity<List<ResponseUserProfile>> customerSearchByAccountStatus(
+            @RequestBody CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByAccountStatus(AccountStatus.valueOf(entity.getInput()))
+                .stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+
+        return ResponseEntity.ok(users);
+    }
+
 }

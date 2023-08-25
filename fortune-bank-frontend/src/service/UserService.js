@@ -38,6 +38,12 @@ class UserService {
       API_URLS.adminAccountStatus + "/" + accountNumber + "/" + status
     );
   }
+
+  static searchUsers(searchParam, searchValue) {
+    return axios.post(API_URLS.adminCustomerSearch + "/" + searchParam, {
+      input: searchValue,
+    });
+  }
 }
 
 export default UserService;

@@ -84,6 +84,10 @@ function App() {
               path="/customers"
               element={<UserHome urlParam="customers" />}
             />
+            <Route
+              path="/customersearch"
+              element={<UserHome urlParam="customersearch" />}
+            />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>
