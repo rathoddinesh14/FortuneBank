@@ -56,7 +56,7 @@ public class ApplyUserControllerTest {
         when(userService.saveUserDetails(any(UserDetails.class))).thenReturn(appliedUser);
         
         // Using Answer to handle different responses for saveAddress
-        when(userService.saveAddress(any(Address.class)))
+        /*when(userService.saveAddress(any(Address.class)))
             .thenAnswer(invocation -> {
                 if (invocation.getArguments()[0] == tAddress) {
                     return tAddress;
@@ -64,7 +64,7 @@ public class ApplyUserControllerTest {
                     return pAddress;
                 }
                 return null; // Handle other cases as needed
-            });
+            });*/
 
         ResponseEntity<ResponseApplyUser> responseEntity = applyUserController.applyUser(userDetailsDto);
         ResponseApplyUser response = responseEntity.getBody();

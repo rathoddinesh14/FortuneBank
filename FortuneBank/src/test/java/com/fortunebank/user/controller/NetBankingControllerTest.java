@@ -20,15 +20,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class NetBankingControllerTest {
 
-    @Mock
+    @MockBean
     private NetBankingService netBankingService;
 
-    @InjectMocks
+    @Autowired
     private NetBankingController netBankingController;
 
     @BeforeEach
@@ -57,8 +59,12 @@ public class NetBankingControllerTest {
         ForgotPasswordDto forgotPasswordDto = new ForgotPasswordDto();
         // Set properties for forgotPasswordDto
 
-        when(netBankingService.resetPassword(any(ForgotPasswordDto.class)))
-            .thenReturn(true);
+        try {
+			when(netBankingService.resetPassword(any(ForgotPasswordDto.class)))
+			    .thenReturn(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         boolean result = netBankingController.resetPassword(forgotPasswordDto);
 
@@ -70,8 +76,13 @@ public class NetBankingControllerTest {
         ForgotUserIdDto forgotUserIdDto = new ForgotUserIdDto();
         // Set properties for forgotUserIdDto
 
-        when(netBankingService.getUserId(any(ForgotUserIdDto.class)))
-            .thenReturn("sampleUserId");
+        try {
+			when(netBankingService.getUserId(any(ForgotUserIdDto.class)))
+			    .thenReturn("sampleUserId");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         String result = netBankingController.forgotUserId(forgotUserIdDto);
 
