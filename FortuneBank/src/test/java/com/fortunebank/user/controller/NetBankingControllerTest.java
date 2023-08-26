@@ -2,7 +2,6 @@ package com.fortunebank.user.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,16 +14,13 @@ import com.fortunebank.user.dto.UserRegistrationDto;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingService;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@SpringBootTest
 public class NetBankingControllerTest {
 
     @MockBean
@@ -35,19 +31,16 @@ public class NetBankingControllerTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     public void testRegister() {
         UserRegistrationDto userRegistrationDto = new UserRegistrationDto();
-        // Set properties for userRegistrationDto
-        
+
         NetBankingUser netBankingUser = new NetBankingUser();
-        // Set properties for netBankingUser
-        
+
         when(netBankingService.registerNetBankingUser(any(NetBankingUser.class)))
-            .thenReturn(netBankingUser);
+                .thenReturn(netBankingUser);
 
         NetBankingUser result = netBankingController.register(userRegistrationDto);
 
@@ -57,14 +50,13 @@ public class NetBankingControllerTest {
     @Test
     public void testResetPassword() {
         ForgotPasswordDto forgotPasswordDto = new ForgotPasswordDto();
-        // Set properties for forgotPasswordDto
 
         try {
-			when(netBankingService.resetPassword(any(ForgotPasswordDto.class)))
-			    .thenReturn(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            when(netBankingService.resetPassword(any(ForgotPasswordDto.class)))
+                    .thenReturn(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         boolean result = netBankingController.resetPassword(forgotPasswordDto);
 
@@ -74,15 +66,13 @@ public class NetBankingControllerTest {
     @Test
     public void testForgotUserId() {
         ForgotUserIdDto forgotUserIdDto = new ForgotUserIdDto();
-        // Set properties for forgotUserIdDto
 
         try {
-			when(netBankingService.getUserId(any(ForgotUserIdDto.class)))
-			    .thenReturn("sampleUserId");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            when(netBankingService.getUserId(any(ForgotUserIdDto.class)))
+                    .thenReturn("sampleUserId");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String result = netBankingController.forgotUserId(forgotUserIdDto);
 
@@ -94,7 +84,7 @@ public class NetBankingControllerTest {
         Long userId = 123456L;
 
         when(netBankingService.getAccountNumber(userId))
-            .thenReturn(987654321L);
+                .thenReturn(987654321L);
 
         ResponseEntity<Long> responseEntity = netBankingController.getAccountNumber(userId);
         Long result = responseEntity.getBody();

@@ -1,38 +1,37 @@
 package com.fortunebank.user.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
-
-
-import static org.mockito.Mockito.*;
 
 import com.fortunebank.user.dto.UserLoginDto;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingService;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
+@SpringBootTest
 public class UserLoginControllerTest {
 
-    @Mock
+    @MockBean
     private NetBankingService netBankingService;
 
-    @InjectMocks
+    @Autowired
     private UserLoginController userLoginController;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    public void tearDown() {
     }
 
     @Test
@@ -48,7 +47,7 @@ public class UserLoginControllerTest {
         netBankingUser.setLoginPassword(password);
 
         when(netBankingService.loginGetUser(userId))
-            .thenReturn(Optional.of(netBankingUser));
+                .thenReturn(Optional.of(netBankingUser));
 
         boolean result = userLoginController.loginUser(userLoginDto);
 
@@ -68,7 +67,7 @@ public class UserLoginControllerTest {
         netBankingUser.setLoginPassword("incorrectPassword");
 
         when(netBankingService.loginGetUser(userId))
-            .thenReturn(Optional.of(netBankingUser));
+                .thenReturn(Optional.of(netBankingUser));
 
         boolean result = userLoginController.loginUser(userLoginDto);
 
@@ -85,9 +84,8 @@ public class UserLoginControllerTest {
         userLoginDto.setPassword(password);
 
         when(netBankingService.loginGetUser(userId))
-            .thenReturn(Optional.empty());
+                .thenReturn(Optional.empty());
 
         assertThrows(Exception.class, () -> userLoginController.loginUser(userLoginDto));
     }
 }
-
