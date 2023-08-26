@@ -1,5 +1,7 @@
 package com.fortunebank.user.dto;
 
+import com.fortunebank.user.enumtype.TransactionType;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,4 +17,5 @@ public class ResponseTransaction {
     private String date;
     private String remark;
     private String maturityInstructions;
+    private TransactionType transactionType;
 }

@@ -4,3 +4,10 @@ export const ParseText = (input) => {
   }
   return input;
 };
+
+export const isEnable = (input) => {
+  if (input === "ENABLED") {
+    return true;
+  }
+  return false;
+};

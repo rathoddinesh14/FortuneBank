@@ -1,39 +1,60 @@
 import React from "react";
-import Overview from "./Overview";
-import Payments from "./Payments";
-import Statements from "./Statements";
 import { useNavigate } from "react-router-dom";
 import DashboardItem from "./DashboardItem";
+import AuthenticationService from "../service/AuthenticationService";
 
 function Dashboard(props) {
   const history = useNavigate();
 
   const handleAddBeneficiary = (e) => {
-    console.log(e);
     e.preventDefault();
     history("/addbeneficiary");
   };
 
+  const handleDeposit = (e) => {
+    e.preventDefault();
+    history("/deposit");
+  };
+
+  const handleAccountSummary = (e) => {
+    e.preventDefault();
+    history("/accountsummary");
+  };
+
+  const handleWithdraw = (e) => {
+    e.preventDefault();
+    history("/withdraw");
+  };
+
   const handleTransfer = (e) => {
-    console.log(e);
     e.preventDefault();
     history("/transfer");
   };
 
   const handleLogout = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/logout");
   };
 
   const handleBeneficiaries = (e) => {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
     history("/beneficiaries");
   };
 
+  const handleCustomers = (e) => {
+    e.preventDefault();
+    history("/customers");
+  };
+
+  const handleCustomerSearch = (e) => {
+    e.preventDefault();
+    history("/customersearch");
+  };
+
   const handleOverview = (e) => {
-    console.log("Overview", e);
+    // console.log("Overview", e);
     e.preventDefault();
     history("/overview");
   };
@@ -43,13 +64,13 @@ function Dashboard(props) {
     e.preventDefault();
     history("/transactions");
   };
-  console.log("props", props);
+
   return (
     <div className="container bg-white pb-4">
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        <a className="navbar-brand" href="/userhome">
+        {/* <a className="navbar-brand" href="/userhome">
           Online Banking
-        </a>
+        </a> */}
         <button
           className="navbar-toggler"
           type="button"
@@ -64,24 +85,38 @@ function Dashboard(props) {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <button className="nav-link" type="button">
                 Home
-              </a>
+              </button>
             </li>
+            {AuthenticationService.isAdminMode() && (
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleCustomerSearch}>
+                  Customer Search
+                </button>
+              </li>
+            )}
+            {AuthenticationService.isAdminMode() && (
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleCustomers}>
+                  Customers
+                </button>
+              </li>
+            )}
             <li className="nav-item">
-              <a className="nav-link" onClick={handleBeneficiaries}>
+              <button className="nav-link" onClick={handleBeneficiaries}>
                 Beneficiaries
-              </a>
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={handleTransactions}>
+              <button className="nav-link" onClick={handleTransactions}>
                 Transactions
-              </a>
+              </button>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={handleLogout}>
+              <button className="nav-link" onClick={handleLogout}>
                 Logout
-              </a>
+              </button>
             </li>
 
             {/* Add more links as needed */}
@@ -90,7 +125,7 @@ function Dashboard(props) {
       </nav>
 
       <div className="row">
-        <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav className="col-md-2 d-none d-md-block bg-light sidebar ">
           {/* Vertical navigation */}
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
@@ -109,18 +144,24 @@ function Dashboard(props) {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/statements">
-                  Statements
-                </a>
+                <button className="nav-link" onClick={handleAccountSummary}>
+                  Account Statements
+                </button>
               </li>
               <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="/addbeneficiary"
-                  onClick={handleAddBeneficiary}
-                >
+                <button className="nav-link" onClick={handleDeposit}>
+                  Deposit Amount
+                </button>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleWithdraw}>
+                  Withdraw Amount
+                </button>
+              </li>
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleAddBeneficiary}>
                   Add Beneficiary
-                </a>
+                </button>
               </li>
 
               <li className="nav-item">

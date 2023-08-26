@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.dto.ResponseUserProfile;
+import com.fortunebank.user.enumtype.AccountStatus;
 import com.fortunebank.user.model.Address;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.AddressRepository;
 import com.fortunebank.user.repository.UserRepository;
-
+import com.fortunebank.user.utils.HelperFunctions;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -34,19 +35,19 @@ public class UserService {
         Optional<UserDetails> userDetails = userRepository.findByAccountNumber(accountNumber);
 
         userDetails.orElseThrow(() -> new RuntimeException("User not found"));
-        ResponseUserProfile responseUserProfile = new ResponseUserProfile();
-        responseUserProfile.setAccountNumber(userDetails.get().getAccountNumber());
-        responseUserProfile.setFirstName(userDetails.get().getFirstName());
-        responseUserProfile.setMiddleName(userDetails.get().getMiddleName());
-        responseUserProfile.setLastName(userDetails.get().getLastName());
-        responseUserProfile.setFatherName(userDetails.get().getFatherName());
-        responseUserProfile.setPhone(userDetails.get().getPhone());
-        responseUserProfile.setEmail(userDetails.get().getEmail());
-        responseUserProfile.setAadharNumber(userDetails.get().getAadharNumber());
-        responseUserProfile.setDob(userDetails.get().getDob().toString());
-        responseUserProfile.setAccountType(userDetails.get().getAccountType());
-        responseUserProfile.setBalance(userDetails.get().getBalance());
 
-        return responseUserProfile;
+        return HelperFunctions.getResponseUserProfilefromUserDetails(userDetails.get());
+    }
+
+    public String getName(Long accountNumber) {
+        return userRepository.findByAccountNumber(accountNumber).get().getFirstName();
+    }
+
+    public boolean updateAccountStatus(Long accountNumber, String status) {
+        Optional<UserDetails> userDetails = userRepository.findByAccountNumber(accountNumber);
+        userDetails.orElseThrow(() -> new RuntimeException("User not found"));
+        userDetails.get().setAccountStatus(AccountStatus.valueOf(status));
+        userRepository.save(userDetails.get());
+        return true;
     }
 }
