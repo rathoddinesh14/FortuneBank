@@ -7,25 +7,26 @@ function Dashboard(props) {
   const history = useNavigate();
 
   const handleAddBeneficiary = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/addbeneficiary");
   };
 
   const handleDeposit = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/deposit");
   };
 
+  const handleAccountSummary = (e) => {
+    e.preventDefault();
+    history("/accountsummary");
+  };
+
   const handleWithdraw = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/withdraw");
   };
 
   const handleTransfer = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/transfer");
   };
@@ -143,9 +144,9 @@ function Dashboard(props) {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/statements">
-                  Statements
-                </a>
+                <button className="nav-link" onClick={handleAccountSummary}>
+                  Account Statements
+                </button>
               </li>
               <li className="nav-item">
                 <button className="nav-link" onClick={handleDeposit}>
