@@ -1,14 +1,17 @@
 package com.fortunebank.user.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.AmountDto;
@@ -70,4 +73,15 @@ public class TransactionController {
         }
     }
 
+    @GetMapping("/transactions-between-dates")
+    public List<ResponseTransaction> getTransactionsBetweenDates(
+            @RequestParam("accountNumber") Long accountNumber,
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+        List<ResponseTransaction> transactions = new ArrayList<>();
+        transactionService.getTransactionsBetweenDates(accountNumber, startDate, endDate).forEach(transaction -> {
+            transactions.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
+        });
+        return transactions;
+    }
 }

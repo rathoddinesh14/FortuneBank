@@ -1,5 +1,6 @@
 import axios from "axios";
 import AuthenticationService from "./AuthenticationService";
+import API_URLS from "../utils/ApiUrls";
 
 const TRANSACTIONS_REST_API_URL =
   "http://localhost:8080/fortunebank/api/transaction";
@@ -32,17 +33,20 @@ class TransactionService {
     return axios.post(TRANSACTIONS_REST_API_URL + "/withdraw", transaction);
   }
 
-  // static createProduct(product){
-  //     return axios.post(PRODUCTS_REST_API_URL,product);
-  // }
+  static getTransactionsBetweenDates(startDate, endDate) {
+    let url = "";
+    if (AuthenticationService.isAdminMode()) {
+      url = API_URLS.adminTransactionsBetweenDates;
+    } else {
+      url =
+        TRANSACTIONS_REST_API_URL +
+        "/transactions-between-dates?accountNumber=" +
+        AuthenticationService.getLoggedInAccountNumber() +
+        "&";
+    }
 
-  // static getProductById(productId){
-  //     return axios.get(PRODUCTS_REST_API_URL+'/'+productId);
-  // }
-
-  // static updateProduct(product,productId){
-  //     return axios.put(PRODUCTS_REST_API_URL+'/'+productId,product);
-  // }
+    return axios.get(url + "startDate=" + startDate + "&endDate=" + endDate);
+  }
 }
 
 export default TransactionService;

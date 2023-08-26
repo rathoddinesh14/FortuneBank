@@ -8,6 +8,7 @@ import TransactionSuccessful from "./TransactionSuccessful";
 import AmountForm from "./AmountForm";
 import CustomerList from "./CustomerList";
 import CustomerSearch from "./CustomerSearch";
+import AccountSummary from "./AccountSummary";
 
 function DashboardItem(props) {
   if (props.urlParam === "addbeneficiary") {
@@ -30,6 +31,8 @@ function DashboardItem(props) {
     return <CustomerList />;
   } else if (props.urlParam === "customersearch") {
     return <CustomerSearch />;
+  } else if (props.urlParam === "accountsummary") {
+    return <AccountSummary />;
   } else {
     return (
       <h1 className="mt-3">
