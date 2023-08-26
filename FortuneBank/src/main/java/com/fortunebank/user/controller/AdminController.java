@@ -19,14 +19,8 @@ import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserLoginDto;
-import com.fortunebank.user.enumtype.AccountStatus;
-import com.fortunebank.user.repository.PayeeRepository;
-import com.fortunebank.user.repository.TransactionRepository;
-import com.fortunebank.user.repository.UserRepository;
-import com.fortunebank.user.service.UserService;
-import com.fortunebank.user.utils.HelperFunctions;
+import com.fortunebank.user.service.AdminService;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,91 +30,49 @@ import java.util.List;
 public class AdminController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    private PayeeRepository beneficiaryRepository;
-
-    @Autowired
-    private UserService userService;
+    private AdminService adminService;
 
     @GetMapping("/customers")
     public ResponseEntity<List<ResponseUserProfile>> getAllUsers() {
-        List<ResponseUserProfile> users = userRepository.findAll().stream().collect(ArrayList::new, (list, user) -> {
-            list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
-        }, ArrayList::addAll);
-
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(adminService.getAllUsers());
     }
 
     @GetMapping("/transactions")
     public ResponseEntity<List<ResponseTransaction>> getAllTransactions() {
-        List<ResponseTransaction> transactions = transactionRepository.findAll().stream().collect(ArrayList::new,
-                (list, transaction) -> {
-                    list.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
-                }, ArrayList::addAll);
-
-        return ResponseEntity.ok(transactions);
+        return ResponseEntity.ok(adminService.getAllTransactions());
     }
 
     @GetMapping("/beneficiaries")
     public ResponseEntity<List<ResponseBeneficiary>> getAllBeneficiaries() {
-        List<ResponseBeneficiary> users = beneficiaryRepository.findAll().stream().collect(ArrayList::new,
-                (list, user) -> {
-                    list.add(HelperFunctions.getResponseBeneficiaryfromPayee(user));
-                }, ArrayList::addAll);
-
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(adminService.getAllBeneficiaries());
     }
 
     @PostMapping("/login")
-    public boolean loginUser(@Validated @RequestBody UserLoginDto uld) throws Exception {
-        if (uld.getUserid().equals("admin") && uld.getPassword().equals("admin")) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean loginAdmin(@Validated @RequestBody UserLoginDto uld) throws Exception {
+        return adminService.loginAdmin(uld);
     }
 
     @PutMapping("/updateaccountstatus/{accountNumber}/{status}")
     public boolean updateAccountStatus(@PathVariable Long accountNumber, @PathVariable String status) {
-        return userService.updateAccountStatus(accountNumber, status);
+        return adminService.updateAccountStatus(accountNumber, status);
     }
 
     @PostMapping("customersearch/firstname")
-    public ResponseEntity<List<ResponseUserProfile>> customerSearch(@RequestBody CustomerSearchDto entity) {
-        List<ResponseUserProfile> users = userRepository.findByFirstName(entity.getInput()).stream()
-                .collect(ArrayList::new, (list, user) -> {
-                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
-                }, ArrayList::addAll);
-
-        return ResponseEntity.ok(users);
+    public ResponseEntity<List<ResponseUserProfile>> customerFirstNameSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerFirstNameSearch(entity));
     }
 
     @PostMapping("customersearch/accountstatus")
     public ResponseEntity<List<ResponseUserProfile>> customerSearchByAccountStatus(
             @RequestBody CustomerSearchDto entity) {
-        List<ResponseUserProfile> users = userRepository.findByAccountStatus(AccountStatus.valueOf(entity.getInput()))
-                .stream()
-                .collect(ArrayList::new, (list, user) -> {
-                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
-                }, ArrayList::addAll);
-
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(adminService.customerSearchByAccountStatus(entity));
     }
 
     @GetMapping("/transactions-between-dates")
-    public List<ResponseTransaction> getTransactionsBetweenDates(
+    public ResponseEntity<List<ResponseTransaction>> getTransactionsBetweenDates(
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-        List<ResponseTransaction> transactions = new ArrayList<>();
-        transactionRepository.findAllBetweenDates(startDate, endDate).forEach(transaction -> {
-            transactions.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
-        });
-        return transactions;
+        return ResponseEntity.ok(adminService.getTransactionsBetweenDates(startDate, endDate));
     }
 
 }
