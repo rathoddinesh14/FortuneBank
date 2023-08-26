@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.dto.ForgotPasswordDto;
 import com.fortunebank.user.dto.ForgotUserIdDto;
-import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.NetBankingUserRepository;
 
@@ -41,10 +40,10 @@ public class NetBankingService {
         return user.getUserId();
     }
 
-	public Long getAccountNumber(Long userid) throws Exception {
-		
-		NetBankingUser user = netBankingUserRepository.findById(userid)
+    public Long getAccountNumber(Long userid) throws Exception {
+
+        NetBankingUser user = netBankingUserRepository.findById(userid)
                 .orElseThrow(() -> new Exception(""));
-		return user.getAccountNumber();
-	}
+        return user.getAccountNumber();
+    }
 }
