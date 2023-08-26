@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class NetBankingUserRegistrationService {
+public class NetBankingService {
 
     @Autowired
     private NetBankingUserRepository netBankingUserRepository;
@@ -39,5 +39,12 @@ public class NetBankingUserRegistrationService {
         NetBankingUser user = netBankingUserRepository.findByAccountNumber(fud.getAccountnumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Account number not found!"));
         return user.getUserId();
+    }
+
+    public Long getAccountNumber(Long userid) throws Exception {
+
+        NetBankingUser user = netBankingUserRepository.findById(userid)
+                .orElseThrow(() -> new Exception(""));
+        return user.getAccountNumber();
     }
 }

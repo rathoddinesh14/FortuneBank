@@ -11,6 +11,7 @@ import AppHome from "./components/AppHome";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import FormTemplate from "./components/FormTemplate";
+import Logout from "./components/Logout";
 
 function App() {
   return (
@@ -29,10 +30,7 @@ function App() {
               element={<FormTemplate children={<NetBankingRegistration />} />}
             />
             <Route path="/apply" element={<ApplyOnline />} />
-            <Route
-              path="/userhome"
-              element={<FormTemplate children={<UserHome />} />}
-            />
+            <Route path="/userhome" element={<UserHome />} />
             <Route
               path="/forgotuserid"
               element={<FormTemplate children={<ForgotUserId />} />}
@@ -66,9 +64,35 @@ function App() {
               element={<UserHome urlParam="transactions" />}
             />
             <Route
+              path="/accountsummary"
+              element={<UserHome urlParam="accountsummary" />}
+            />
+            <Route
               path="/transfer"
               element={<UserHome urlParam="transfer" />}
             />
+            <Route
+              path="/overview"
+              element={<UserHome urlParam="overview" />}
+            />
+            <Route
+              path="/transactionsuccess"
+              element={<UserHome urlParam="transactionsuccess" />}
+            />
+            <Route path="/deposit" element={<UserHome urlParam="deposit" />} />
+            <Route
+              path="/withdraw"
+              element={<UserHome urlParam="withdraw" />}
+            />
+            <Route
+              path="/customers"
+              element={<UserHome urlParam="customers" />}
+            />
+            <Route
+              path="/customersearch"
+              element={<UserHome urlParam="customersearch" />}
+            />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </BrowserRouter>
       </section>

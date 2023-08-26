@@ -12,4 +12,5 @@ public class TransactionDto {
     private Long toaccount;
     private Double amount;
     private String remarks;
+    private String maturityInstructions;
 }

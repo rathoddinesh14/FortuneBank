@@ -1,18 +1,16 @@
+import AuthenticationService from "../service/AuthenticationService";
 import Dashboard from "./Dashboard";
-// import { useParams } from "react-router-dom";
-// import AddPayee from "./AddPayee";
-// import AddTransaction from "./AddTransaction";
 
 function UserHome(props) {
-  // url
-  // const { id } = useParams();
-
   return (
     <div className="container">
-      <h1>Welcome user</h1>
+      {!AuthenticationService.isAdminMode() && (
+        <h1 className="">Welcome {AuthenticationService.getAccountName()}, </h1>
+      )}
+      {AuthenticationService.isAdminMode() && (
+        <h1 className="">Welcome Admin, </h1>
+      )}
       <Dashboard urlParam={props.urlParam} />
-      {/* <AddPayee /> */}
-      {/* <AddTransaction /> */}
     </div>
   );
 }

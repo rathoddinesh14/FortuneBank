@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../service/AuthenticationService";
+import BeneficiaryService from "../service/BeneficiaryService";
 
 function AddPayee() {
   const history = useNavigate();
   const [beneficiaryname, setBeneficiaryname] = useState("");
-  const [accountnumber, setAccountnumber] = useState("");
+  const accountnumber = AuthenticationService.getLoggedInAccountNumber();
   const [payeeaccountnumber, setPayeeaccountnumber] = useState("");
   const [nickname, setNickname] = useState("");
   const [savebeneficiary, setSavebeneficiary] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleBeneficiarynameChange = (event) => {
     setBeneficiaryname(event.target.value);
-  };
-
-  const handleAccountnumberChange = (event) => {
-    setAccountnumber(event.target.value);
   };
 
   const handlePayeeAccountnumberChange = (event) => {
@@ -46,12 +44,12 @@ function AddPayee() {
     };
 
     // Send POST request using axios
-    axios
-      .post("http://localhost:8080/fortunebank/api/beneficiary/add", data)
+    BeneficiaryService.addBeneficiary(data)
       .then((response) => {
-        console.log("Beneficiary Added:", response.data);
-        alert("Beneficiary Added");
+        // console.log("Beneficiary Added:", response.data);
+        // alert("Beneficiary Added");
         if (response.data) {
+          setMessage("Beneficiary added successfully.");
           setTimeout(() => {
             history("/userhome");
           }, 2000);
@@ -67,6 +65,17 @@ function AddPayee() {
       <h2>Add Beneficiary</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+          <label htmlFor="accountnumber">Account Number:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="accountnumber"
+            value={accountnumber}
+            readOnly
+          />
+        </div>
+
+        <div className="form-group">
           <label htmlFor="beneficiaryname">Beneficiary Name:</label>
           <input
             type="text"
@@ -74,17 +83,6 @@ function AddPayee() {
             id="beneficiaryname"
             value={beneficiaryname}
             onChange={handleBeneficiarynameChange}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="accountnumber">Account Number:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="accountnumber"
-            value={accountnumber}
-            onChange={handleAccountnumberChange}
           />
         </div>
 
@@ -134,6 +132,7 @@ function AddPayee() {
           Add Beneficiary
         </button>
       </form>
+      {message && <div className="alert alert-success mt-3">{message}</div>}
     </div>
   );
 }
