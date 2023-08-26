@@ -19,6 +19,7 @@ import java.util.List;
 import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.TransactionService;
@@ -94,8 +95,12 @@ public class TransactionControllerTest {
         savedTransaction.setDate(new Date());
         transactions.add(savedTransaction);
 
-        when(transactionService.getTransactions(accountNumber))
-                .thenReturn(transactions);
+        try {
+            when(transactionService.getTransactions(accountNumber))
+                    .thenReturn(transactions);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
 
         ResponseEntity<List<ResponseTransaction>> responseEntity = transactionController.getTransactions(accountNumber);
         List<ResponseTransaction> result = responseEntity.getBody();
