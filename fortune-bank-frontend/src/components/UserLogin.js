@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
 import UserService from "../service/UserService";
+import ErrorHandler from "../utils/ErrorHandler";
 
 function UserLogin() {
   const history = useNavigate();
@@ -32,32 +33,32 @@ function UserLogin() {
       AuthenticationService.adminlogin(username, password)
         .then((response) => {
           AuthenticationService.setAdminMode(true);
-          if (response.data) {
-            setMessage("Login successful....Redirecting to home page");
+          setMessage(response.data);
+          if (response.status === 200) {
             setTimeout(() => {
               history("/userhome");
             }, 1000);
           }
         })
         .catch((error) => {
-          setMessage("Login failed. Please try again. " + error.message);
+          ErrorHandler.handleError(error, setMessage);
         });
     } else {
       AuthenticationService.login(username, password)
         .then((response) => {
-          if (response.data) {
+          setMessage(response.data);
+          if (response.status === 200) {
             UserService.getAccountNumber(username).then((response) => {
               AuthenticationService.registerSuccessfulLogin(response.data);
             });
             AuthenticationService.setAdminMode(false);
-            setMessage("Login successful....Redirecting to home page");
             setTimeout(() => {
               history("/userhome");
             }, 1000);
           }
         })
         .catch((error) => {
-          setMessage("Login failed. Please try again. " + error.message);
+          ErrorHandler.handleError(error, setMessage);
         });
     }
   };

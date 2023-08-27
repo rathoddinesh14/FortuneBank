@@ -13,6 +13,7 @@ import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserLoginDto;
 import com.fortunebank.user.enumtype.AccountStatus;
+import com.fortunebank.user.exception.InvalidLoginException;
 import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.repository.TransactionRepository;
 import com.fortunebank.user.repository.UserRepository;
@@ -63,7 +64,7 @@ public class AdminService {
         if (uld.getUserid().equals("admin") && uld.getPassword().equals("admin")) {
             return true;
         } else {
-            return false;
+            throw new InvalidLoginException();
         }
     }
 
