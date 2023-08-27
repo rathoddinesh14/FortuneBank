@@ -115,10 +115,13 @@ function ApplyOnline() {
   };
 
   return (
-    <div className="container mt-5">
+    <div
+      className="container mt-5"
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
+    >
       <form onSubmit={handleSubmit}>
         <div className="row">
-          <div className="col-md-6 bg-white p-4">
+          <div className="col-md-6 p-4">
             <h2 className="mb-4">User Registration</h2>
             <FormInput
               label="First Name"
@@ -241,7 +244,7 @@ function ApplyOnline() {
               blur={(value) => true}
             />
           </div>
-          <div className="col-md-6 bg-white p-4">
+          <div className="col-md-6 p-4">
             <AddressForm
               temporaryAddress={temporaryAddress}
               permanentAddress={permanentAddress}

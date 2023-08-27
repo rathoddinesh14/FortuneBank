@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TransactionService from "../service/TransactionService";
-import TransactionTable from "./TransactionTable";
+import DisplayTable from "./DisplayTable";
+import TransactionColumns from "./TransactionColumns";
 
 function UserTransactions() {
   const [transactions, setTransactions] = useState([]);
@@ -15,7 +16,13 @@ function UserTransactions() {
     });
   };
 
-  return <TransactionTable data={transactions} />;
+  return (
+    <DisplayTable
+      data={transactions}
+      columns={TransactionColumns}
+      table="Transactions"
+    />
+  );
 }
 
 export default UserTransactions;

@@ -41,11 +41,11 @@ public class TransactionController {
     public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
         List<ResponseTransaction> transactions = new ArrayList<>();
         try {
-        transactionService.getTransactions(accountNumber).forEach(transaction -> {
-            transactions.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
-        });
+            transactionService.getTransactions(accountNumber).forEach(transaction -> {
+                transactions.add(HelperFunctions.getResponseTransactionfromTransaction(transaction));
+            });
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class TransactionController {
             } else {
                 return ResponseEntity.ok("Withdrawal failed");
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

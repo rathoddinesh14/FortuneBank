@@ -18,8 +18,12 @@ class Logout extends Component {
             />
           </div>
           <div className="col-md-6">
-            <h1>Thank You</h1>
-            <p>We appreciate your visit. Have a great day!</p>
+            <div className="alert alert-success text-center" role="alert">
+              <h1 className="display-4">Thank You</h1>
+              <p className="lead">
+                We appreciate your visit. Have a great day!
+              </p>
+            </div>
           </div>
         </div>
       </div>

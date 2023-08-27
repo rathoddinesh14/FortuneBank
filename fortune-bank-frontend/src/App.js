@@ -77,8 +77,8 @@ function App() {
               element={<UserHome urlParam="overview" />}
             />
             <Route
-              path="/transactionsuccess"
-              element={<UserHome urlParam="transactionsuccess" />}
+              path="/transaction/:transactionStatus"
+              element={<UserHome urlParam="transaction" />}
             />
             <Route path="/deposit" element={<UserHome urlParam="deposit" />} />
             <Route

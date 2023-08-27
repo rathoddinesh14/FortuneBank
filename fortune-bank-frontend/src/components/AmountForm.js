@@ -15,7 +15,16 @@ function AmountForm(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (props.type === "deposit") {
+    // check if amount is valid
+    if (amount <= 0) {
+      setMessage("Amount must be greater than 0");
+      setTimeout(() => {
+        setMessage("");
+      }, 1000);
+      return;
+    }
+
+    if (props.type === "Deposit") {
       TransactionService.deposit({
         accountNumber: AuthenticationService.getLoggedInAccountNumber(),
         amount: amount,
@@ -23,20 +32,28 @@ function AmountForm(props) {
         setMessage(response.data);
         setTimeout(() => {
           setMessage("");
-          history("/transactionsuccess");
+          history("/transaction/success");
         }, 1000);
       });
-    } else if (props.type === "withdraw") {
+    } else if (props.type === "Withdraw") {
       TransactionService.withdraw({
         accountNumber: AuthenticationService.getLoggedInAccountNumber(),
         amount: amount,
-      }).then((response) => {
-        setMessage(response.data);
-        setTimeout(() => {
-          setMessage("");
-          history("/transactionsuccess");
-        }, 1000);
-      });
+      })
+        .then((response) => {
+          setMessage(response.data);
+          setTimeout(() => {
+            setMessage("");
+            history("/transaction/success");
+          }, 1000);
+        })
+        .catch((error) => {
+          setMessage(error.response.data);
+          setTimeout(() => {
+            setMessage("");
+            history("/transaction/failure");
+          }, 1000);
+        });
     }
   };
 
