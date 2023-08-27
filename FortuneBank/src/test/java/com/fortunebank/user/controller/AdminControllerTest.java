@@ -71,8 +71,9 @@ public class AdminControllerTest {
         loginDto.setUserid("admin");
         loginDto.setPassword("admin");
         when(adminService.loginAdmin(loginDto)).thenReturn(true);
-        boolean result = adminController.loginAdmin(loginDto);
-        assertTrue(result);
+        ResponseEntity<String> result = adminController.loginAdmin(loginDto);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals("Login Successful", result.getBody());
     }
 
     @Test

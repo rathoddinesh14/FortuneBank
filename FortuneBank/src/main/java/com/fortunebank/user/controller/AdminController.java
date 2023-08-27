@@ -23,6 +23,8 @@ import com.fortunebank.user.service.AdminService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -48,8 +50,17 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public boolean loginAdmin(@Validated @RequestBody UserLoginDto uld) throws Exception {
-        return adminService.loginAdmin(uld);
+    public ResponseEntity<String> loginAdmin(@Validated @RequestBody UserLoginDto uld) {
+        String message = "";
+        try {
+            if (adminService.loginAdmin(uld)) {
+                return ResponseEntity.ok("Login Successful");
+            }
+        } catch (Exception e) {
+            message = e.getMessage();
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, e.getMessage());
+        }
+        return ResponseEntity.badRequest().body(message);
     }
 
     @PutMapping("/updateaccountstatus/{accountNumber}/{status}")

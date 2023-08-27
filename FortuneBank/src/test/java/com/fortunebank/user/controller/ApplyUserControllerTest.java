@@ -84,7 +84,7 @@ public class ApplyUserControllerTest {
         appliedUser.setBalance(0);
         appliedUser.setAccountStatus(AccountStatus.ENABLED);
 
-        when(userService.saveUserDetails(any(UserDetails.class))).thenReturn(appliedUser);
+        when(userService.saveUserDetails(any(UserDetailsDto.class))).thenReturn(appliedUser);
 
         ResponseEntity<ResponseApplyUser> responseEntity = applyUserController.applyUser(userDetailsDto);
         ResponseApplyUser response = responseEntity.getBody();

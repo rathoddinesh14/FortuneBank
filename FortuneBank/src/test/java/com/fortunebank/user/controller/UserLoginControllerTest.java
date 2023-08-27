@@ -8,14 +8,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fortunebank.user.dto.UserLoginDto;
+import com.fortunebank.user.exception.InvalidLoginException;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @SpringBootTest
 public class UserLoginControllerTest {
@@ -47,11 +48,11 @@ public class UserLoginControllerTest {
         netBankingUser.setLoginPassword(password);
 
         when(netBankingService.loginGetUser(userId))
-                .thenReturn(Optional.of(netBankingUser));
+                .thenReturn(netBankingUser);
 
-        boolean result = userLoginController.loginUser(userLoginDto);
-
-        assertTrue(result);
+        ResponseEntity<String> result = userLoginController.loginUser(userLoginDto);
+        assertEquals("Login Successful", result.getBody());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
     @Test
@@ -67,11 +68,11 @@ public class UserLoginControllerTest {
         netBankingUser.setLoginPassword("incorrectPassword");
 
         when(netBankingService.loginGetUser(userId))
-                .thenReturn(Optional.of(netBankingUser));
+                .thenReturn(netBankingUser);
 
-        boolean result = userLoginController.loginUser(userLoginDto);
-
-        assertFalse(result);
+        ResponseEntity<String> result = userLoginController.loginUser(userLoginDto);
+        assertEquals("Invalid Password", result.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 
     @Test
@@ -84,8 +85,10 @@ public class UserLoginControllerTest {
         userLoginDto.setPassword(password);
 
         when(netBankingService.loginGetUser(userId))
-                .thenReturn(Optional.empty());
+                .thenThrow(new InvalidLoginException("User with this userId not found!"));
 
-        assertThrows(Exception.class, () -> userLoginController.loginUser(userLoginDto));
+        ResponseEntity<String> result = userLoginController.loginUser(userLoginDto);
+        assertEquals("User with this userId not found!", result.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
     }
 }

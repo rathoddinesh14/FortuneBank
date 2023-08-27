@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.fortunebank.user.dto.PayeeDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.service.PayeeService;
 
@@ -62,15 +63,25 @@ public class PayeeControllerTest {
 
         List<ResponseBeneficiary> beneficiaries = new ArrayList<>();
 
-        when(beneficiaryService.findByUdAccountNumber(accountNumber))
-                .thenReturn(beneficiaries);
+        try {
+            when(beneficiaryService.findByUdAccountNumber(accountNumber))
+                    .thenReturn(beneficiaries);
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        ResponseEntity<List<ResponseBeneficiary>> responseEntity = payeeController.getBeneficiary(accountNumber);
-        List<ResponseBeneficiary> result = responseEntity.getBody();
+        ResponseEntity<List<ResponseBeneficiary>> responseEntity;
+        try {
+            responseEntity = payeeController.getBeneficiary(accountNumber);
+            List<ResponseBeneficiary> result = responseEntity.getBody();
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        if (result != null)
-            assertEquals(beneficiaries.size(), result.size()); // Adjust the assertion based on your data
+            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+            if (result != null)
+                assertEquals(beneficiaries.size(), result.size());
+        } catch (ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test

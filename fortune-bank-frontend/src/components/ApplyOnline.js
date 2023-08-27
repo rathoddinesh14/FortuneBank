@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressForm from "./AddressForm";
 import UserService from "../service/UserService";
+import FormInput from "../utils/FormInput";
 
 function ApplyOnline() {
   const history = useNavigate();
@@ -44,6 +45,20 @@ function ApplyOnline() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (
+      !firstName ||
+      !lastName ||
+      !phone ||
+      !email ||
+      !aadharNumber ||
+      !dob ||
+      !temporaryAddress ||
+      !permanentAddress
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
+
     const data = {
       firstName: firstName,
       middleName: middleName,
@@ -57,117 +72,179 @@ function ApplyOnline() {
       paddress: permanentAddress,
     };
 
+    // checking if temporary is filled
+    if (
+      !temporaryAddress.line1 ||
+      !temporaryAddress.line2 ||
+      !temporaryAddress.landmark ||
+      !temporaryAddress.state ||
+      !temporaryAddress.city ||
+      !temporaryAddress.pincode
+    ) {
+      alert("Please fill temporary address");
+      return;
+    }
+
+    // checking if permanent is filled
+    if (
+      !permanentAddress.line1 ||
+      !permanentAddress.line2 ||
+      !permanentAddress.landmark ||
+      !permanentAddress.state ||
+      !permanentAddress.city ||
+      !permanentAddress.pincode
+    ) {
+      alert("Please fill permanent address");
+      return;
+    }
+
     UserService.apply(data)
       .then((response) => {
-        alert("Apply Online successful");
-        if (response.data) {
+        if (response.status === 200) {
           setTimeout(() => {
-            history("/");
+            history("/accountconfirm/success");
           }, 2000);
         }
       })
       .catch((error) => {
         console.error("Registration failed:", error, data);
+        setTimeout(() => {
+          history("/accountconfirm/failure");
+        }, 2000);
       });
   };
 
   return (
-    <div className="container mt-5">
+    <div
+      className="container mt-5"
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
+    >
       <form onSubmit={handleSubmit}>
         <div className="row">
-          <div className="col-md-6 bg-white p-4">
+          <div className="col-md-6 p-4">
             <h2 className="mb-4">User Registration</h2>
-            <div className="form-group">
-              <label htmlFor="firstName">First Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="First Name"
+              name="firstName"
+              value={firstName}
+              onChange={(value) => setFirstName(value)}
+              validate={(value) => {
+                // only alphabets
+                const regex = /^[a-zA-Z]+$/;
+                return regex.test(value);
+              }}
+              message="Only alphabets are allowed and must be greater than 0 characters"
+              blur={(value) => {
+                return /^[a-zA-Z]+$/.test(value) && value.length > 0;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="middleName">Middle Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="middleName"
-                value={middleName}
-                onChange={(e) => setMiddleName(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Middle Name"
+              name="middleName"
+              value={middleName}
+              onChange={(value) => setMiddleName(value)}
+              validate={(value) => {
+                // Only alphabets
+                const regex = /^[a-zA-Z]+$/;
+                return regex.test(value);
+              }}
+              message="Only alphabets are allowed. (Optional)"
+              blur={(value) => {
+                return /^[a-zA-Z]+$/.test(value) || value.length === 0;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Last Name"
+              name="lastName"
+              value={lastName}
+              onChange={(value) => setLastName(value)}
+              validate={(value) => {
+                // Only alphabets
+                const regex = /^[a-zA-Z]+$/;
+                return regex.test(value);
+              }}
+              message="Only alphabets are allowed and must be greater than 0 characters"
+              blur={(value) => {
+                return /^[a-zA-Z]+$/.test(value) && value.length > 0;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="fatherName">Father's Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="fatherName"
-                value={fatherName}
-                onChange={(e) => setFatherName(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Father's Name"
+              name="fatherName"
+              value={fatherName}
+              onChange={(value) => setFatherName(value)}
+              validate={(value) => {
+                // Only alphabets
+                const regex = /^[a-zA-Z]+$/;
+                return regex.test(value);
+              }}
+              message="Only alphabets are allowed. (Optional)"
+              blur={(value) => {
+                return /^[a-zA-Z]+$/.test(value) || value.length === 0;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="phone">Phone:</label>
-              <input
-                type="tel"
-                className="form-control"
-                id="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Phone"
+              name="phone"
+              value={phone}
+              onChange={(value) => setPhone(value)}
+              validate={(value) => {
+                // Valid phone number format > 1
+                const regex = /^[0-9]+$/;
+                return (
+                  regex.test(value) && value.length >= 0 && value.length <= 10
+                );
+              }}
+              message="Invalid phone number and must be 10 digits"
+              blur={(value) => {
+                return value.length === 10;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Email"
+              name="email"
+              value={email}
+              onChange={(value) => setEmail(value)}
+              validate={(value) => {}}
+              message="Invalid email address"
+              blur={(value) => {
+                // Validate email address on blur
+                const regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+                return regex.test(value);
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="aadharNumber">Aadhar Number:</label>
-              <input
-                type="text"
-                className="form-control"
-                id="aadharNumber"
-                value={aadharNumber}
-                onChange={(e) => setAadharNumber(e.target.value)}
-              />
-            </div>
+            <FormInput
+              label="Aadhar Number"
+              name="aadharNumber"
+              value={aadharNumber}
+              onChange={(value) => setAadharNumber(value)}
+              validate={(value) => {
+                const regex = /^[0-9]+$/;
+                return regex.test(value) && value.length <= 12;
+              }}
+              message="Invalid Aadhar number and must be 12 digits"
+              blur={(value) => {
+                return value.length === 12;
+              }}
+            />
 
-            <div className="form-group">
-              <label htmlFor="dob">Date of Birth:</label>
-              <input
-                type="date"
-                className="form-control"
-                id="dob"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-              />
-            </div>
-
-            {/* <div className="mb-3"></div> */}
+            <FormInput
+              label="Date of Birth"
+              name="dob"
+              value={dob}
+              onChange={(value) => setDob(value)}
+              validate={(value) => true}
+              message="Invalid date format (dd/mm/yyyy)"
+              blur={(value) => true}
+            />
           </div>
-          <div className="col-md-6 bg-white p-4">
+          <div className="col-md-6 p-4">
             <AddressForm
               temporaryAddress={temporaryAddress}
               permanentAddress={permanentAddress}

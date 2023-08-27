@@ -1,53 +1,16 @@
 import React from "react";
 import { useTable, useSortBy } from "react-table";
 
-function TransactionTable(props) {
+function DisplayTable(props) {
   const data = React.useMemo(() => props.data, [props.data]);
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Transaction Id",
-        accessor: "tid",
-      },
-      {
-        Header: "Transaction Type",
-        accessor: "transactionType",
-      },
-      {
-        Header: "From Account",
-        accessor: "fromAccountNumber",
-      },
-      {
-        Header: "To Account",
-        accessor: "toAccountNumber",
-      },
-      {
-        Header: "Transaction Amount",
-        accessor: "amount",
-      },
-      {
-        Header: "Transaction Date",
-        accessor: "date",
-      },
-      {
-        Header: "Remarks",
-        accessor: "remark",
-      },
-      {
-        Header: "Maturity Instructions",
-        accessor: "maturityInstructions",
-      },
-    ],
-    []
-  );
+  const columns = React.useMemo(() => props.columns, []);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data }, useSortBy);
 
   return (
     <div>
-      <h1 className="text-warning text-center">Transactions List</h1>
+      <h1 className="text-warning text-center">{props.table} List</h1>
       <br />
       <div className="row justify-content-center">
         <table className="table table-success w-auto" {...getTableProps()}>
@@ -106,4 +69,4 @@ function TransactionTable(props) {
   );
 }
 
-export default TransactionTable;
+export default DisplayTable;

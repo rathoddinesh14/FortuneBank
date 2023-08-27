@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TransactionService from "../service/TransactionService";
-import TransactionTable from "./TransactionTable";
+import DisplayTable from "./DisplayTable";
+import TransactionColumns from "./TransactionColumns";
 
 function AccountSummary() {
   const [startDate, setStartDate] = useState("");
@@ -62,7 +63,11 @@ function AccountSummary() {
         </div>
       </div>
       <h3 className="mt-4">Transactions:</h3>
-      <TransactionTable data={transactions} />
+      <DisplayTable
+        data={transactions}
+        columns={TransactionColumns}
+        table="Transactions"
+      />
     </div>
   );
 }

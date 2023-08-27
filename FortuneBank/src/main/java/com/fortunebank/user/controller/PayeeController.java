@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.PayeeDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.service.PayeeService;
@@ -43,7 +44,8 @@ public class PayeeController {
     }
 
     @GetMapping("/get/{accountNumber}")
-    public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber) {
+    public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber)
+            throws ResourceNotFoundException {
         return new ResponseEntity<List<ResponseBeneficiary>>(beneficiaryService.findByUdAccountNumber(accountNumber),
                 HttpStatus.OK);
     }

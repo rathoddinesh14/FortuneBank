@@ -91,11 +91,11 @@ function AddTransaction() {
               </option>
               {beneficiaries.map((beneficiary) => (
                 <option
-                  key={beneficiary.accountnumber}
-                  value={beneficiary.accountnumber}
+                  key={beneficiary.payeeAccountNumber}
+                  value={beneficiary.payeeAccountNumber}
                 >
-                  {beneficiary.accountnumber} - {beneficiary.name} -{" "}
-                  {beneficiary.nickname}
+                  {beneficiary.payeeAccountNumber} - {beneficiary.name} -{" "}
+                  {beneficiary.nickName}
                 </option>
               ))}
             </select>

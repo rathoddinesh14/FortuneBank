@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import FormTemplate from "./components/FormTemplate";
 import Logout from "./components/Logout";
+import AccountConfirmation from "./components/ApplyConfirmation";
 
 function App() {
   return (
@@ -76,8 +77,8 @@ function App() {
               element={<UserHome urlParam="overview" />}
             />
             <Route
-              path="/transactionsuccess"
-              element={<UserHome urlParam="transactionsuccess" />}
+              path="/transaction/:transactionStatus"
+              element={<UserHome urlParam="transaction" />}
             />
             <Route path="/deposit" element={<UserHome urlParam="deposit" />} />
             <Route
@@ -93,6 +94,10 @@ function App() {
               element={<UserHome urlParam="customersearch" />}
             />
             <Route path="/logout" element={<Logout />} />
+            <Route
+              path="/accountconfirm/:status"
+              element={<AccountConfirmation />}
+            />
           </Routes>
         </BrowserRouter>
       </section>

@@ -32,13 +32,11 @@ function Dashboard(props) {
   };
 
   const handleLogout = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/logout");
   };
 
   const handleBeneficiaries = (e) => {
-    // console.log(e);
     e.preventDefault();
     history("/beneficiaries");
   };
@@ -54,13 +52,11 @@ function Dashboard(props) {
   };
 
   const handleOverview = (e) => {
-    // console.log("Overview", e);
     e.preventDefault();
     history("/overview");
   };
 
   const handleTransactions = (e) => {
-    console.log(e);
     e.preventDefault();
     history("/transactions");
   };
@@ -68,14 +64,11 @@ function Dashboard(props) {
   return (
     <div className="container bg-white pb-4">
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-        {/* <a className="navbar-brand" href="/userhome">
-          Online Banking
-        </a> */}
         <button
           className="navbar-toggler"
           type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
@@ -118,8 +111,6 @@ function Dashboard(props) {
                 Logout
               </button>
             </li>
-
-            {/* Add more links as needed */}
           </ul>
         </div>
       </nav>
@@ -136,11 +127,6 @@ function Dashboard(props) {
                   onClick={handleOverview}
                 >
                   Overview
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/payments">
-                  Payments
                 </a>
               </li>
               <li className="nav-item">

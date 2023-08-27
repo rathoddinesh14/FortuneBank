@@ -4,7 +4,7 @@ import UserTransactions from "./UserTransactions";
 import Beneficiaries from "./Beneficiaries";
 import React from "react";
 import AccountDetails from "./AccountDetails";
-import TransactionSuccessful from "./TransactionSuccessful";
+import TransactionStatus from "./TransactionSuccessful";
 import AmountForm from "./AmountForm";
 import CustomerList from "./CustomerList";
 import CustomerSearch from "./CustomerSearch";
@@ -21,12 +21,12 @@ function DashboardItem(props) {
     return <Beneficiaries />;
   } else if (props.urlParam === "overview") {
     return <AccountDetails />;
-  } else if (props.urlParam === "transactionsuccess") {
-    return <TransactionSuccessful />;
+  } else if (props.urlParam === "transaction") {
+    return <TransactionStatus />;
   } else if (props.urlParam === "deposit") {
-    return <AmountForm type="deposit" />;
+    return <AmountForm type="Deposit" />;
   } else if (props.urlParam === "withdraw") {
-    return <AmountForm type="withdraw" />;
+    return <AmountForm type="Withdraw" />;
   } else if (props.urlParam === "customers") {
     return <CustomerList />;
   } else if (props.urlParam === "customersearch") {

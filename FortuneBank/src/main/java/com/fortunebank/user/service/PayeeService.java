@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.repository.PayeeRepository;
@@ -25,11 +26,11 @@ public class PayeeService {
 		return payeeRepo.save(ben);
 	}
 
-	public List<ResponseBeneficiary> findByUdAccountNumber(Long accountNumber) {
+	public List<ResponseBeneficiary> findByUdAccountNumber(Long accountNumber) throws ResourceNotFoundException {
 		List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
 
 		Optional<List<Beneficiary>> bl = payeeRepo.findByUdAccountNumber(accountNumber);
-		bl.orElseThrow(() -> new RuntimeException("No Beneficiaries found for the user"));
+		bl.orElseThrow(() -> new ResourceNotFoundException("Account number not found!"));
 
 		bl.get().stream().forEach(beneficiary -> {
 			beneficiaryList.add(HelperFunctions.getResponseBeneficiaryfromPayee(beneficiary));

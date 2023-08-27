@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FormInput from "../utils/FormInput";
 
 function AddressForm(props) {
   const [addressType, setAddressType] = useState("temporary");
@@ -112,17 +113,24 @@ function AddressForm(props) {
               onChange={(e) => handleInputChange(e, "temporary")}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="tempPincode">Pincode :</label>
-            <input
-              type="text"
-              className="form-control"
-              id="tempPincode"
-              name="pincode"
-              value={props.temporaryAddress.pincode}
-              onChange={(e) => handleInputChange(e, "temporary")}
-            />
-          </div>
+          <FormInput
+            label="Pincode"
+            name="pincode"
+            value={props.temporaryAddress.pincode}
+            onChange={(value) =>
+              props.setTemporaryAddress({
+                ...props.temporaryAddress,
+                pincode: value,
+              })
+            }
+            validate={(value) => {
+              return /^\d+$/.test(value) && value.length <= 6;
+            }}
+            message="Pincode must be 6 digits"
+            blur={(value) => {
+              return value.length === 6;
+            }}
+          />
         </div>
       ) : (
         <div>
@@ -194,17 +202,24 @@ function AddressForm(props) {
               onChange={(e) => handleInputChange(e, "permanent")}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="permPincode">Pincode :</label>
-            <input
-              type="text"
-              className="form-control"
-              id="permPincode"
-              name="pincode"
-              value={props.permanentAddress.pincode}
-              onChange={(e) => handleInputChange(e, "permanent")}
-            />
-          </div>
+          <FormInput
+            label="Pincode"
+            name="pincode"
+            value={props.permanentAddress.pincode}
+            onChange={(value) =>
+              props.setPermanentAddress({
+                ...props.permanentAddress,
+                pincode: value,
+              })
+            }
+            validate={(value) => {
+              return /^\d+$/.test(value) && value.length <= 6;
+            }}
+            message="Pincode must be 6 digits"
+            blur={(value) => {
+              return value.length === 6;
+            }}
+          />
         </div>
       )}
     </div>

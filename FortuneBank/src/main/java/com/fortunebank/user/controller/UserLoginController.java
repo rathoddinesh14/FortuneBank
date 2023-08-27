@@ -1,6 +1,10 @@
 package com.fortunebank.user.controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortunebank.user.dto.UserLoginDto;
+import com.fortunebank.user.exception.InvalidLoginException;
 import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.service.NetBankingService;
 
@@ -20,15 +25,24 @@ public class UserLoginController {
 	private NetBankingService netBankingService;
 
 	@PostMapping("/login")
-	public boolean loginUser(@Validated @RequestBody UserLoginDto uld) throws Exception {
+
+	public ResponseEntity<String> loginUser(@Validated @RequestBody UserLoginDto uld) {
 		String userid = uld.getUserid();
 		String password = uld.getPassword();
+		String message = "";
 
-		NetBankingUser nbu = netBankingService.loginGetUser(userid).orElseThrow(() -> new Exception("Error"));
-		if (password.equals(nbu.getLoginPassword())) {
-			return true;
-		} else {
-			return false;
+		try {
+			NetBankingUser nbu = netBankingService.loginGetUser(userid);
+			if (password.equals(nbu.getLoginPassword())) {
+				message = "Login Successful";
+				return ResponseEntity.ok(message);
+			} else {
+				message = "Invalid Password";
+			}
+		} catch (InvalidLoginException e) {
+			message = e.getMessage();
+			Logger.getLogger(UserLoginController.class.getName()).log(Level.SEVERE, e.getMessage());
 		}
+		return ResponseEntity.badRequest().body(message);
 	}
 }
