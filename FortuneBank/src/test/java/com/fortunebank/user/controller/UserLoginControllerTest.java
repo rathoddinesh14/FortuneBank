@@ -18,8 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
-
 @SpringBootTest
 public class UserLoginControllerTest {
 
