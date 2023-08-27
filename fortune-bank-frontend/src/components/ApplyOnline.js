@@ -45,6 +45,20 @@ function ApplyOnline() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (
+      !firstName ||
+      !lastName ||
+      !phone ||
+      !email ||
+      !aadharNumber ||
+      !dob ||
+      !temporaryAddress ||
+      !permanentAddress
+    ) {
+      alert("Please fill all the fields");
+      return;
+    }
+
     const data = {
       firstName: firstName,
       middleName: middleName,
@@ -58,17 +72,45 @@ function ApplyOnline() {
       paddress: permanentAddress,
     };
 
+    // checking if temporary is filled
+    if (
+      !temporaryAddress.line1 ||
+      !temporaryAddress.line2 ||
+      !temporaryAddress.landmark ||
+      !temporaryAddress.state ||
+      !temporaryAddress.city ||
+      !temporaryAddress.pincode
+    ) {
+      alert("Please fill temporary address");
+      return;
+    }
+
+    // checking if permanent is filled
+    if (
+      !permanentAddress.line1 ||
+      !permanentAddress.line2 ||
+      !permanentAddress.landmark ||
+      !permanentAddress.state ||
+      !permanentAddress.city ||
+      !permanentAddress.pincode
+    ) {
+      alert("Please fill permanent address");
+      return;
+    }
+
     UserService.apply(data)
       .then((response) => {
-        alert("Apply Online successful");
-        if (response.data) {
+        if (response.status === 200) {
           setTimeout(() => {
-            history("/");
+            history("/accountconfirm/success");
           }, 2000);
         }
       })
       .catch((error) => {
         console.error("Registration failed:", error, data);
+        setTimeout(() => {
+          history("/accountconfirm/failure");
+        }, 2000);
       });
   };
 
