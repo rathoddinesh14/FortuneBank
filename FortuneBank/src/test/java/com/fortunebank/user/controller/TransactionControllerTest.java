@@ -63,17 +63,18 @@ public class TransactionControllerTest {
         savedTransaction.setFud(fromUser);
         savedTransaction.setTud(toUser);
         savedTransaction.setAmount(100.0);
+        savedTransaction.setDate(new Date());
 
         when(transactionService.saveTransaction(any(TransactionDto.class)))
-                .thenReturn(savedTransaction);
+                .thenReturn(HelperFunctions.getResponseTransactionfromTransaction(savedTransaction));
 
-        ResponseEntity<Transaction> responseEntity = transactionController.transfer(transactionDto);
-        Transaction result = responseEntity.getBody();
+        ResponseEntity<ResponseTransaction> responseEntity = transactionController.transfer(transactionDto);
+        ResponseTransaction result = responseEntity.getBody();
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         if (result != null) {
-            assertEquals(savedTransaction.getFud().getAccountNumber(), result.getFud().getAccountNumber());
-            assertEquals(savedTransaction.getTud().getAccountNumber(), result.getTud().getAccountNumber());
+            assertEquals(savedTransaction.getFud().getAccountNumber(), result.getFromAccountNumber());
+            assertEquals(savedTransaction.getTud().getAccountNumber(), result.getToAccountNumber());
             assertEquals(savedTransaction.getAmount(), result.getAmount());
         }
     }
@@ -121,12 +122,13 @@ public class TransactionControllerTest {
         request.setAmount(100.0);
 
         when(transactionService.depositAmount(request.getAccountNumber(), request.getAmount()))
-                .thenReturn(true);
+                .thenReturn(
+                        HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 100, null, null, null));
 
-        ResponseEntity<String> response = transactionController.depositAmount(request);
+        ResponseEntity<ResponseTransaction> response = transactionController.depositAmount(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Deposit successful", response.getBody());
+        assertEquals(request.getAmount(), response.getBody().getAmount());
 
         verify(transactionService).depositAmount(request.getAccountNumber(), request.getAmount());
         verifyNoMoreInteractions(transactionService);
@@ -135,16 +137,17 @@ public class TransactionControllerTest {
     @Test
     public void testDepositAmountFailure() {
         AmountDto request = new AmountDto();
+        // invalid account number
         request.setAccountNumber(12345L);
         request.setAmount(100.0);
 
         when(transactionService.depositAmount(request.getAccountNumber(), request.getAmount()))
-                .thenReturn(false);
+                .thenThrow(new IllegalArgumentException("Invalid user account"));
 
-        ResponseEntity<String> response = transactionController.depositAmount(request);
+        ResponseEntity<ResponseTransaction> response = transactionController.depositAmount(request);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Deposit failed", response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Invalid user account", response.getBody().getRemark());
 
         verify(transactionService).depositAmount(request.getAccountNumber(), request.getAmount());
         verifyNoMoreInteractions(transactionService);
@@ -157,12 +160,12 @@ public class TransactionControllerTest {
         request.setAmount(50.0);
 
         when(transactionService.withdrawAmount(request.getAccountNumber(), request.getAmount()))
-                .thenReturn(true);
+                .thenReturn(HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 50, null, null, null));
 
-        ResponseEntity<String> response = transactionController.withdrawAmount(request);
+        ResponseEntity<ResponseTransaction> response = transactionController.withdrawAmount(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Withdrawal successful", response.getBody());
+        assertEquals(request.getAmount(), response.getBody().getAmount());
 
         verify(transactionService).withdrawAmount(request.getAccountNumber(), request.getAmount());
         verifyNoMoreInteractions(transactionService);
@@ -171,16 +174,17 @@ public class TransactionControllerTest {
     @Test
     public void testWithdrawAmountFailure() {
         AmountDto request = new AmountDto();
+        // invalid account number
         request.setAccountNumber(12345L);
         request.setAmount(50.0);
 
         when(transactionService.withdrawAmount(request.getAccountNumber(), request.getAmount()))
-                .thenReturn(false);
+                .thenThrow(new IllegalArgumentException("Withdrawal failed"));
 
-        ResponseEntity<String> response = transactionController.withdrawAmount(request);
+        ResponseEntity<ResponseTransaction> response = transactionController.withdrawAmount(request);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Withdrawal failed", response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Withdrawal failed", response.getBody().getRemark());
 
         verify(transactionService).withdrawAmount(request.getAccountNumber(), request.getAmount());
         verifyNoMoreInteractions(transactionService);
@@ -196,10 +200,10 @@ public class TransactionControllerTest {
         when(transactionService.withdrawAmount(request.getAccountNumber(), request.getAmount()))
                 .thenThrow(new IllegalArgumentException(errorMessage));
 
-        ResponseEntity<String> response = transactionController.withdrawAmount(request);
+        ResponseEntity<ResponseTransaction> response = transactionController.withdrawAmount(request);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(errorMessage, response.getBody());
+        assertEquals(errorMessage, response.getBody().getRemark());
 
         verify(transactionService).withdrawAmount(request.getAccountNumber(), request.getAmount());
         verifyNoMoreInteractions(transactionService);

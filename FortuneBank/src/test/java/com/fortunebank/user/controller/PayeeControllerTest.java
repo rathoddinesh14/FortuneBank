@@ -47,14 +47,14 @@ public class PayeeControllerTest {
 
         Beneficiary savedBeneficiary = new Beneficiary();
 
-        when(beneficiaryService.addPayee(any(Beneficiary.class)))
+        when(beneficiaryService.addPayee(any(PayeeDto.class)))
                 .thenReturn(savedBeneficiary);
 
-        ResponseEntity<Beneficiary> responseEntity = payeeController.addBeneficiary(payeeDto);
-        Beneficiary result = responseEntity.getBody();
+        ResponseEntity<String> responseEntity = payeeController.addBeneficiary(payeeDto);
+        String result = responseEntity.getBody();
 
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertEquals(savedBeneficiary, result);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Beneficiary added successfully", result);
     }
 
     @Test
