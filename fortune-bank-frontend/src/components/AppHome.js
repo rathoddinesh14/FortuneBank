@@ -33,9 +33,7 @@ function AppHome() {
   return (
     <div className="container mt-1">
       <div className="row">
-        <div className="col-md-8">
-          <BankCarousel />
-        </div>
+        <div className="col-md-8">{/* <BankCarousel /> */}</div>
         <div className="col-md-4">
           <div
             className="d-flex flex-column p-4 rounded shadow"

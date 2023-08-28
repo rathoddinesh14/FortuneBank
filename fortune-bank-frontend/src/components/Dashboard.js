@@ -51,6 +51,11 @@ function Dashboard(props) {
     history("/customersearch");
   };
 
+  const handleHome = (e) => {
+    e.preventDefault();
+    history("/userhome");
+  };
+
   const handleOverview = (e) => {
     e.preventDefault();
     history("/overview");
@@ -78,7 +83,7 @@ function Dashboard(props) {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <button className="nav-link" type="button">
+              <button className="nav-link" onClick={handleHome}>
                 Home
               </button>
             </li>

@@ -5,9 +5,11 @@ function Header() {
     <header className="py-4">
       <div className="container">
         <a href="/" style={{ textDecoration: "none" }}>
-          <h1 className="display-3">Fortune Bank</h1>
+          <h1 style={{ fontWeight: "bold" }}>Fortune Bank</h1>
         </a>
-        <p className="lead">Where Money Matters</p>
+        <p className="lead" style={{ fontWeight: "bold" }}>
+          Where Money Matters
+        </p>
       </div>
     </header>
   );

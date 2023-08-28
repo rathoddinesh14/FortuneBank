@@ -9,6 +9,7 @@ import AmountForm from "./AmountForm";
 import CustomerList from "./CustomerList";
 import CustomerSearch from "./CustomerSearch";
 import AccountSummary from "./AccountSummary";
+import BankCarousel from "./BankCarousel";
 
 function DashboardItem(props) {
   if (props.urlParam === "addbeneficiary") {
@@ -36,7 +37,8 @@ function DashboardItem(props) {
   } else {
     return (
       <h1 className="mt-3">
-        Welcome to Online Banking Dashboard {props.urlParam}
+        {/* Welcome to Online Banking Dashboard {props.urlParam} */}
+        <BankCarousel />
       </h1>
     );
   }
