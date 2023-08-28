@@ -28,6 +28,13 @@ public class PayeeController {
     @Autowired
     private PayeeService beneficiaryService;
 
+    /*
+     * This method is used to add a beneficiary
+     * 
+     * @param PayeeDto beneficiary
+     * 
+     * @return ResponseEntity<Beneficiary>
+     */
     @PostMapping("/add")
     public ResponseEntity<Beneficiary> addBeneficiary(@RequestBody PayeeDto beneficiary) {
         Beneficiary savedBeneficiary = new Beneficiary();
@@ -43,6 +50,13 @@ public class PayeeController {
         return new ResponseEntity<Beneficiary>(savedBeneficiary, HttpStatus.CREATED);
     }
 
+    /*
+     * This method is used to get the beneficiaries of a particular account
+     * 
+     * @param Long accountNumber
+     * 
+     * @return ResponseEntity<List<ResponseBeneficiary>>
+     */
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber)
             throws ResourceNotFoundException {
@@ -50,6 +64,15 @@ public class PayeeController {
                 HttpStatus.OK);
     }
 
+    /*
+     * This method is used to delete a beneficiary
+     * 
+     * @param Long accountNumber
+     * 
+     * @param Long beneficiaryId
+     * 
+     * @return ResponseEntity<Boolean>
+     */
     @DeleteMapping("/delete/{accountNumber}/{beneficiaryId}")
     public ResponseEntity<Boolean> deleteBeneficiary(@PathVariable Long accountNumber,
             @PathVariable Long beneficiaryId) {

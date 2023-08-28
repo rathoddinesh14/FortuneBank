@@ -32,11 +32,25 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    /*
+     * This method is used to transfer the amount from one account to another
+     * 
+     * @param TransactionDto transactionDto
+     * 
+     * @return ResponseEntity<Transaction>
+     */
     @PostMapping("/transfer")
     public ResponseEntity<Transaction> transfer(@RequestBody TransactionDto transactionDto) {
         return new ResponseEntity<>(transactionService.saveTransaction(transactionDto), HttpStatus.OK);
     }
 
+    /*
+     * This method is used to get the transactions of a particular account
+     * 
+     * @param Long accountNumber
+     * 
+     * @return ResponseEntity<List<ResponseTransaction>>
+     */
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseTransaction>> getTransactions(@PathVariable Long accountNumber) {
         List<ResponseTransaction> transactions = new ArrayList<>();
@@ -50,6 +64,13 @@ public class TransactionController {
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
+    /*
+     * This method is used to deposit the amount in the account
+     * 
+     * @param AmountDto request
+     * 
+     * @return ResponseEntity<String>
+     */
     @PostMapping("/deposit")
     public ResponseEntity<String> depositAmount(@RequestBody AmountDto request) {
         Long accountNumber = request.getAccountNumber();
@@ -61,6 +82,13 @@ public class TransactionController {
         }
     }
 
+    /*
+     * This method is used to withdraw the amount from the account
+     * 
+     * @param AmountDto request
+     * 
+     * @return ResponseEntity<String>
+     */
     @PostMapping("/withdraw")
     public ResponseEntity<String> withdrawAmount(@RequestBody AmountDto request) {
         Long accountNumber = request.getAccountNumber();
@@ -77,6 +105,17 @@ public class TransactionController {
         }
     }
 
+    /*
+     * This method is used to get the transactions between two dates
+     * 
+     * @param Long accountNumber
+     * 
+     * @param Date startDate
+     * 
+     * @param Date endDate
+     * 
+     * @return List<ResponseTransaction>
+     */
     @GetMapping("/transactions-between-dates")
     public List<ResponseTransaction> getTransactionsBetweenDates(
             @RequestParam("accountNumber") Long accountNumber,

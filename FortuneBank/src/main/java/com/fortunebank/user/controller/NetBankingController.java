@@ -26,6 +26,14 @@ public class NetBankingController {
 	@Autowired
 	private NetBankingService netBankingService;
 
+	/*
+	 * This method is used to register the user
+	 * for net banking.
+	 * 
+	 * @param UserRegistrationDto userRegDto
+	 * 
+	 * @return NetBankingUser
+	 */
 	@PostMapping("/register")
 	public NetBankingUser register(@RequestBody UserRegistrationDto userRegDto) {
 		NetBankingUser netBankingUser = new NetBankingUser();
@@ -36,6 +44,13 @@ public class NetBankingController {
 		return netBankingService.registerNetBankingUser(netBankingUser);
 	}
 
+	/*
+	 * This method is used to reset the password
+	 * 
+	 * @param ForgotPasswordDto fpd
+	 * 
+	 * @return boolean
+	 */
 	@PostMapping("/resetpassword")
 	public boolean resetPassword(@Validated @RequestBody ForgotPasswordDto fpd) {
 		boolean res = false;
@@ -47,6 +62,14 @@ public class NetBankingController {
 		return res;
 	}
 
+	/*
+	 * This method is used to retrieve the user id
+	 * when the user forgets the user id
+	 * 
+	 * @param ForgotPasswordDto fpd
+	 * 
+	 * @return boolean
+	 */
 	@PostMapping("/forgotuserid")
 	public String forgotUserId(@Validated @RequestBody ForgotUserIdDto fud) {
 		String res = "";
@@ -57,7 +80,14 @@ public class NetBankingController {
 		}
 		return res;
 	}
-	
+
+	/*
+	 * This method is used to get the account number
+	 * 
+	 * @param Long userid
+	 * 
+	 * @return ResponseEntity<Long>
+	 */
 	@GetMapping("/getacno/{userid}")
 	public ResponseEntity<Long> getAccountNumber(@PathVariable Long userid) throws Exception {
 		return new ResponseEntity<>(netBankingService.getAccountNumber(userid), HttpStatus.OK);

@@ -24,8 +24,14 @@ public class UserLoginController {
 	@Autowired
 	private NetBankingService netBankingService;
 
+	/*
+	 * This method is used to login the user
+	 * 
+	 * @param UserLoginDto uld
+	 * 
+	 * @return ResponseEntity<String>
+	 */
 	@PostMapping("/login")
-
 	public ResponseEntity<String> loginUser(@Validated @RequestBody UserLoginDto uld) {
 		String userid = uld.getUserid();
 		String password = uld.getPassword();
