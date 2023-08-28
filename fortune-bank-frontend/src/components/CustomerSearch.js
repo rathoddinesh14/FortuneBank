@@ -3,7 +3,7 @@ import UserService from "../service/UserService";
 import { useTable, useSortBy } from "react-table";
 
 function CustomerSearch() {
-  const [searchParam, setSearchParam] = useState("accountNumber");
+  const [searchParam, setSearchParam] = useState("accountnumber");
   const [searchValue, setSearchValue] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [message, setMessage] = useState("");
@@ -66,10 +66,10 @@ function CustomerSearch() {
         Header: "Date of Birth",
         accessor: "dob",
       },
-      {
-        Header: "Account Type",
-        accessor: "accountType",
-      },
+      // {
+      //   Header: "Account Type",
+      //   accessor: "accountType",
+      // },
       {
         Header: "Balance",
         accessor: "balance",
@@ -104,19 +104,33 @@ function CustomerSearch() {
             <option value="email">Email</option>
             <option value="aadharnumber">Aadhar Number</option>
             <option value="dob">Date of Birth</option>
-            <option value="accounttype">Account Type</option>
+            {/* <option value="accounttype">Account Type</option> */}
             <option value="accountstatus">Account Status</option>
           </select>
         </div>
         <div className="col-md-4">
-          <input
-            className="form-control"
-            {...(searchParam === "dob" && { type: "date" })}
-            {...(searchParam !== "dob" && { type: "text" })}
-            value={searchValue}
-            onChange={handleSearchValueChange}
-            placeholder={`Search by ${searchParam}`}
-          />
+          {searchParam === "accountstatus" ? (
+            <select
+              className="form-select"
+              value={searchValue}
+              onChange={handleSearchValueChange}
+            >
+              <option value="" disabled>
+                Select Account Status
+              </option>
+              <option value="ENABLED">ENABLED</option>
+              <option value="DISABLED">DISABLED</option>
+            </select>
+          ) : (
+            <input
+              className="form-control"
+              {...(searchParam === "dob" && { type: "date" })}
+              {...(searchParam !== "dob" && { type: "text" })}
+              value={searchValue}
+              onChange={handleSearchValueChange}
+              placeholder={`Search by ${searchParam}`}
+            />
+          )}
         </div>
         <div className="col-md-4">
           <button className="btn btn-primary" onClick={handleSearch}>

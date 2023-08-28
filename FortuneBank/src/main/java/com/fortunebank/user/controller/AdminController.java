@@ -101,6 +101,19 @@ public class AdminController {
     }
 
     /*
+     * This method is used to search the user by account number
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/accountnumber")
+    public ResponseEntity<List<ResponseUserProfile>> customerAccountNumberSearch(
+            @RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerAccountNumberSearch(entity));
+    }
+
+    /*
      * This method is used to search the user by first name
      * 
      * @param CustomerSearchDto entity
@@ -110,6 +123,78 @@ public class AdminController {
     @PostMapping("customersearch/firstname")
     public ResponseEntity<List<ResponseUserProfile>> customerFirstNameSearch(@RequestBody CustomerSearchDto entity) {
         return ResponseEntity.ok(adminService.customerFirstNameSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by middle name
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/middlename")
+    public ResponseEntity<List<ResponseUserProfile>> customerMiddleNameSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerMiddleNameSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by last name
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/lastname")
+    public ResponseEntity<List<ResponseUserProfile>> customerLastNameSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerLastNameSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by father's name
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/fathername")
+    public ResponseEntity<List<ResponseUserProfile>> customerFatherNameSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerFatherNameSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by phone number
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/phone")
+    public ResponseEntity<List<ResponseUserProfile>> customerPhoneSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerPhoneSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by email
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/email")
+    public ResponseEntity<List<ResponseUserProfile>> customerEmailSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerEmailSearch(entity));
+    }
+
+    /*
+     * This method is used to search the user by Aadhar number
+     * 
+     * @param CustomerSearchDto entity
+     * 
+     * @return ResponseEntity<List<ResponseUserProfile>>
+     */
+    @PostMapping("customersearch/aadharnumber")
+    public ResponseEntity<List<ResponseUserProfile>> customerAadharNumberSearch(@RequestBody CustomerSearchDto entity) {
+        return ResponseEntity.ok(adminService.customerAadharNumberSearch(entity));
     }
 
     /*

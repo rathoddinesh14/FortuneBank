@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.ResponseUserProfile;
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.model.Beneficiary;
 import com.fortunebank.user.model.Transaction;
@@ -54,6 +55,7 @@ public class HelperFunctions {
         responseTransaction.setRemark(transaction.getRemark());
         responseTransaction.setToAccountNumber(transaction.getTud().getAccountNumber());
         responseTransaction.setTransactionType(transaction.getTransactionType());
+        responseTransaction.setTransactionMode(transaction.getTransactionMode());
         return responseTransaction;
     }
 
@@ -97,7 +99,7 @@ public class HelperFunctions {
      * @return Transaction object
      */
     public static Transaction getTransaction(UserDetails fromUser, UserDetails toUser, double amount, String remark,
-            TransactionType transactionType, String maturityInstructions) {
+            TransactionType transactionType, String maturityInstructions, TransactionMode mode) {
         Transaction transaction = new Transaction();
         transaction.setFud(fromUser);
         transaction.setTud(toUser);
@@ -106,6 +108,7 @@ public class HelperFunctions {
         transaction.setTransactionType(transactionType);
         transaction.setDate(getCurrentTime());
         transaction.setMaturityInstructions(maturityInstructions);
+        transaction.setTransactionMode(mode);
         return transaction;
     }
 
@@ -117,10 +120,11 @@ public class HelperFunctions {
      * @param Long            toAccountNumber
      * @param String          message
      * @param TransactionType transactionType
+     * @param TransactionMode mode
      * @return ResponseTransaction object
      */
     public static ResponseTransaction getResponseTransaction(Double amount, Long fromAccountNumber,
-            Long toAccountNumber, String message, TransactionType transactionType) {
+            Long toAccountNumber, String message, TransactionType transactionType, TransactionMode mode) {
         ResponseTransaction responseTransaction = new ResponseTransaction();
         responseTransaction.setAmount(amount);
         responseTransaction.setFromAccountNumber(fromAccountNumber);
@@ -130,6 +134,7 @@ public class HelperFunctions {
         responseTransaction.setDate(HelperFunctions.getCurrentTime().toString());
         responseTransaction.setTid(0L);
         responseTransaction.setMaturityInstructions("None");
+        responseTransaction.setTransactionMode(mode);
         return responseTransaction;
     }
 }

@@ -13,10 +13,15 @@ function AddTransaction() {
   const [remarks, setRemarks] = useState("");
   const [maturityInstructions, setMaturityInstructions] = useState("");
   const [beneficiaryMessage, setBeneficiaryMessage] = useState("");
+  const [transactionMode, setTransactionMode] = useState("");
   const [message, setMessage] = useState("");
 
   const handleBeneficiaryChange = (event) => {
     setToaccount(event.target.value);
+  };
+
+  const handleTransactionModeChange = (event) => {
+    setTransactionMode(event.target.value);
   };
 
   const handleAmountChange = (event) => {
@@ -50,6 +55,7 @@ function AddTransaction() {
       amount: amount,
       remarks: remarks,
       maturityInstructions: maturityInstructions,
+      mode: transactionMode,
     };
 
     // Send POST request using axios
@@ -79,18 +85,44 @@ function AddTransaction() {
       <h2>Transaction</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="fromaccount">Your Account Number:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="fromaccount"
-            value={AuthenticationService.getLoggedInAccountNumber()}
-            readOnly
-          />
+          <div className="row">
+            <div className="col-6">
+              <label htmlFor="fromaccount" className="form-label">
+                Your Account Number:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="fromaccount"
+                value={AuthenticationService.getLoggedInAccountNumber()}
+                readOnly
+              />
+            </div>
+            <div className="col-6">
+              <label htmlFor="transactionMode" className="form-label">
+                Transaction Mode
+              </label>
+              <select
+                className="form-select"
+                id="transactionMode"
+                value={transactionMode}
+                onChange={handleTransactionModeChange}
+              >
+                <option value="" disabled>
+                  Select Transaction Mode
+                </option>
+                <option value="NEFT">NEFT</option>
+                <option value="IMPS">IMPS</option>
+                <option value="RTGS">RTGS</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="form-group">
-          <label htmlFor="toaccount">Beneficiary Account Number:</label>
+          <label htmlFor="toaccount" className="form-label">
+            Beneficiary Account Number:
+          </label>
           <div className="mb-3">
             <select
               className="form-select"
@@ -129,7 +161,9 @@ function AddTransaction() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="amount">Amount:</label>
+          <label htmlFor="amount" className="form-label">
+            Amount:
+          </label>
           <input
             type="number"
             className="form-control"
@@ -140,7 +174,9 @@ function AddTransaction() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="remarks">Remarks:</label>
+          <label htmlFor="remarks" className="form-label">
+            Remarks:
+          </label>
           <textarea
             className="form-control"
             id="remarks"
@@ -151,7 +187,9 @@ function AddTransaction() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="maturityInstructions">Maturity Instructions:</label>
+          <label htmlFor="maturityInstructions" className="form-label">
+            Maturity Instructions:
+          </label>
           <textarea
             className="form-control"
             id="maturityInstructions"

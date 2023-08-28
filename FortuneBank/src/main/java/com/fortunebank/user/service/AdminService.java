@@ -107,8 +107,106 @@ public class AdminService {
      * @param CustomerSearchDto entity
      * @return List<ResponseUserProfile>
      */
+    public List<ResponseUserProfile> customerAccountNumberSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = new ArrayList<>();
+        userRepository.findByAccountNumber(Long.parseLong(entity.getInput())).ifPresent(user -> {
+            users.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+        });
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by account number.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
     public List<ResponseUserProfile> customerFirstNameSearch(CustomerSearchDto entity) {
         List<ResponseUserProfile> users = userRepository.findByFirstName(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by middle name.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerMiddleNameSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByMiddleName(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by last name.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerLastNameSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByLastName(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by phone number.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerPhoneSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByPhone(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by father name.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerFatherNameSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByFatherName(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by email.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerEmailSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByEmail(entity.getInput()).stream()
+                .collect(ArrayList::new, (list, user) -> {
+                    list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
+                }, ArrayList::addAll);
+        return users;
+    }
+
+    /**
+     * This method is used to search a user by aadhar number.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
+    public List<ResponseUserProfile> customerAadharNumberSearch(CustomerSearchDto entity) {
+        List<ResponseUserProfile> users = userRepository.findByAadharNumber(entity.getInput()).stream()
                 .collect(ArrayList::new, (list, user) -> {
                     list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
                 }, ArrayList::addAll);

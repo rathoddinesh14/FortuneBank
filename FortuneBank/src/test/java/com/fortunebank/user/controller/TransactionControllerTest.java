@@ -19,6 +19,7 @@ import java.util.List;
 import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
@@ -123,7 +124,8 @@ public class TransactionControllerTest {
 
         when(transactionService.depositAmount(request.getAccountNumber(), request.getAmount()))
                 .thenReturn(
-                        HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 100, null, null, null));
+                        HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 100, null, null, null,
+                                TransactionMode.SELF));
 
         ResponseEntity<ResponseTransaction> response = transactionController.depositAmount(request);
 
@@ -160,7 +162,8 @@ public class TransactionControllerTest {
         request.setAmount(50.0);
 
         when(transactionService.withdrawAmount(request.getAccountNumber(), request.getAmount()))
-                .thenReturn(HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 50, null, null, null));
+                .thenReturn(HelperFunctions.getTransaction(new UserDetails(), new UserDetails(), 50, null, null, null,
+                        TransactionMode.SELF));
 
         ResponseEntity<ResponseTransaction> response = transactionController.withdrawAmount(request);
 

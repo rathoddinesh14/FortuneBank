@@ -38,6 +38,8 @@ function TransactionStatus() {
           Maturity Instructions: {responseTransaction.maturityInstructions}{" "}
           <br />
           Transaction Type: {responseTransaction.transactionType}
+          <br />
+          Transaction Mode: {responseTransaction.transactionMode}
         </p>
       </div>
     </div>
