@@ -46,10 +46,8 @@ function AddPayee() {
     // Send POST request using axios
     BeneficiaryService.addBeneficiary(data)
       .then((response) => {
-        // console.log("Beneficiary Added:", response.data);
-        // alert("Beneficiary Added");
-        if (response.data) {
-          setMessage("Beneficiary added successfully.");
+        if (response.status === 200) {
+          setMessage(response.data);
           setTimeout(() => {
             history("/userhome");
           }, 2000);

@@ -13,6 +13,13 @@ import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
 
 public class HelperFunctions {
+
+    /**
+     * This method is used to get ResponseUserProfile object from UserDetails.
+     * 
+     * @param UserDetails userDetails
+     * @return ResponseUserProfile object
+     */
     public static ResponseUserProfile getResponseUserProfilefromUserDetails(UserDetails userDetails) {
         ResponseUserProfile responseUserProfile = new ResponseUserProfile();
         responseUserProfile.setAccountNumber(userDetails.getAccountNumber());
@@ -30,6 +37,12 @@ public class HelperFunctions {
         return responseUserProfile;
     }
 
+    /**
+     * This method is used to get ResponseTransaction object from Transaction.
+     * 
+     * @param Transaction transaction
+     * @return ResponseTransaction object
+     */
     public static ResponseTransaction getResponseTransactionfromTransaction(Transaction transaction) {
         ResponseTransaction responseTransaction = new ResponseTransaction();
         responseTransaction.setTid(transaction.getTid());
@@ -44,6 +57,12 @@ public class HelperFunctions {
         return responseTransaction;
     }
 
+    /**
+     * This method is used to get ResponseBeneficiary object from Beneficiary.
+     * 
+     * @param Beneficiary beneficiary
+     * @return ResponseBeneficiary object
+     */
     public static ResponseBeneficiary getResponseBeneficiaryfromPayee(Beneficiary beneficiary) {
         ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
         responseBeneficiary.setPayeeAccountNumber(beneficiary.getPayeeDetails().getAccountNumber());
@@ -54,12 +73,29 @@ public class HelperFunctions {
         return responseBeneficiary;
     }
 
+    /**
+     * This method is used to get Timestamp object of current time.
+     * 
+     * @param
+     * @return Timestamp object
+     */
     public static Timestamp getCurrentTime() {
         LocalDateTime localDateTime = LocalDateTime.now();
         ZoneId zoneId = ZoneId.of("Asia/Kolkata");
         return Timestamp.valueOf(localDateTime.atZone(zoneId).toLocalDateTime());
     }
 
+    /**
+     * This method is used to get Transaction object.
+     * 
+     * @param UserDetails     fromUser
+     * @param UserDetails     toUser
+     * @param double          amount
+     * @param String          remark
+     * @param TransactionType transactionType
+     * @param String          maturityInstructions
+     * @return Transaction object
+     */
     public static Transaction getTransaction(UserDetails fromUser, UserDetails toUser, double amount, String remark,
             TransactionType transactionType, String maturityInstructions) {
         Transaction transaction = new Transaction();
@@ -71,5 +107,29 @@ public class HelperFunctions {
         transaction.setDate(getCurrentTime());
         transaction.setMaturityInstructions(maturityInstructions);
         return transaction;
+    }
+
+    /**
+     * This method is used to get ResponseTransaction object.
+     * 
+     * @param Double          amount
+     * @param Long            fromAccountNumber
+     * @param Long            toAccountNumber
+     * @param String          message
+     * @param TransactionType transactionType
+     * @return ResponseTransaction object
+     */
+    public static ResponseTransaction getResponseTransaction(Double amount, Long fromAccountNumber,
+            Long toAccountNumber, String message, TransactionType transactionType) {
+        ResponseTransaction responseTransaction = new ResponseTransaction();
+        responseTransaction.setAmount(amount);
+        responseTransaction.setFromAccountNumber(fromAccountNumber);
+        responseTransaction.setToAccountNumber(toAccountNumber);
+        responseTransaction.setTransactionType(transactionType);
+        responseTransaction.setRemark(message);
+        responseTransaction.setDate(HelperFunctions.getCurrentTime().toString());
+        responseTransaction.setTid(0L);
+        responseTransaction.setMaturityInstructions("None");
+        return responseTransaction;
     }
 }

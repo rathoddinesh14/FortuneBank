@@ -25,6 +25,13 @@ public class ApplyUserController {
 	@Autowired
 	private UserService userService;
 
+	/*
+	 * This method is used to apply for a new account
+	 * 
+	 * @param UserDetailsDto userDto
+	 * 
+	 * @return ResponseEntity<ResponseApplyUser>
+	 */
 	@PostMapping("/apply")
 	public ResponseEntity<ResponseApplyUser> applyUser(@RequestBody UserDetailsDto userDto) {
 		try {
@@ -43,11 +50,25 @@ public class ApplyUserController {
 
 	}
 
+	/*
+	 * This method is used to get the user profile
+	 * 
+	 * @param Long accountNumber
+	 * 
+	 * @return ResponseEntity<ResponseUserProfile>
+	 */
 	@GetMapping("/userprofile/{accountNumber}")
 	public ResponseEntity<ResponseUserProfile> getUserProfile(@PathVariable Long accountNumber) {
 		return new ResponseEntity<ResponseUserProfile>(userService.getUserProfile(accountNumber), HttpStatus.OK);
 	}
 
+	/*
+	 * This method is used to get the name of the user
+	 * 
+	 * @param Long accountNumber
+	 * 
+	 * @return ResponseEntity<String>
+	 */
 	@GetMapping("/getname/{accountNumber}")
 	public ResponseEntity<String> getName(@PathVariable Long accountNumber) {
 		return new ResponseEntity<String>(userService.getName(accountNumber), HttpStatus.OK);

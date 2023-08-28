@@ -6,7 +6,7 @@ function BankCarousel() {
           <img
             src="images/carousel1.jpeg"
             // size 800x400
-            style={{ width: "800px", height: "500px" }}
+            style={{ width: "500px", height: "400px" }}
             alt="Slide 1"
             className="d-block w-100"
           />
@@ -18,7 +18,7 @@ function BankCarousel() {
         <div className="carousel-item">
           <img
             src="images/carousel2.jpeg"
-            style={{ width: "800px", height: "500px" }}
+            style={{ width: "500px", height: "400px" }}
             alt="Slide 2"
             className="d-block w-100"
           />
@@ -30,7 +30,7 @@ function BankCarousel() {
         <div className="carousel-item">
           <img
             src="images/carousel3.jpeg"
-            style={{ width: "800px", height: "500px" }}
+            style={{ width: "500px", height: "400px" }}
             alt="Slide 3"
             className="d-block w-100"
           />

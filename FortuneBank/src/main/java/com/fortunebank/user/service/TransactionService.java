@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.exception.InsufficientBalanceException;
 import com.fortunebank.user.exception.ResourceNotFoundException;
+import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.model.Transaction;
@@ -27,18 +28,24 @@ public class TransactionService {
         @Autowired
         private UserRepository userRepository;
 
-        public Transaction saveTransaction(TransactionDto transactionDto) {
+        /**
+         * This method is used to save transaction.
+         * 
+         * @param TransactionDto transactionDto
+         * @return Transaction object
+         */
+        public ResponseTransaction saveTransaction(TransactionDto transactionDto) {
 
                 UserDetails fromUser = userRepository.findByAccountNumber(transactionDto.getFromaccount())
-                                .orElseThrow(() -> new IllegalArgumentException("Invalid user accounts"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Invalid user accounts"));
 
                 UserDetails toUser = userRepository.findByAccountNumber(transactionDto.getToaccount())
-                                .orElseThrow(() -> new IllegalArgumentException("Invalid user accounts"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Invalid user accounts"));
 
                 double amount = transactionDto.getAmount();
                 if (fromUser.getBalance() < amount) {
                         // Insufficient balance, handle appropriately
-                        throw new IllegalArgumentException("Insufficient balance");
+                        throw new InsufficientBalanceException("Insufficient balance");
                 }
 
                 // Update sender's balance
@@ -49,17 +56,32 @@ public class TransactionService {
                 // Save the updated balances and the transaction
                 userRepository.save(fromUser);
                 userRepository.save(toUser);
-                return transactionRepository.save(HelperFunctions.getTransaction(fromUser, toUser, amount,
-                                transactionDto.getRemarks(), TransactionType.TRANSFER,
-                                transactionDto.getMaturityInstructions()));
+                return HelperFunctions.getResponseTransactionfromTransaction(
+                                transactionRepository.save(HelperFunctions.getTransaction(fromUser, toUser, amount,
+                                                transactionDto.getRemarks(), TransactionType.TRANSFER,
+                                                transactionDto.getMaturityInstructions())));
         }
 
+        /**
+         * This method is used to get all transactions of a user.
+         * 
+         * @param Long accountNumber
+         * @return List of Transaction objects
+         * @throws ResourceNotFoundException
+         */
         public List<Transaction> getTransactions(Long accountNumber) throws ResourceNotFoundException {
                 return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber, accountNumber)
                                 .orElseThrow(() -> new ResourceNotFoundException("Account number not found!"));
         }
 
-        public boolean depositAmount(Long accountNumber, double amount) {
+        /**
+         * This method is used to deposit amount.
+         * 
+         * @param Long   accountNumber
+         * @param double amount
+         * @return Transaction object
+         */
+        public Transaction depositAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
                                 () -> new IllegalArgumentException("Invalid user account"));
@@ -68,14 +90,20 @@ public class TransactionService {
                 user.setBalance(user.getBalance() + amount);
                 userRepository.save(user);
 
-                transactionRepository
+                return transactionRepository
                                 .save(HelperFunctions.getTransaction(user, user, amount, "Deposit",
                                                 TransactionType.DEPOSIT,
                                                 "No"));
-                return true;
         }
 
-        public boolean withdrawAmount(Long accountNumber, double amount) {
+        /**
+         * This method is used to withdraw amount.
+         * 
+         * @param Long   accountNumber
+         * @param double amount
+         * @return Transaction object
+         */
+        public Transaction withdrawAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
                                 () -> new IllegalArgumentException("Invalid user account"));
@@ -88,12 +116,19 @@ public class TransactionService {
                 user.setBalance(user.getBalance() - amount);
                 userRepository.save(user);
 
-                transactionRepository.save(
+                return transactionRepository.save(
                                 HelperFunctions.getTransaction(user, user, amount, "Withdrawal",
                                                 TransactionType.WITHDRAWAL, "No"));
-                return true;
         }
 
+        /**
+         * This method is used to get transactions between dates.
+         * 
+         * @param Long accountNumber
+         * @param Date startDate
+         * @param Date endDate
+         * @return List of Transaction objects
+         */
         public List<Transaction> getTransactionsBetweenDates(Long userId, Date startDate, Date endDate) {
                 return transactionRepository.findByFudAccountNumberAndDateBetweenOrTudAccountNumberAndDateBetween(
                                 userId, startDate, endDate, userId, startDate, endDate);

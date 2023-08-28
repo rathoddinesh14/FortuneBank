@@ -28,21 +28,30 @@ public class PayeeController {
     @Autowired
     private PayeeService beneficiaryService;
 
+    /*
+     * This method is used to add a beneficiary
+     * 
+     * @param PayeeDto beneficiary
+     * 
+     * @return ResponseEntity<Beneficiary>
+     */
     @PostMapping("/add")
-    public ResponseEntity<Beneficiary> addBeneficiary(@RequestBody PayeeDto beneficiary) {
-        Beneficiary savedBeneficiary = new Beneficiary();
-        UserDetails userDetails = new UserDetails();
-        userDetails.setAccountNumber(beneficiary.getAccountnumber());
-        UserDetails payeeDetails = new UserDetails();
-        payeeDetails.setAccountNumber(beneficiary.getPayeeaccountnumber());
-        savedBeneficiary.setUd(userDetails);
-        savedBeneficiary.setPayeeDetails(payeeDetails);
-        savedBeneficiary.setName(beneficiary.getBeneficiaryname());
-        savedBeneficiary.setNickName(beneficiary.getNickname());
-        savedBeneficiary = beneficiaryService.addPayee(savedBeneficiary);
-        return new ResponseEntity<Beneficiary>(savedBeneficiary, HttpStatus.CREATED);
+    public ResponseEntity<String> addBeneficiary(@RequestBody PayeeDto beneficiary) {
+        try {
+            beneficiaryService.addPayee(beneficiary);
+            return new ResponseEntity<String>("Beneficiary added successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Beneficiary not added", HttpStatus.OK);
+        }
     }
 
+    /*
+     * This method is used to get the beneficiaries of a particular account
+     * 
+     * @param Long accountNumber
+     * 
+     * @return ResponseEntity<List<ResponseBeneficiary>>
+     */
     @GetMapping("/get/{accountNumber}")
     public ResponseEntity<List<ResponseBeneficiary>> getBeneficiary(@PathVariable Long accountNumber)
             throws ResourceNotFoundException {
@@ -50,6 +59,15 @@ public class PayeeController {
                 HttpStatus.OK);
     }
 
+    /*
+     * This method is used to delete a beneficiary
+     * 
+     * @param Long accountNumber
+     * 
+     * @param Long beneficiaryId
+     * 
+     * @return ResponseEntity<Boolean>
+     */
     @DeleteMapping("/delete/{accountNumber}/{beneficiaryId}")
     public ResponseEntity<Boolean> deleteBeneficiary(@PathVariable Long accountNumber,
             @PathVariable Long beneficiaryId) {

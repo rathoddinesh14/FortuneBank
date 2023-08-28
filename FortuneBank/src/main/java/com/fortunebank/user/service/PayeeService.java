@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.exception.ResourceNotFoundException;
+import com.fortunebank.user.dto.PayeeDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
+import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.utils.HelperFunctions;
 
@@ -22,10 +24,27 @@ public class PayeeService {
 	@Autowired
 	private PayeeRepository payeeRepo;
 
-	public Beneficiary addPayee(Beneficiary ben) {
-		return payeeRepo.save(ben);
+	public Beneficiary addPayee(PayeeDto beneficiary) {
+		Beneficiary savedBeneficiary = new Beneficiary();
+		UserDetails userDetails = new UserDetails();
+		userDetails.setAccountNumber(beneficiary.getAccountnumber());
+		UserDetails payeeDetails = new UserDetails();
+		payeeDetails.setAccountNumber(beneficiary.getPayeeaccountnumber());
+
+		savedBeneficiary.setUd(userDetails);
+		savedBeneficiary.setPayeeDetails(payeeDetails);
+		savedBeneficiary.setName(beneficiary.getBeneficiaryname());
+		savedBeneficiary.setNickName(beneficiary.getNickname());
+		return payeeRepo.save(savedBeneficiary);
 	}
 
+	/**
+	 * This method is used to get all the beneficiaries of a user.
+	 * 
+	 * @param Long accountNumber
+	 * @return List<ResponseBeneficiary>
+	 * @throws ResourceNotFoundException
+	 */
 	public List<ResponseBeneficiary> findByUdAccountNumber(Long accountNumber) throws ResourceNotFoundException {
 		List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
 
@@ -38,6 +57,13 @@ public class PayeeService {
 		return beneficiaryList;
 	}
 
+	/**
+	 * This method is used to delete a beneficiary.
+	 * 
+	 * @param accountNumber
+	 * @param beneficiaryId
+	 * @return Boolean
+	 */
 	public Boolean deleteBeneficiary(Long accountNumber, Long beneficiaryId) {
 		Optional<Beneficiary> beneficiary = payeeRepo.findByUdAccountNumberAndBid(accountNumber, beneficiaryId);
 		beneficiary.orElseThrow(() -> new RuntimeException("No Beneficiaries found for the user"));

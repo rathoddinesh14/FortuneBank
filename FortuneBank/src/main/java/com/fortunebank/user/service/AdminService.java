@@ -37,6 +37,11 @@ public class AdminService {
     @Autowired
     private UserService userService;
 
+    /**
+     * This method is used to get all users.
+     * 
+     * @return List<ResponseUserProfile>
+     */
     public List<ResponseUserProfile> getAllUsers() {
         List<ResponseUserProfile> users = userRepository.findAll().stream().collect(ArrayList::new, (list, user) -> {
             list.add(HelperFunctions.getResponseUserProfilefromUserDetails(user));
@@ -44,6 +49,11 @@ public class AdminService {
         return users;
     }
 
+    /**
+     * This method is used to get all transactions.
+     * 
+     * @return List<ResponseTransaction>
+     */
     public List<ResponseTransaction> getAllTransactions() {
         List<ResponseTransaction> transactions = transactionRepository.findAll().stream().collect(ArrayList::new,
                 (list, transaction) -> {
@@ -52,6 +62,11 @@ public class AdminService {
         return transactions;
     }
 
+    /**
+     * This method is used to get all beneficiaries.
+     * 
+     * @return List<ResponseBeneficiary>
+     */
     public List<ResponseBeneficiary> getAllBeneficiaries() {
         List<ResponseBeneficiary> users = beneficiaryRepository.findAll().stream().collect(ArrayList::new,
                 (list, user) -> {
@@ -60,6 +75,13 @@ public class AdminService {
         return users;
     }
 
+    /**
+     * This method is used to login admin.
+     * 
+     * @param UserLoginDto uld
+     * @return boolean
+     * @throws InvalidLoginException
+     */
     public boolean loginAdmin(UserLoginDto uld) {
         if (uld.getUserid().equals("admin") && uld.getPassword().equals("admin")) {
             return true;
@@ -68,10 +90,23 @@ public class AdminService {
         }
     }
 
+    /**
+     * This method is used to update account status of a user.
+     * 
+     * @param Long   accountNumber
+     * @param String status
+     * @return boolean
+     */
     public boolean updateAccountStatus(Long accountNumber, String status) {
-        return userService.updateAccountStatus(accountNumber, status);
+        return userService.updateAccountStatus(accountNumber, AccountStatus.valueOf(status));
     }
 
+    /**
+     * This method is used to search a user by account number.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
     public List<ResponseUserProfile> customerFirstNameSearch(CustomerSearchDto entity) {
         List<ResponseUserProfile> users = userRepository.findByFirstName(entity.getInput()).stream()
                 .collect(ArrayList::new, (list, user) -> {
@@ -80,6 +115,12 @@ public class AdminService {
         return users;
     }
 
+    /**
+     * This method is used to search a user by account status.
+     * 
+     * @param CustomerSearchDto entity
+     * @return List<ResponseUserProfile>
+     */
     public List<ResponseUserProfile> customerSearchByAccountStatus(CustomerSearchDto entity) {
         List<ResponseUserProfile> users = userRepository.findByAccountStatus(AccountStatus.valueOf(entity.getInput()))
                 .stream()
@@ -89,6 +130,13 @@ public class AdminService {
         return users;
     }
 
+    /**
+     * This method is used to get transactions between dates.
+     * 
+     * @param Date startDate
+     * @param Date endDate
+     * @return List<ResponseTransaction>
+     */
     public List<ResponseTransaction> getTransactionsBetweenDates(Date startDate, Date endDate) {
         List<ResponseTransaction> transactions = new ArrayList<>();
         transactionRepository.findAllBetweenDates(startDate, endDate).forEach(transaction -> {

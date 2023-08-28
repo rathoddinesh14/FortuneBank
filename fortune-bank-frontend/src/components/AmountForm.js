@@ -29,9 +29,10 @@ function AmountForm(props) {
         accountNumber: AuthenticationService.getLoggedInAccountNumber(),
         amount: amount,
       }).then((response) => {
-        setMessage(response.data);
         setTimeout(() => {
-          setMessage("");
+          AuthenticationService.setTransactionStatus(
+            JSON.stringify(response.data)
+          );
           history("/transaction/success");
         }, 1000);
       });
@@ -48,9 +49,10 @@ function AmountForm(props) {
           }, 1000);
         })
         .catch((error) => {
-          setMessage(error.response.data);
           setTimeout(() => {
-            setMessage("");
+            AuthenticationService.setTransactionStatus(
+              JSON.stringify(error.response.data)
+            );
             history("/transaction/failure");
           }, 1000);
         });
