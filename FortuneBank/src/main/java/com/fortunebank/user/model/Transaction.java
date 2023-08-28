@@ -1,6 +1,7 @@
 package com.fortunebank.user.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.enumtype.TransactionType;
 
 import jakarta.persistence.Entity;
@@ -73,4 +74,10 @@ public class Transaction {
 	 */
 	@Enumerated(EnumType.STRING)
 	private TransactionType transactionType;
+
+	/**
+	 * The mode of the transaction.
+	 */
+	@Enumerated(EnumType.STRING)
+	private TransactionMode transactionMode;
 }

@@ -1,5 +1,6 @@
 package com.fortunebank.user.dto;
 
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.enumtype.TransactionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,4 +53,9 @@ public class ResponseTransaction {
      * The type of transaction (e.g., Deposit, Withdrawal, Transfer).
      */
     private TransactionType transactionType;
+
+    /**
+     * The mode of the transaction (e.g., NEFT, IMPS, RTGS, SELF).
+     */
+    private TransactionMode transactionMode;
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.service.TransactionService;
 import com.fortunebank.user.utils.HelperFunctions;
@@ -49,7 +50,7 @@ public class TransactionController {
             return new ResponseEntity<>(
                     HelperFunctions.getResponseTransaction(transactionDto.getAmount(),
                             transactionDto.getFromaccount(), transactionDto.getToaccount(), e.getMessage(),
-                            TransactionType.TRANSFER),
+                            TransactionType.TRANSFER, TransactionMode.valueOf(transactionDto.getMode())),
                     HttpStatus.BAD_REQUEST);
         }
     }
@@ -89,7 +90,7 @@ public class TransactionController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(HelperFunctions.getResponseTransaction(request.getAmount(),
                     request.getAccountNumber(), request.getAccountNumber(), e.getMessage(),
-                    TransactionType.DEPOSIT));
+                    TransactionType.DEPOSIT, TransactionMode.SELF));
         }
     }
 
@@ -109,7 +110,7 @@ public class TransactionController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(HelperFunctions.getResponseTransaction(request.getAmount(),
                     request.getAccountNumber(), request.getAccountNumber(), e.getMessage(),
-                    TransactionType.WITHDRAWAL));
+                    TransactionType.WITHDRAWAL, TransactionMode.SELF));
         }
     }
 

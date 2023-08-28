@@ -10,6 +10,7 @@ import com.fortunebank.user.exception.InsufficientBalanceException;
 import com.fortunebank.user.exception.ResourceNotFoundException;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
+import com.fortunebank.user.enumtype.TransactionMode;
 import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
@@ -57,9 +58,11 @@ public class TransactionService {
                 userRepository.save(fromUser);
                 userRepository.save(toUser);
                 return HelperFunctions.getResponseTransactionfromTransaction(
-                                transactionRepository.save(HelperFunctions.getTransaction(fromUser, toUser, amount,
-                                                transactionDto.getRemarks(), TransactionType.TRANSFER,
-                                                transactionDto.getMaturityInstructions())));
+                                transactionRepository.save(
+                                                HelperFunctions.getTransaction(fromUser, toUser, amount,
+                                                                transactionDto.getRemarks(), TransactionType.TRANSFER,
+                                                                transactionDto.getMaturityInstructions(),
+                                                                TransactionMode.valueOf(transactionDto.getMode()))));
         }
 
         /**
@@ -93,7 +96,8 @@ public class TransactionService {
                 return transactionRepository
                                 .save(HelperFunctions.getTransaction(user, user, amount, "Deposit",
                                                 TransactionType.DEPOSIT,
-                                                "No"));
+                                                "No",
+                                                TransactionMode.SELF));
         }
 
         /**
@@ -118,7 +122,7 @@ public class TransactionService {
 
                 return transactionRepository.save(
                                 HelperFunctions.getTransaction(user, user, amount, "Withdrawal",
-                                                TransactionType.WITHDRAWAL, "No"));
+                                                TransactionType.WITHDRAWAL, "No", TransactionMode.SELF));
         }
 
         /**

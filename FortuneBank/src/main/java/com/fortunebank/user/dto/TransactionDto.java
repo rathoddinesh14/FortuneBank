@@ -35,4 +35,9 @@ public class TransactionDto {
      * Instructions for the maturity of the transaction.
      */
     private String maturityInstructions;
+
+    /**
+     * The mode of the transaction.
+     */
+    private String mode;
 }

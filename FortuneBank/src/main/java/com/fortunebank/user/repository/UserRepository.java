@@ -14,5 +14,18 @@ public interface UserRepository extends JpaRepository<UserDetails, Long> {
 
     Collection<UserDetails> findByFirstName(String input);
 
+    Collection<UserDetails> findByLastName(String input);
+
+    Collection<UserDetails> findByMiddleName(String input);
+
+    Collection<UserDetails> findByFatherName(String input);
+
+    Collection<UserDetails> findByPhone(String input);
+
+    Collection<UserDetails> findByEmail(String input);
+
+    Collection<UserDetails> findByAadharNumber(String input);
+
     Collection<UserDetails> findByAccountStatus(AccountStatus accountStatus);
+
 }

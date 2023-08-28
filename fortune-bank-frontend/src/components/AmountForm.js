@@ -42,11 +42,14 @@ function AmountForm(props) {
         amount: amount,
       })
         .then((response) => {
-          setMessage(response.data);
-          setTimeout(() => {
-            setMessage("");
-            history("/transaction/success");
-          }, 1000);
+          if (response.status === 200) {
+            setTimeout(() => {
+              AuthenticationService.setTransactionStatus(
+                JSON.stringify(response.data)
+              );
+              history("/transaction/success");
+            }, 1000);
+          }
         })
         .catch((error) => {
           setTimeout(() => {

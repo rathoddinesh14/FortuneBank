@@ -14,7 +14,6 @@ class CustomerList extends Component {
   handleToggleCustomer = (customerId) => {
     this.state.customers.forEach((customer) => {
       if (customer.accountNumber === customerId) {
-        console.log(customer.accountStatus);
         UserService.updateUser(
           customerId,
           !isEnable(customer.accountStatus) ? "ENABLED" : "DISABLED"

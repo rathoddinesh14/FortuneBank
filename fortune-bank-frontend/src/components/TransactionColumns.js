@@ -31,6 +31,10 @@ const TransactionColumns = [
     Header: "Maturity Instructions",
     accessor: "maturityInstructions",
   },
+  {
+    Header: "Transaction Mode",
+    accessor: "transactionMode",
+  },
 ];
 
 export default TransactionColumns;
