@@ -125,46 +125,52 @@ function Dashboard(props) {
           {/* Vertical navigation */}
           <div className="sidebar-sticky">
             <ul className="nav flex-column">
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="/overview"
-                  onClick={handleOverview}
-                >
-                  Overview
-                </a>
-              </li>
+              {!AuthenticationService.isAdminMode() && (
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    href="/overview"
+                    onClick={handleOverview}
+                  >
+                    Overview
+                  </a>
+                </li>
+              )}
+
               <li className="nav-item">
                 <button className="nav-link" onClick={handleAccountSummary}>
                   Account Statements
                 </button>
               </li>
-              <li className="nav-item">
-                <button className="nav-link" onClick={handleDeposit}>
-                  Deposit Amount
-                </button>
-              </li>
-              <li className="nav-item">
-                <button className="nav-link" onClick={handleWithdraw}>
-                  Withdraw Amount
-                </button>
-              </li>
-              <li className="nav-item">
-                <button className="nav-link" onClick={handleAddBeneficiary}>
-                  Add Beneficiary
-                </button>
-              </li>
+              {!AuthenticationService.isAdminMode() && (
+                <>
+                  <li className="nav-item">
+                    <button className="nav-link" onClick={handleDeposit}>
+                      Deposit Amount
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button className="nav-link" onClick={handleWithdraw}>
+                      Withdraw Amount
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button className="nav-link" onClick={handleAddBeneficiary}>
+                      Add Beneficiary
+                    </button>
+                  </li>
 
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  href="/transfer"
-                  onClick={handleTransfer}
-                >
-                  Transfer
-                </a>
-              </li>
-              {/* Add more vertical navigation items */}
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="/transfer"
+                      onClick={handleTransfer}
+                    >
+                      Transfer
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </nav>

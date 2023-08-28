@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.exception.ResourceNotFoundException;
+import com.fortunebank.user.dto.PayeeDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.model.Beneficiary;
+import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.PayeeRepository;
 import com.fortunebank.user.utils.HelperFunctions;
 
@@ -22,8 +24,18 @@ public class PayeeService {
 	@Autowired
 	private PayeeRepository payeeRepo;
 
-	public Beneficiary addPayee(Beneficiary ben) {
-		return payeeRepo.save(ben);
+	public Beneficiary addPayee(PayeeDto beneficiary) {
+		Beneficiary savedBeneficiary = new Beneficiary();
+		UserDetails userDetails = new UserDetails();
+		userDetails.setAccountNumber(beneficiary.getAccountnumber());
+		UserDetails payeeDetails = new UserDetails();
+		payeeDetails.setAccountNumber(beneficiary.getPayeeaccountnumber());
+
+		savedBeneficiary.setUd(userDetails);
+		savedBeneficiary.setPayeeDetails(payeeDetails);
+		savedBeneficiary.setName(beneficiary.getBeneficiaryname());
+		savedBeneficiary.setNickName(beneficiary.getNickname());
+		return payeeRepo.save(savedBeneficiary);
 	}
 
 	/**

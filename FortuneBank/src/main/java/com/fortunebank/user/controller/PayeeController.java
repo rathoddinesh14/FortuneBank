@@ -36,18 +36,13 @@ public class PayeeController {
      * @return ResponseEntity<Beneficiary>
      */
     @PostMapping("/add")
-    public ResponseEntity<Beneficiary> addBeneficiary(@RequestBody PayeeDto beneficiary) {
-        Beneficiary savedBeneficiary = new Beneficiary();
-        UserDetails userDetails = new UserDetails();
-        userDetails.setAccountNumber(beneficiary.getAccountnumber());
-        UserDetails payeeDetails = new UserDetails();
-        payeeDetails.setAccountNumber(beneficiary.getPayeeaccountnumber());
-        savedBeneficiary.setUd(userDetails);
-        savedBeneficiary.setPayeeDetails(payeeDetails);
-        savedBeneficiary.setName(beneficiary.getBeneficiaryname());
-        savedBeneficiary.setNickName(beneficiary.getNickname());
-        savedBeneficiary = beneficiaryService.addPayee(savedBeneficiary);
-        return new ResponseEntity<Beneficiary>(savedBeneficiary, HttpStatus.CREATED);
+    public ResponseEntity<String> addBeneficiary(@RequestBody PayeeDto beneficiary) {
+        try {
+            beneficiaryService.addPayee(beneficiary);
+            return new ResponseEntity<String>("Beneficiary added successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Beneficiary not added", HttpStatus.OK);
+        }
     }
 
     /*
