@@ -26,6 +26,13 @@ public class PayeeService {
 		return payeeRepo.save(ben);
 	}
 
+	/**
+	 * This method is used to get all the beneficiaries of a user.
+	 * 
+	 * @param Long accountNumber
+	 * @return List<ResponseBeneficiary>
+	 * @throws ResourceNotFoundException
+	 */
 	public List<ResponseBeneficiary> findByUdAccountNumber(Long accountNumber) throws ResourceNotFoundException {
 		List<ResponseBeneficiary> beneficiaryList = new ArrayList<ResponseBeneficiary>();
 
@@ -38,6 +45,13 @@ public class PayeeService {
 		return beneficiaryList;
 	}
 
+	/**
+	 * This method is used to delete a beneficiary.
+	 * 
+	 * @param accountNumber
+	 * @param beneficiaryId
+	 * @return Boolean
+	 */
 	public Boolean deleteBeneficiary(Long accountNumber, Long beneficiaryId) {
 		Optional<Beneficiary> beneficiary = payeeRepo.findByUdAccountNumberAndBid(accountNumber, beneficiaryId);
 		beneficiary.orElseThrow(() -> new RuntimeException("No Beneficiaries found for the user"));

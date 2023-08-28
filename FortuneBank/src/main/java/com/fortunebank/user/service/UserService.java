@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fortunebank.user.dto.AddressDto;
 import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserDetailsDto;
 import com.fortunebank.user.enumtype.AccountStatus;
@@ -26,6 +25,12 @@ public class UserService {
     @Autowired
     private AddressRepository addressRepository;
 
+    /**
+     * This method is used to save user details.
+     * 
+     * @param UserDetailsDto userDetailsDto
+     * @return UserDetails object
+     */
     public UserDetails saveUserDetails(UserDetailsDto userDetailsDto) {
         UserDetails user = new UserDetails();
         user.setFirstName(userDetailsDto.getFirstName());
@@ -43,6 +48,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * This method is used to save temporary address
+     * and permanent address of user.
+     * 
+     * @param UserDetailsDto userDetailsDto
+     * @param UserDetails    appliedUser
+     */
     public void saveAddress(UserDetailsDto userDto, UserDetails appliedUser) {
         Address tAddress = new Address();
         tAddress.setLine1(userDto.getTaddress().getLine1());
@@ -67,6 +79,12 @@ public class UserService {
         addressRepository.save(pAddress);
     }
 
+    /**
+     * This method is used to get user profile.
+     * 
+     * @param Long accountNumber
+     * @return ResponseUserProfile object
+     */
     public ResponseUserProfile getUserProfile(Long accountNumber) {
         Optional<UserDetails> userDetails = userRepository.findByAccountNumber(accountNumber);
 
@@ -75,14 +93,28 @@ public class UserService {
         return HelperFunctions.getResponseUserProfilefromUserDetails(userDetails.get());
     }
 
+    /**
+     * This method is used to get name of a customer
+     * with given account number.
+     * 
+     * @param Long accountNumber
+     * @return ResponseUserProfile object
+     */
     public String getName(Long accountNumber) {
         return userRepository.findByAccountNumber(accountNumber).get().getFirstName();
     }
 
-    public boolean updateAccountStatus(Long accountNumber, String status) {
+    /**
+     * This method is used to update account status.
+     * 
+     * @param Long          accountNumber
+     * @param AccountStatus status
+     * @return boolean
+     */
+    public boolean updateAccountStatus(Long accountNumber, AccountStatus status) {
         Optional<UserDetails> userDetails = userRepository.findByAccountNumber(accountNumber);
         userDetails.orElseThrow(() -> new RuntimeException("User not found"));
-        userDetails.get().setAccountStatus(AccountStatus.valueOf(status));
+        userDetails.get().setAccountStatus(status);
         userRepository.save(userDetails.get());
         return true;
     }

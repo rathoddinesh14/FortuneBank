@@ -13,6 +13,13 @@ import com.fortunebank.user.model.Transaction;
 import com.fortunebank.user.model.UserDetails;
 
 public class HelperFunctions {
+
+    /**
+     * This method is used to get ResponseUserProfile object from UserDetails.
+     * 
+     * @param UserDetails userDetails
+     * @return ResponseUserProfile object
+     */
     public static ResponseUserProfile getResponseUserProfilefromUserDetails(UserDetails userDetails) {
         ResponseUserProfile responseUserProfile = new ResponseUserProfile();
         responseUserProfile.setAccountNumber(userDetails.getAccountNumber());
@@ -30,6 +37,12 @@ public class HelperFunctions {
         return responseUserProfile;
     }
 
+    /**
+     * This method is used to get ResponseTransaction object from Transaction.
+     * 
+     * @param Transaction transaction
+     * @return ResponseTransaction object
+     */
     public static ResponseTransaction getResponseTransactionfromTransaction(Transaction transaction) {
         ResponseTransaction responseTransaction = new ResponseTransaction();
         responseTransaction.setTid(transaction.getTid());
@@ -44,6 +57,12 @@ public class HelperFunctions {
         return responseTransaction;
     }
 
+    /**
+     * This method is used to get ResponseBeneficiary object from Beneficiary.
+     * 
+     * @param Beneficiary beneficiary
+     * @return ResponseBeneficiary object
+     */
     public static ResponseBeneficiary getResponseBeneficiaryfromPayee(Beneficiary beneficiary) {
         ResponseBeneficiary responseBeneficiary = new ResponseBeneficiary();
         responseBeneficiary.setPayeeAccountNumber(beneficiary.getPayeeDetails().getAccountNumber());
@@ -54,12 +73,29 @@ public class HelperFunctions {
         return responseBeneficiary;
     }
 
+    /**
+     * This method is used to get Timestamp object of current time.
+     * 
+     * @param
+     * @return Timestamp object
+     */
     public static Timestamp getCurrentTime() {
         LocalDateTime localDateTime = LocalDateTime.now();
         ZoneId zoneId = ZoneId.of("Asia/Kolkata");
         return Timestamp.valueOf(localDateTime.atZone(zoneId).toLocalDateTime());
     }
 
+    /**
+     * This method is used to get Transaction object.
+     * 
+     * @param UserDetails     fromUser
+     * @param UserDetails     toUser
+     * @param double          amount
+     * @param String          remark
+     * @param TransactionType transactionType
+     * @param String          maturityInstructions
+     * @return Transaction object
+     */
     public static Transaction getTransaction(UserDetails fromUser, UserDetails toUser, double amount, String remark,
             TransactionType transactionType, String maturityInstructions) {
         Transaction transaction = new Transaction();

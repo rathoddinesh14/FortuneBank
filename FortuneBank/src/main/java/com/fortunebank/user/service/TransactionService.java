@@ -27,6 +27,12 @@ public class TransactionService {
         @Autowired
         private UserRepository userRepository;
 
+        /**
+         * This method is used to save transaction.
+         * 
+         * @param TransactionDto transactionDto
+         * @return Transaction object
+         */
         public Transaction saveTransaction(TransactionDto transactionDto) {
 
                 UserDetails fromUser = userRepository.findByAccountNumber(transactionDto.getFromaccount())
@@ -54,11 +60,25 @@ public class TransactionService {
                                 transactionDto.getMaturityInstructions()));
         }
 
+        /**
+         * This method is used to get all transactions of a user.
+         * 
+         * @param Long accountNumber
+         * @return List of Transaction objects
+         * @throws ResourceNotFoundException
+         */
         public List<Transaction> getTransactions(Long accountNumber) throws ResourceNotFoundException {
                 return transactionRepository.findByFudAccountNumberOrTudAccountNumber(accountNumber, accountNumber)
                                 .orElseThrow(() -> new ResourceNotFoundException("Account number not found!"));
         }
 
+        /**
+         * This method is used to deposit amount.
+         * 
+         * @param Long   accountNumber
+         * @param double amount
+         * @return boolean
+         */
         public boolean depositAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
@@ -75,6 +95,13 @@ public class TransactionService {
                 return true;
         }
 
+        /**
+         * This method is used to withdraw amount.
+         * 
+         * @param Long   accountNumber
+         * @param double amount
+         * @return boolean
+         */
         public boolean withdrawAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
@@ -94,6 +121,14 @@ public class TransactionService {
                 return true;
         }
 
+        /**
+         * This method is used to get transactions between dates.
+         * 
+         * @param Long accountNumber
+         * @param Date startDate
+         * @param Date endDate
+         * @return List of Transaction objects
+         */
         public List<Transaction> getTransactionsBetweenDates(Long userId, Date startDate, Date endDate) {
                 return transactionRepository.findByFudAccountNumberAndDateBetweenOrTudAccountNumberAndDateBetween(
                                 userId, startDate, endDate, userId, startDate, endDate);
