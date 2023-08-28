@@ -5,6 +5,7 @@ const AUTH_API_URL = "http://localhost:8080/fortunebank/api/";
 export const ACCOUNT_NUMBER_SESSION_ATTRIBUTE_NAME = "authenticatedUser";
 export const ACCOUNT_NAME_SESSION_ATTRIBUTE_NAME = "accountName";
 export const ADMIN_MODE_SESSION_ATTRIBUTE_NAME = "isAdminMode";
+export const TRANSACTION_STATUS_SESSION_ATTRIBUTE_NAME = "transactionStatus";
 
 class AuthenticationService {
   static setSessionAttribute(key, value) {
@@ -74,6 +75,21 @@ class AuthenticationService {
     if (isAdmin === null) return false;
     if (isAdmin === "true") return true;
     return false;
+  }
+
+  static setTransactionStatus(transactionStatus) {
+    sessionStorage.setItem(
+      TRANSACTION_STATUS_SESSION_ATTRIBUTE_NAME,
+      transactionStatus
+    );
+  }
+
+  static getTransactionStatus() {
+    let transactionStatus = sessionStorage.getItem(
+      TRANSACTION_STATUS_SESSION_ATTRIBUTE_NAME
+    );
+    if (transactionStatus === null) return "";
+    return transactionStatus;
   }
 }
 

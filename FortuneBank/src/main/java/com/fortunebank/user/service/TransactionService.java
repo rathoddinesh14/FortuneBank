@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.fortunebank.user.exception.InsufficientBalanceException;
 import com.fortunebank.user.exception.ResourceNotFoundException;
+import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
 import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.model.Transaction;
@@ -33,18 +34,18 @@ public class TransactionService {
          * @param TransactionDto transactionDto
          * @return Transaction object
          */
-        public Transaction saveTransaction(TransactionDto transactionDto) {
+        public ResponseTransaction saveTransaction(TransactionDto transactionDto) {
 
                 UserDetails fromUser = userRepository.findByAccountNumber(transactionDto.getFromaccount())
-                                .orElseThrow(() -> new IllegalArgumentException("Invalid user accounts"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Invalid user accounts"));
 
                 UserDetails toUser = userRepository.findByAccountNumber(transactionDto.getToaccount())
-                                .orElseThrow(() -> new IllegalArgumentException("Invalid user accounts"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Invalid user accounts"));
 
                 double amount = transactionDto.getAmount();
                 if (fromUser.getBalance() < amount) {
                         // Insufficient balance, handle appropriately
-                        throw new IllegalArgumentException("Insufficient balance");
+                        throw new InsufficientBalanceException("Insufficient balance");
                 }
 
                 // Update sender's balance
@@ -55,9 +56,10 @@ public class TransactionService {
                 // Save the updated balances and the transaction
                 userRepository.save(fromUser);
                 userRepository.save(toUser);
-                return transactionRepository.save(HelperFunctions.getTransaction(fromUser, toUser, amount,
-                                transactionDto.getRemarks(), TransactionType.TRANSFER,
-                                transactionDto.getMaturityInstructions()));
+                return HelperFunctions.getResponseTransactionfromTransaction(
+                                transactionRepository.save(HelperFunctions.getTransaction(fromUser, toUser, amount,
+                                                transactionDto.getRemarks(), TransactionType.TRANSFER,
+                                                transactionDto.getMaturityInstructions())));
         }
 
         /**
@@ -77,9 +79,9 @@ public class TransactionService {
          * 
          * @param Long   accountNumber
          * @param double amount
-         * @return boolean
+         * @return Transaction object
          */
-        public boolean depositAmount(Long accountNumber, double amount) {
+        public Transaction depositAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
                                 () -> new IllegalArgumentException("Invalid user account"));
@@ -88,11 +90,10 @@ public class TransactionService {
                 user.setBalance(user.getBalance() + amount);
                 userRepository.save(user);
 
-                transactionRepository
+                return transactionRepository
                                 .save(HelperFunctions.getTransaction(user, user, amount, "Deposit",
                                                 TransactionType.DEPOSIT,
                                                 "No"));
-                return true;
         }
 
         /**
@@ -100,9 +101,9 @@ public class TransactionService {
          * 
          * @param Long   accountNumber
          * @param double amount
-         * @return boolean
+         * @return Transaction object
          */
-        public boolean withdrawAmount(Long accountNumber, double amount) {
+        public Transaction withdrawAmount(Long accountNumber, double amount) {
 
                 UserDetails user = userRepository.findByAccountNumber(accountNumber).orElseThrow(
                                 () -> new IllegalArgumentException("Invalid user account"));
@@ -115,10 +116,9 @@ public class TransactionService {
                 user.setBalance(user.getBalance() - amount);
                 userRepository.save(user);
 
-                transactionRepository.save(
+                return transactionRepository.save(
                                 HelperFunctions.getTransaction(user, user, amount, "Withdrawal",
                                                 TransactionType.WITHDRAWAL, "No"));
-                return true;
         }
 
         /**

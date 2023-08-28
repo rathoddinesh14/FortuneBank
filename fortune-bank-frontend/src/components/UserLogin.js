@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
 import UserService from "../service/UserService";
-import ErrorHandler from "../utils/ErrorHandler";
+import handleError from "../utils/ErrorHandler";
 
 function UserLogin() {
   const history = useNavigate();
@@ -41,7 +41,7 @@ function UserLogin() {
           }
         })
         .catch((error) => {
-          ErrorHandler.handleError(error, setMessage);
+          handleError(error, setMessage);
         });
     } else {
       AuthenticationService.login(username, password)
@@ -58,7 +58,7 @@ function UserLogin() {
           }
         })
         .catch((error) => {
-          ErrorHandler.handleError(error, setMessage);
+          handleError(error, setMessage);
         });
     }
   };

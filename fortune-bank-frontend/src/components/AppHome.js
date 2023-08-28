@@ -1,5 +1,4 @@
 import React from "react";
-import BankCarousel from "./BankCarousel";
 import { useNavigate } from "react-router-dom";
 
 function AppHome() {

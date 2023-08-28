@@ -3,6 +3,7 @@ package com.fortunebank.user.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fortunebank.user.dto.AmountDto;
 import com.fortunebank.user.dto.ResponseTransaction;
 import com.fortunebank.user.dto.TransactionDto;
-import com.fortunebank.user.model.Transaction;
+import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.service.TransactionService;
 import com.fortunebank.user.utils.HelperFunctions;
 
@@ -40,8 +41,17 @@ public class TransactionController {
      * @return ResponseEntity<Transaction>
      */
     @PostMapping("/transfer")
-    public ResponseEntity<Transaction> transfer(@RequestBody TransactionDto transactionDto) {
-        return new ResponseEntity<>(transactionService.saveTransaction(transactionDto), HttpStatus.OK);
+    public ResponseEntity<ResponseTransaction> transfer(@RequestBody TransactionDto transactionDto) {
+        try {
+            return new ResponseEntity<>(transactionService.saveTransaction(transactionDto), HttpStatus.OK);
+        } catch (Exception e) {
+            Logger.getLogger(TransactionController.class.getName()).info(e.getMessage());
+            return new ResponseEntity<>(
+                    HelperFunctions.getResponseTransaction(transactionDto.getAmount(),
+                            transactionDto.getFromaccount(), transactionDto.getToaccount(), e.getMessage(),
+                            TransactionType.TRANSFER),
+                    HttpStatus.BAD_REQUEST);
+        }
     }
 
     /*
@@ -69,16 +79,17 @@ public class TransactionController {
      * 
      * @param AmountDto request
      * 
-     * @return ResponseEntity<String>
+     * @return ResponseEntity<>
      */
     @PostMapping("/deposit")
-    public ResponseEntity<String> depositAmount(@RequestBody AmountDto request) {
-        Long accountNumber = request.getAccountNumber();
-        double depositAmount = request.getAmount();
-        if (transactionService.depositAmount(accountNumber, depositAmount)) {
-            return ResponseEntity.ok("Deposit successful");
-        } else {
-            return ResponseEntity.ok("Deposit failed");
+    public ResponseEntity<ResponseTransaction> depositAmount(@RequestBody AmountDto request) {
+        try {
+            return ResponseEntity.ok(HelperFunctions.getResponseTransactionfromTransaction(
+                    transactionService.depositAmount(request.getAccountNumber(), request.getAmount())));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(HelperFunctions.getResponseTransaction(request.getAmount(),
+                    request.getAccountNumber(), request.getAccountNumber(), e.getMessage(),
+                    TransactionType.DEPOSIT));
         }
     }
 
@@ -90,18 +101,15 @@ public class TransactionController {
      * @return ResponseEntity<String>
      */
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdrawAmount(@RequestBody AmountDto request) {
-        Long accountNumber = request.getAccountNumber();
-        double withdrawalAmount = request.getAmount();
-
+    public ResponseEntity<ResponseTransaction> withdrawAmount(@RequestBody AmountDto request) {
         try {
-            if (transactionService.withdrawAmount(accountNumber, withdrawalAmount)) {
-                return ResponseEntity.ok("Withdrawal successful");
-            } else {
-                return ResponseEntity.ok("Withdrawal failed");
-            }
+            return ResponseEntity.ok(HelperFunctions.getResponseTransactionfromTransaction(
+                    transactionService.withdrawAmount(request.getAccountNumber(), request.getAmount())));
+
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(HelperFunctions.getResponseTransaction(request.getAmount(),
+                    request.getAccountNumber(), request.getAccountNumber(), e.getMessage(),
+                    TransactionType.WITHDRAWAL));
         }
     }
 

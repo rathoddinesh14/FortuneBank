@@ -13,13 +13,17 @@ function AddTransaction() {
   const [remarks, setRemarks] = useState("");
   const [maturityInstructions, setMaturityInstructions] = useState("");
   const [beneficiaryMessage, setBeneficiaryMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleBeneficiaryChange = (event) => {
     setToaccount(event.target.value);
   };
 
   const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+    const regdouble = /^(\d*\.)?\d+$/;
+    if (event.target.value === "" || regdouble.test(event.target.value)) {
+      setAmount(event.target.value);
+    }
   };
 
   const handleRemarksChange = (event) => {
@@ -51,14 +55,22 @@ function AddTransaction() {
     // Send POST request using axios
     TransactionService.addTransaction(data)
       .then((response) => {
-        if (response.data) {
+        if (response.status === 200) {
           setTimeout(() => {
-            history("/transactionsuccess");
+            AuthenticationService.setTransactionStatus(
+              JSON.stringify(response.data)
+            );
+            history("/transaction/success");
           }, 1000);
         }
       })
       .catch((error) => {
-        console.error("Transaction Failed:", error, data);
+        setTimeout(() => {
+          AuthenticationService.setTransactionStatus(
+            JSON.stringify(error.response.data)
+          );
+          history("/transaction/failure");
+        }, 1000);
       });
   };
 
@@ -101,22 +113,25 @@ function AddTransaction() {
             </select>
           </div>
           <div className="row pb-1">
-            <button
-              className="btn-primary col-2"
-              type="button"
-              onClick={fetchBeneficiaries}
-            >
-              Fetch Beneficiaries
-            </button>
-            &nbsp;
-            <span className="text-success col-4">{beneficiaryMessage}</span>
+            <div className="col-2">
+              <button
+                className="btn-primary"
+                type="button"
+                onClick={fetchBeneficiaries}
+              >
+                Fetch Beneficiaries
+              </button>
+            </div>
+            <div className="col-6">
+              <span className="text-success col-4">{beneficiaryMessage}</span>
+            </div>
           </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="amount">Amount:</label>
           <input
-            type="text"
+            type="number"
             className="form-control"
             id="amount"
             value={amount}

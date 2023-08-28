@@ -108,4 +108,28 @@ public class HelperFunctions {
         transaction.setMaturityInstructions(maturityInstructions);
         return transaction;
     }
+
+    /**
+     * This method is used to get ResponseTransaction object.
+     * 
+     * @param Double          amount
+     * @param Long            fromAccountNumber
+     * @param Long            toAccountNumber
+     * @param String          message
+     * @param TransactionType transactionType
+     * @return ResponseTransaction object
+     */
+    public static ResponseTransaction getResponseTransaction(Double amount, Long fromAccountNumber,
+            Long toAccountNumber, String message, TransactionType transactionType) {
+        ResponseTransaction responseTransaction = new ResponseTransaction();
+        responseTransaction.setAmount(amount);
+        responseTransaction.setFromAccountNumber(fromAccountNumber);
+        responseTransaction.setToAccountNumber(toAccountNumber);
+        responseTransaction.setTransactionType(transactionType);
+        responseTransaction.setRemark(message);
+        responseTransaction.setDate(HelperFunctions.getCurrentTime().toString());
+        responseTransaction.setTid(0L);
+        responseTransaction.setMaturityInstructions("None");
+        return responseTransaction;
+    }
 }

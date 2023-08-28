@@ -1,26 +1,45 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import AuthenticationService from "../service/AuthenticationService";
 
 function TransactionStatus() {
   const { transactionStatus } = useParams();
 
+  const responseTransaction = JSON.parse(
+    AuthenticationService.getTransactionStatus()
+  );
+
   return (
     <div className="container mt-5">
-      {transactionStatus === "success" ? (
-        <div className="alert alert-success" role="alert">
-          <h4 className="alert-heading">Transaction Successful!</h4>
-          <p>Your transaction has been completed successfully.</p>
-          <hr />
-          <p className="mb-0">Thank you for using our services.</p>
-        </div>
-      ) : (
-        <div className="alert alert-danger" role="alert">
-          <h4 className="alert-heading">Transaction Failed!</h4>
-          <p>Your transaction has failed.</p>
-          <hr />
-          <p className="mb-0">Please try again.</p>
-        </div>
-      )}
+      <div
+        className={`alert alert-${
+          transactionStatus === "success" ? "success" : "danger"
+        }`}
+        role="alert"
+      >
+        <h4 className="alert-heading">
+          {transactionStatus === "success"
+            ? "Transaction Successful!"
+            : "Transaction Failed!"}
+        </h4>
+        <p>
+          {transactionStatus === "success"
+            ? "Your transaction has been completed successfully."
+            : "Your transaction has failed. Please try again."}
+        </p>
+        <hr />
+        <p className="mb-0">
+          Transaction ID: {responseTransaction.tid} <br />
+          From Account: {responseTransaction.fromAccountNumber} <br />
+          To Account: {responseTransaction.toAccountNumber} <br />
+          Amount: Rs. {responseTransaction.amount} <br />
+          Date: {responseTransaction.date} <br />
+          Remark: {responseTransaction.remark} <br />
+          Maturity Instructions: {responseTransaction.maturityInstructions}{" "}
+          <br />
+          Transaction Type: {responseTransaction.transactionType}
+        </p>
+      </div>
     </div>
   );
 }

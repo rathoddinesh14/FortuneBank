@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * is not found.
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends Exception {
+public class ResourceNotFoundException extends IllegalArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
