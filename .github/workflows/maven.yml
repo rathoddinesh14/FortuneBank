@@ -19,19 +19,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      mariadb:
-        image: mariadb:latest
-        env:
-          MYSQL_ROOT_PASSWORD: pass
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
     - uses: actions/checkout@v3
-    - name: Create Database
-      run: mysql -h mariadb -u root --password=pass -e "CREATE DATABASE fortunebankdatabase"
+
+    - uses: getong/mariadb-action@v1.1
+      with:
+        host port: 3306 # Optional, default value is 3306. The port of host
+        container port: 3306 # Optional, default value is 3306. The port of container
+        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+        mariadb version: '10.4.10' # Optional, default value is "latest". The version of the MariaDB
+        mysql database: 'fortunenbankdatabase' # Optional, default value is "test". The specified database which will be create
+        mysql root password: 'pass'
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3
