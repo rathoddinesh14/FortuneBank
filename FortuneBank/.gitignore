@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+/settings/
+.mvn/
+
+mvnw
+mvnw.cmd
+.project
