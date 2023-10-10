@@ -10,7 +10,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
 
@@ -28,6 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+    # go to the directory where pom.xml file is present
+      working-directory: ./FortuneBank
       run: mvn -B package --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
