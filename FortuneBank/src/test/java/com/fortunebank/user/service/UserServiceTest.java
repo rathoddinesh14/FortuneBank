@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -78,6 +79,8 @@ public class UserServiceTest {
         UserDetails userDetails = new UserDetails();
         userDetails.setAccountNumber(accountNumber);
         userDetails.setFirstName("John");
+        userDetails.setDob(Date.valueOf("2000-01-01"));
+        userDetails.setAccountStatus(AccountStatus.ENABLED);
 
         when(userRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(userDetails));
 
