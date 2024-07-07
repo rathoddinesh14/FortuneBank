@@ -65,7 +65,7 @@ To install and run the Full Stack Banking Application, follow these steps:
    npm install
    ```
 
-4. Set up a database to store user and transaction data.
+4. Set up a database to store user and transaction data and follow the steps mentioned [here](mariadb.md).
 
 5. Configure the database connection in the application by updating the database configuration files.
 
