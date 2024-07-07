@@ -80,6 +80,24 @@ To install and run the Full Stack Banking Application, follow these steps:
 
 ## Usage
 
+### Importing a MySQL Database
+
+To import a MySQL database dump, use the following command:
+
+```sh
+mysql -u [username] -p [database_name] < [dump_file].sql
+```
+
+- Replace `[username]` with your MySQL username.
+- Replace `[database_name]` with the name of the database you want to import into.
+- Replace `[dump_file]` with the filename of the dump file.
+
+**Example:**
+
+```sh
+mysql -u root -p mydatabase < mydatabase_dump.sql
+```
+
 1. Users can access the application by signing up for an account or logging in if they already have one.
 
 2. After logging in, users can perform various banking operations such as viewing account summaries, adding/removing beneficiaries, making transactions, and more.
