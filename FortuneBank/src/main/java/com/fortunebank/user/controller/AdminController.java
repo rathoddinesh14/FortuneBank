@@ -1,10 +1,14 @@
 package com.fortunebank.user.controller;
 
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +25,6 @@ import com.fortunebank.user.dto.ResponseUserProfile;
 import com.fortunebank.user.dto.UserLoginDto;
 import com.fortunebank.user.service.AdminService;
 
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
