@@ -51,3 +51,7 @@ yarn-error.log*
 .settings/
 .project
 .mvn/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
