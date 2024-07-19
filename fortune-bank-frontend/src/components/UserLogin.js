@@ -116,7 +116,7 @@ function UserLogin() {
           </button>
         </form>
         {message && (
-          <div className="alert alert-success mt-3" role="alert">
+          <div className="alert alert-success mt-3" role="alert" id="message">
             {message}
           </div>
         )}
