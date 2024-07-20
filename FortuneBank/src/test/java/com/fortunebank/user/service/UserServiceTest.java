@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.fortunebank.user.dto.AddressDto;
 import com.fortunebank.user.dto.ResponseUserProfile;
@@ -22,6 +23,7 @@ import com.fortunebank.user.repository.AddressRepository;
 import com.fortunebank.user.repository.UserRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class UserServiceTest {
 
     @MockBean

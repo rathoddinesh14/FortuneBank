@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.fortunebank.user.dto.ForgotPasswordDto;
 import com.fortunebank.user.dto.ForgotUserIdDto;
@@ -20,6 +21,7 @@ import com.fortunebank.user.model.NetBankingUser;
 import com.fortunebank.user.repository.NetBankingUserRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class NetBankingServiceTest {
 
     @MockBean

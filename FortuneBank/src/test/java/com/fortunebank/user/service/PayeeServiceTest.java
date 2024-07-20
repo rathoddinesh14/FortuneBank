@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.test.context.ActiveProfiles;
+
 import com.fortunebank.user.dto.PayeeDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
 import com.fortunebank.user.exception.ResourceNotFoundException;
@@ -22,6 +24,7 @@ import com.fortunebank.user.model.UserDetails;
 import com.fortunebank.user.repository.PayeeRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class PayeeServiceTest {
 
     @MockBean

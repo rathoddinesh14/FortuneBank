@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.fortunebank.user.dto.CustomerSearchDto;
 import com.fortunebank.user.dto.ResponseBeneficiary;
@@ -28,6 +29,7 @@ import com.fortunebank.user.enumtype.TransactionType;
 import com.fortunebank.user.service.AdminService;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class AdminControllerTest {
 
     @Autowired
