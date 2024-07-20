@@ -37,7 +37,16 @@ When('I click the login button', async function () {
     await loginButton.click();
 });
 
-Then('I should see a success message', async function () {
+Then('I should see a {string} message', async function (string) {
     const successMessage = page.locator('#message');
-    await expect(successMessage).toHaveText('Network Error');
+    if (string === 'error')
+        await expect(successMessage).toHaveText('Network Error');
+});
+
+Then('I should be redirected to the {string} page', async function (string) {
+    await expect(page).toHaveURL('http://localhost:3000/' + string);
+
+    // close browser
+    await page.close();
+    await browser.close();
 });
