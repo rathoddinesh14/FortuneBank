@@ -67,6 +67,16 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.18.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>3.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>5.14.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
