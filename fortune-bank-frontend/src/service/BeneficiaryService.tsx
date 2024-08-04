@@ -6,7 +6,7 @@ const BENEFICIARIES_REST_API_URL =
   "http://localhost:8080/fortunebank/api/beneficiary";
 
 class BeneficiaryService {
-  static getBeneficiaries() {
+  static getBeneficiaries(): Promise<any> {
     if (AuthenticationService.isAdminMode()) {
       return axios.get(API_URLS.adminBeneficiaries);
     } else {
@@ -18,11 +18,11 @@ class BeneficiaryService {
     }
   }
 
-  static addBeneficiary(beneficiary) {
+  static addBeneficiary(beneficiary: object): Promise<any> {
     return axios.post(BENEFICIARIES_REST_API_URL + "/add", beneficiary);
   }
 
-  static deleteBeneficiary(beneficiaryId) {
+  static deleteBeneficiary(beneficiaryId: string): Promise<any> {
     return axios.delete(
       BENEFICIARIES_REST_API_URL +
         "/delete/" +

@@ -3,25 +3,29 @@ import TransactionService from "../service/TransactionService";
 import DisplayTable from "./DisplayTable";
 import TransactionColumns from "./TransactionColumns";
 
-function AccountSummary() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [transactions, setTransactions] = useState([]);
+interface Transaction {
+  // Add transaction properties here (e.g. id, date, amount, etc.)
+}
 
-  const handleStartDateChange = (event) => {
+function AccountSummary() {
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStartDate(event.target.value);
   };
 
-  const handleEndDateChange = (event) => {
+  const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(event.target.value);
   };
 
   const handleSearch = () => {
     TransactionService.getTransactionsBetweenDates(startDate, endDate)
-      .then((response) => {
+      .then((response: any) => {
         setTransactions(response.data);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error("Error fetching transactions:", error);
       });
   };

@@ -5,11 +5,11 @@ import API_URLS from "../utils/ApiUrls";
 const USER_API_URL = "http://localhost:8080/fortunebank/api";
 
 class UserService {
-  static apply(data) {
+  static apply(data: object) {
     return axios.post(USER_API_URL + "/apply", data);
   }
 
-  static getAccountNumber(userid) {
+  static getAccountNumber(userid: string) {
     return axios.get(USER_API_URL + "/getacno/" + userid);
   }
 
@@ -21,7 +21,7 @@ class UserService {
     );
   }
 
-  static async getUserDetails() {
+  static async getUserDetails(): Promise<any> {
     return await axios.get(
       USER_API_URL +
         "/userprofile/" +
@@ -33,13 +33,13 @@ class UserService {
     return axios.get(API_URLS.adminCustomers);
   }
 
-  static updateUser(accountNumber, status) {
+  static updateUser(accountNumber: string, status: string) {
     return axios.put(
       API_URLS.adminAccountStatus + "/" + accountNumber + "/" + status
     );
   }
 
-  static searchUsers(searchParam, searchValue) {
+  static searchUsers(searchParam: string, searchValue: string) {
     return axios.post(API_URLS.adminCustomerSearch + "/" + searchParam, {
       input: searchValue,
     });

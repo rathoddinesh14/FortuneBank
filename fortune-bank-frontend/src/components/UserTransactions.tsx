@@ -3,15 +3,19 @@ import TransactionService from "../service/TransactionService";
 import DisplayTable from "./DisplayTable";
 import TransactionColumns from "./TransactionColumns";
 
+interface Transaction {
+  // Add transaction properties here (e.g. id, date, amount, etc.)
+}
+
 function UserTransactions() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   const fetchTransactions = () => {
-    TransactionService.getTransactions().then((response) => {
+    TransactionService.getTransactions().then((response: any) => {
       setTransactions(response.data);
     });
   };

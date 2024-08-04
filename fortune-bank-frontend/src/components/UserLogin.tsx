@@ -4,6 +4,11 @@ import AuthenticationService from "../service/AuthenticationService";
 import UserService from "../service/UserService";
 import handleError from "../utils/ErrorHandler";
 
+interface LoginResponse {
+  data: string;
+  status: number;
+}
+
 function UserLogin() {
   const history = useNavigate();
   const [username, setUsername] = useState("");
@@ -11,11 +16,11 @@ function UserLogin() {
   const [message, setMessage] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
@@ -26,12 +31,12 @@ function UserLogin() {
     setPassword("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isAdmin) {
       AuthenticationService.adminlogin(username, password)
-        .then((response) => {
+        .then((response: LoginResponse) => {
           AuthenticationService.setAdminMode(true);
           setMessage(response.data);
           if (response.status === 200) {
@@ -40,15 +45,15 @@ function UserLogin() {
             }, 1000);
           }
         })
-        .catch((error) => {
+        .catch((error: any) => {
           handleError(error, setMessage);
         });
     } else {
       AuthenticationService.login(username, password)
-        .then((response) => {
+        .then((response: LoginResponse) => {
           setMessage(response.data);
           if (response.status === 200) {
-            UserService.getAccountNumber(username).then((response) => {
+            UserService.getAccountNumber(username).then((response: any) => {
               AuthenticationService.registerSuccessfulLogin(response.data);
             });
             AuthenticationService.setAdminMode(false);
@@ -57,7 +62,7 @@ function UserLogin() {
             }, 1000);
           }
         })
-        .catch((error) => {
+        .catch((error: any) => {
           handleError(error, setMessage);
         });
     }

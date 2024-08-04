@@ -1,6 +1,16 @@
 import React from "react";
 
-const FormInput = ({
+interface FormInputProps {
+  label: string;
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  validate: (value: string) => boolean;
+  message: string;
+  blur: (value: string) => boolean;
+}
+
+const FormInput: React.FC<FormInputProps> = ({
   label,
   name,
   value,
@@ -9,9 +19,9 @@ const FormInput = ({
   message,
   blur,
 }) => {
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState<string>("");
 
-  const handleChange = (e) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const inputValue = e.target.value;
     if (name === "email") {
       onChange(inputValue);
@@ -23,7 +33,7 @@ const FormInput = ({
     }
   };
 
-  const handleBlur = (e) => {
+  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
     if (blur(e.target.value)) {
       setError("");
     } else {
@@ -42,7 +52,7 @@ const FormInput = ({
         id={name}
         name={name}
         value={value}
-        onChange={handleChange} // Use handleChange here
+        onChange={handleChange}
         onBlur={handleBlur}
       />
       {error && <div className="invalid-feedback">{error}</div>}

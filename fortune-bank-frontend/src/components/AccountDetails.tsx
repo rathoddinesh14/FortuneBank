@@ -2,17 +2,25 @@ import React, { Component } from "react";
 import AuthenticationService from "../service/AuthenticationService";
 import UserService from "../service/UserService";
 
-class AccountDetails extends Component {
-  state = {
+interface User {
+  [key: string]: string | number;
+}
+
+interface AccountDetailsState {
+  user: User;
+}
+
+class AccountDetails extends Component<{}, AccountDetailsState> {
+  state: AccountDetailsState = {
     user: {},
   };
 
   componentDidMount() {
     UserService.getUserDetails(AuthenticationService.getLoggedInAccountNumber())
-      .then((response) => {
+      .then((response: any) => {
         this.setState({ user: response.data });
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error("Error fetching user details:", error);
       });
   }

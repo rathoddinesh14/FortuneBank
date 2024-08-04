@@ -1,7 +1,11 @@
 import AuthenticationService from "../service/AuthenticationService";
 import Dashboard from "./Dashboard";
 
-function UserHome(props) {
+interface UserHomeProps {
+  urlParam: string;
+}
+
+function UserHome(props: UserHomeProps) {
   return (
     <div className="container">
       {!AuthenticationService.isAdminMode() && (

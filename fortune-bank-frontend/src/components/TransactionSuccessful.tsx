@@ -2,10 +2,26 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import AuthenticationService from "../service/AuthenticationService";
 
-function TransactionStatus() {
-  const { transactionStatus } = useParams();
+interface TransactionStatusProps {
+  transactionStatus: string;
+}
 
-  const responseTransaction = JSON.parse(
+interface TransactionResponse {
+  tid: string;
+  fromAccountNumber: string;
+  toAccountNumber: string;
+  amount: number;
+  date: string;
+  remark: string;
+  maturityInstructions: string;
+  transactionType: string;
+  transactionMode: string;
+}
+
+function TransactionStatus() {
+  const { transactionStatus } = useParams<TransactionStatusProps>();
+
+  const responseTransaction: TransactionResponse = JSON.parse(
     AuthenticationService.getTransactionStatus()
   );
 
